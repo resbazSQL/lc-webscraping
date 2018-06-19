@@ -1,7 +1,7 @@
 ---
 title: "Introduction: What is web scraping?"
-teaching: 10
-exercises: 0
+teaching: 30
+exercises: 10
 questions:
 - "What is web scraping and why is it useful?"
 - "What are typical use cases for web scraping?"
@@ -42,6 +42,34 @@ text mining projects, say, collections of journal articles or digitised texts. T
 [data journalism](https://en.wikipedia.org/wiki/Data_journalism), in particular, relies on the
 ability for investigative journalists to harvest data that is not always published in a form
 that allows analysis.
+
+## Some legal and technical considerations. 
+
+Scraping websites via automated means may or may not violate the law in your country. While we certainly do not have time to go into legal details here, sufficiently flagrant violations of a terms of service can cause potential issues for research projects. It's usually worth looking at the site's terms of service before performing any bulk operations on many of its pages. Before starting a thesis or research project based on scraped data, it's worth asking your university's legal team first. 
+
+Websites change. This lesson used a governmental website that was an excellent website in November 2016.
+
+
+<table>
+<tr>
+<td style="width:50%">
+<img src="{{ page.root }}/fig/importio-ontparl-01.png" alt="Parliment Members Page"/>
+            
+</td>
+<td style="width:50%">
+<img src="{{ page.root }}/fig/MembersPageCurrent.png" alt="Screenshot of the Parliament of Canada website, June 19 2018"/>
+    
+</td>
+</tr>
+<tr>
+    <td> How the site appeared when this lesson was written. </td>
+    <td> How the site appears today. </td>
+</tr>
+</table>
+
+Crucially, going to the [wayback machine at archive.org](https://web.archive.org/web/20180601000000*/https://www.ola.org/en/members/current) indicates that this *governmental archive* was indexed on June 12, 2018. Far too late to save the data. When you think a site is important enough to scrape, the site is important enough to archive. Visiting the site at [archive.org](https://archive.org) can (unless their robots.txt file prohibits it), index the site. Another service used by many law libraries is [perma.cc](https://perma.cc), which makes delightful short URIs which are good for including in papers. 
+
+
 
 ## Before you get started
 
@@ -86,7 +114,7 @@ organized inside labeled elements:
     <a href="/Parliamentarians/en/members/Ziad-Aboultaif(89156)"> 
         <img alt="Photo - Ziad Aboultaif - Click to open the Member of Parliament profile" title="Photo - Ziad Aboultaif - Click to open the Member of Parliament profile" src="http://www.parl.gc.ca/Parliamentarians/Images/OfficialMPPhotos/42/AboultaifZiad_CPC.jpg" class="picture" />
         <div class="full-name">
-		    <span class="honorific"><abbr></abbr></span>
+            <span class="honorific"><abbr></abbr></span>
             <span class="first-name">Ziad</span>
             <span class="last-name">Aboultaif</span>
         </div>
@@ -176,6 +204,57 @@ In this lesson, we will continue exploring the examples above and try different 
 the information they contain. But before we launch into web scraping proper, we need to look
 a bit closer at how information is organized in an HTML document and how to build queries to access
 a specific subset of that information.
+
+> ## Discussion
+>
+> How does turning an arbitrary webpage into a tabulated file help your research?
+>
+> * A. Data, on the web, is made by computers. It takes a computer to get that data out.
+> * B. My colleagues post their data in pdfs, this technique can help me get their data.
+> * C. Data, on the web, is usually presented for human consumption. By getting a computer to parse web pages, we can analyze large sets of data without needing to manually enter it. 
+> * D. Not everything on the web is in a table tag. These techniques help us make tables out of those things.
+> 
+> > ## Solution
+> > The answer is C, because we want to tell a computer what to do so that the computer can go do it at scale. If we want to make comparisons between groups of data and don't otherwise have access to the data in the form that the developers of the webpage has it, we can use webscraping to turn the data back into a format a computer can process. 
+> {: .solution}
+{: .discussion}
+
+> ## Exercises
+> 
+> While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
+>
+> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media html for the top 5 listed members. 
+>
+> First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au). 
+>
+> * Search on "Members of Parliment" -- no hits for the federal parliment. (As of June 2018)
+> 
+> * Search on "twitter" -- no hits for governmental twitter handles. 
+> 
+> Obviously, if this was a real search we would look at more sources before turning to scraping. 
+> 
+> If we wanted to automate this, this would be the step where we looked at the site's terms of service. I've looked at the "Disclaimer" page, and it says it is freely available for our use, and does not forbid the action. Good enough.
+>
+> Now, we need to find Tony's Social media HTML. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines of his social media handles (or whomever else is listed first at the time.)
+> 
+> You should see around line 670:
+> ~~~
+> <a href="http://www.facebook.com/TonyAbbottMP" class="social facebook" target="_blank"><i class="fa fa-lg margin-right fa-facebook"></i></a>
+> <a href="http://twitter.com/TonyAbbottMHR" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
+> ~~~
+>
+> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live html (as adjusted by javascript) and with that specific element's html centred in the viewport. 
+>
+> ![Chrome document inspector]({{ page.root }}/fig/Inspector.png)
+> 
+> Discuss why the document inspector is so useful when scraping webpages.
+{: .challenge}
+
+
+
+
+
+
 
 # References
 
