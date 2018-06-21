@@ -131,6 +131,39 @@ organized inside labeled elements:
 Thanks to these labels, we could relatively easily instruct a computer to look for all parliamentarians from
 Alberta and list their names and caucus information.
 
+> ## Exercise
+> 
+> While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
+>
+> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media html for the top 5 listed members. 
+>
+> First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au). 
+>
+> * Search on "Members of Parliment" -- no hits for the federal parliment. (As of June 2018)
+> 
+> * Search on "twitter" -- no hits for governmental twitter handles. 
+> 
+> Obviously, if this was a real search we would look at more sources before turning to scraping. 
+> 
+> If we wanted to automate this, this would be the step where we looked at the site's terms of service. I've looked at the "Disclaimer" page, and it says it is freely available for our use, and does not forbid the action. Good enough.
+>
+> Now, we need to find Tony's Social media HTML. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines of his social media handles (or whomever else is listed first at the time.)
+> 
+> You should see around line 670:
+> ~~~
+> <a href="http://www.facebook.com/TonyAbbottMP" class="social facebook" target="_blank"><i class="fa fa-lg margin-right fa-facebook"></i></a>
+> <a href="http://twitter.com/TonyAbbottMHR" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
+> ~~~
+>
+> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live html (as adjusted by javascript) and with that specific element's html centred in the viewport. 
+>
+> ![Chrome document inspector]({{ page.root }}/fig/Inspector.png)
+> 
+> Discuss why the document inspector is so useful when scraping webpages.
+{: .challenge}
+
+
+
 > ## Structured vs unstructured data
 >
 > When presented with information, human beings are good at quickly categorizing it and extracting the data
@@ -219,36 +252,6 @@ a specific subset of that information.
 > {: .solution}
 {: .discussion}
 
-> ## Exercises
-> 
-> While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
->
-> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media html for the top 5 listed members. 
->
-> First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au). 
->
-> * Search on "Members of Parliment" -- no hits for the federal parliment. (As of June 2018)
-> 
-> * Search on "twitter" -- no hits for governmental twitter handles. 
-> 
-> Obviously, if this was a real search we would look at more sources before turning to scraping. 
-> 
-> If we wanted to automate this, this would be the step where we looked at the site's terms of service. I've looked at the "Disclaimer" page, and it says it is freely available for our use, and does not forbid the action. Good enough.
->
-> Now, we need to find Tony's Social media HTML. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines of his social media handles (or whomever else is listed first at the time.)
-> 
-> You should see around line 670:
-> ~~~
-> <a href="http://www.facebook.com/TonyAbbottMP" class="social facebook" target="_blank"><i class="fa fa-lg margin-right fa-facebook"></i></a>
-> <a href="http://twitter.com/TonyAbbottMHR" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
-> ~~~
->
-> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live html (as adjusted by javascript) and with that specific element's html centred in the viewport. 
->
-> ![Chrome document inspector]({{ page.root }}/fig/Inspector.png)
-> 
-> Discuss why the document inspector is so useful when scraping webpages.
-{: .challenge}
 
 
 
