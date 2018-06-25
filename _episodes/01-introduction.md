@@ -1,7 +1,7 @@
 ---
 title: "Introduction: What is web scraping?"
-teaching: 30
-exercises: 10
+teaching: 45
+exercises: 20
 questions:
 - "What is web scraping and why is it useful?"
 - "What are typical use cases for web scraping?"
@@ -9,10 +9,12 @@ objectives:
 - "Introduce the concept of structured data"
 - "Discuss how data can be extracted from web pages"
 - "Introduce the examples that will be used in this lesson"
+- "Offer a taste of how to scrape data from the web"
 keypoints:
 - "Humans are good at categorizing information, computers not so much."
-- "Often, data on a web site is not properly structured, making its extraction difficult."
 - "Web scraping is the process of automating the extraction of data from web sites."
+- "Web scraping works because HTML is structured data."
+- "Often, data on a web site is not well structured, making its extraction difficult."
 ---
 
 ## What is web scraping?
@@ -43,7 +45,73 @@ text mining projects, say, collections of journal articles or digitised texts. T
 ability for investigative journalists to harvest data that is not always published in a form
 that allows analysis.
 
-## Some legal and technical considerations. 
+
+## Using the Scraper Chrome extension
+
+In order to contextualise what we're talking about, let us do a rudimentary scrape of a website. 
+
+Let's go to the list of [UK House of Commons members](https://www.parliament.uk/mps-lords-and-offices/mps/). 
+
+We are interested in downloading this list to a spreadsheet, with columns for names and
+constituencies. Do do so, we will use the Scraper extension in the Chrome browser
+(refer to the [Setup]({{ page.root }}/setup/) section for help installing these tools).
+
+## Scrape similar
+
+With the extension installed, we can select the first row of the House of Commons members
+list, do a right click and choose "Scrape similar" from the contextual menu:
+
+![Screenshot of the Scraper contextual menu]({{ page.root }}/fig/scraper-contextmenu.png)
+
+Alternatively, the "Scrape similar" option can also be accessed from the Scraper extension
+icon:
+
+![Screenshot of the Scraper menu]({{ page.root }}/fig/scraper-menu.png)
+
+Either operation will bring up the Scraper window:
+
+![Screenshot of the Scraper main window]({{ page.root }}/fig/scraper-ukparl-01.png)
+
+We can then choose "Save to clipboard".
+
+Let's open a text file in our favourite text editor, and paste.
+
+You should see something like:
+
+~~~
+Surname, First name Constituency
+A   back to top
+                                 Abbott, Ms Diane                                 (Labour)                              Hackney North and Stoke Newington
+                                 Abrahams, Debbie                                 (Labour)                              Oldham East and Saddleworth
+                                 Adams, Nigel                                 (Conservative)                                Selby and Ainsty
+                                 Afolami, Bim                                 (Conservative)                                Hitchin and Harpenden
+                                 Afriyie, Adam                                 (Conservative)                               Windsor
+~~~
+
+
+> ## Exercise: Using the Scraper Chrome extension on Trove
+> 
+> In the later part of the lesson, we will be working with [Wragge's Trove Scraper](https://github.com/wragge/ozglam-workbench/blob/master/Trove/Cookbook/Harvesting-data-from-the-Bulletin.ipynb) python script. 
+> > ## Hard Mode
+> > If you are already deeply familiar with the DOM and XPath, try to follow that full script, including the OCRing. For the rest of us, we will be gently 
+exploring Australia's Trove database.
+> > 
+> {: .solution}
+> Trove offers a digitized [old Journal called "The Bulletin."](https://nla.gov.au/nla.obj-68375465/). This page uses dynamic HTML to show us a catalogue.
+> 
+> <table> <tr> <td style="width:50%"> <img src="{{ page.root }}/fig/catalogue.png" alt="catalogue"/></td><td style="width:50%"><img src="{{ page.root }}/fig/catalogueBrowse.png" alt="A list of journals"/></td></tr></table>
+>
+> Your exercise is to get a list of the object names, Journal numbers, and dates into a text file
+>
+> ~~~
+>                                        nla.obj-124654480                 The bulletin.                     No. 1 (31 Jan 1880)                            8                     children                     Digitised                         
+>                                        nla.obj-188284455                 The bulletin.                     No. 2 (7 Feb 1880)                            8                     children                     Digitised                         
+>                                        nla.obj-188537163                 The bulletin.                     No. 3 (14 Feb 1880)   
+> ~~~
+{: .challenge}
+
+
+## Some legal and technical considerations
 
 Scraping websites via automated means may or may not violate the law in your country. While we certainly do not have time to go into legal details here, sufficiently flagrant violations of a terms of service can cause potential issues for research projects. It's usually worth looking at the site's terms of service before performing any bulk operations on many of its pages. Before starting a thesis or research project based on scraped data, it's worth asking your university's legal team first. 
 
@@ -87,7 +155,7 @@ of why this information would be useful could be an advocacy group wishing to ma
 for citizens to contact their representatives about a particular issue. 
 
 Let's start by looking at the current list of members of the Canadian parliament, which is available
-on the [Parliament of Canada website](http://www.parl.gc.ca/Parliamentarians/en/members).
+on the [Parliament of Canada website](http://www.ourcommons.ca/Parliamentarians/en/members) [Backup link: https://perma.cc/W8Y9-HPWF](https://perma.cc/W8Y9-HPWF).
 
 This is how this page appears in November 2016:
 
@@ -112,7 +180,7 @@ organized inside labeled elements:
 (...)
 <div>
     <a href="/Parliamentarians/en/members/Ziad-Aboultaif(89156)"> 
-        <img alt="Photo - Ziad Aboultaif - Click to open the Member of Parliament profile" title="Photo - Ziad Aboultaif - Click to open the Member of Parliament profile" src="http://www.parl.gc.ca/Parliamentarians/Images/OfficialMPPhotos/42/AboultaifZiad_CPC.jpg" class="picture" />
+        <img alt="Photo - Ziad Aboultaif - Click to open the Member of Parliament profile" title="Photo - Ziad Aboultaif - Click to open the Member of Parliament profile" src="//www.ourcommons.ca/Parliamentarians/Images/OfficialMPPhotos/42/AboultaifZiad_CPC.jpg" class="picture" />
         <div class="full-name">
             <span class="honorific"><abbr></abbr></span>
             <span class="first-name">Ziad</span>
@@ -124,12 +192,67 @@ organized inside labeled elements:
     <div class="constituency">Edmonton Manning</div>
     <div class="province">Alberta</div>        
 </div>
+
 (...)
 ~~~
 {: .output}
 
 Thanks to these labels, we could relatively easily instruct a computer to look for all parliamentarians from
 Alberta and list their names and caucus information.
+
+
+
+> ## Exercise
+> 
+> While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
+>
+> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [Backup link: https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media html for the top 5 listed members. 
+>
+> First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au). 
+>
+> * Search on "Members of Parliment" -- no hits for the federal parliment. (As of June 2018)
+> 
+> * Search on "twitter" -- no hits for governmental twitter handles. 
+> 
+> Obviously, if this was a real search we would look at more sources before turning to scraping. 
+> 
+> If we wanted to automate this, this would be the step where we looked at the site's terms of service. I've looked at the "Disclaimer" page, and it says it is freely available for our use, and does not forbid the action. Good enough.
+>
+> Now, we need to find Tony's Social media HTML. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines of his social media handles (or whomever else is listed first at the time.)
+> 
+> You should see around line 670:
+> ~~~
+> <a href="http://www.facebook.com/TonyAbbottMP" class="social facebook" target="_blank"><i class="fa fa-lg margin-right fa-facebook"></i></a>
+> <a href="http://twitter.com/TonyAbbottMHR" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
+> ~~~
+>
+> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live html (as adjusted by javascript) and with that specific element's html centred in the viewport. 
+>
+> ![Chrome document inspector]({{ page.root }}/fig/Inspector.png)
+> 
+> Discuss why the document inspector is so useful when scraping webpages.
+{: .challenge}
+
+
+
+> ## Discussion
+>
+> Consider a researcher wanting to get a list of Australian members of parliment so that she can combine it with data from the Australian Bureau of Statistics about land area. Scraping is beneficial for her because:
+>
+> * A. Data, on the web, is made by computers. It takes a computer to get that data out.
+> * B. Her colleagues post their data in pdfs, this technique can help her get their data.
+> * C. Data, on the web, is usually presented for human consumption. By getting a computer to parse web pages, we can analyze large sets of data without needing to manually enter it. 
+> * D. Not everything on the web is in a table tag. These techniques help us make tables out of those things.
+> 
+> > ## Solution
+> > The answer is C, because we want to tell a computer what to do so that the computer can go do it at scale. If we want to make comparisons between groups of data and don't otherwise have access to the data in the form that the developers of the webpage has it, we can use webscraping to turn the data back into a format a computer can process. 
+> > 
+> > Note well that there exist techqniues for getting data out of pdfs, but they are somewhat outside the scope of this course. [Wragge's OzGlam Workbench](https://github.com/wragge/ozglam-workbench/) offers a number of approaches in this direction. 
+> {: .solution}
+{: .discussion}
+ 
+
+
 
 > ## Structured vs unstructured data
 >
@@ -145,7 +268,7 @@ Alberta and list their names and caucus information.
 >
 {: .callout}
 
-Let's look now at the current list of members for the [UK House of Commons](https://www.parliament.uk/mps-lords-and-offices/mps/). 
+Let's look now at the current list of members for the [UK House of Commons](https://www.parliament.uk/mps-lords-and-offices/mps/) [Backup link: https://perma.cc/M8BC-JUJ8](https://perma.cc/M8BC-JUJ8). 
 
 ![Screenshot of the UK House of Commons website]({{ page.root }}/fig/ukparl.png)
 
@@ -205,50 +328,23 @@ the information they contain. But before we launch into web scraping proper, we 
 a bit closer at how information is organized in an HTML document and how to build queries to access
 a specific subset of that information.
 
-> ## Discussion
+
+> ## Discussion: 
 >
-> How does turning an arbitrary webpage into a tabulated file help your research?
+> Why can we not scrape most PDF data in the same way we scrape a webpage?
 >
-> * A. Data, on the web, is made by computers. It takes a computer to get that data out.
-> * B. My colleagues post their data in pdfs, this technique can help me get their data.
-> * C. Data, on the web, is usually presented for human consumption. By getting a computer to parse web pages, we can analyze large sets of data without needing to manually enter it. 
-> * D. Not everything on the web is in a table tag. These techniques help us make tables out of those things.
+> * A. PDFs might be images instead of text.
+> * B. PDFs aren't structured data. They're text or images positioned on a page.
+> * C. Because we need to use different tools
+> * D. We have to OCR them first.
 > 
 > > ## Solution
-> > The answer is C, because we want to tell a computer what to do so that the computer can go do it at scale. If we want to make comparisons between groups of data and don't otherwise have access to the data in the form that the developers of the webpage has it, we can use webscraping to turn the data back into a format a computer can process. 
+> > 
+> > The answer is B. All of this scraping of webpages is possible because they're made out of structured data. PDFs by comparison are unstructured. Their text is simply positioned on a page letter by letter. We have to use an approach like Regular Expressions to extract that data. 
+> >
 > {: .solution}
 {: .discussion}
 
-> ## Exercises
-> 
-> While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
->
-> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media html for the top 5 listed members. 
->
-> First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au). 
->
-> * Search on "Members of Parliment" -- no hits for the federal parliment. (As of June 2018)
-> 
-> * Search on "twitter" -- no hits for governmental twitter handles. 
-> 
-> Obviously, if this was a real search we would look at more sources before turning to scraping. 
-> 
-> If we wanted to automate this, this would be the step where we looked at the site's terms of service. I've looked at the "Disclaimer" page, and it says it is freely available for our use, and does not forbid the action. Good enough.
->
-> Now, we need to find Tony's Social media HTML. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines of his social media handles (or whomever else is listed first at the time.)
-> 
-> You should see around line 670:
-> ~~~
-> <a href="http://www.facebook.com/TonyAbbottMP" class="social facebook" target="_blank"><i class="fa fa-lg margin-right fa-facebook"></i></a>
-> <a href="http://twitter.com/TonyAbbottMHR" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
-> ~~~
->
-> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live html (as adjusted by javascript) and with that specific element's html centred in the viewport. 
->
-> ![Chrome document inspector]({{ page.root }}/fig/Inspector.png)
-> 
-> Discuss why the document inspector is so useful when scraping webpages.
-{: .challenge}
 
 
 
@@ -260,4 +356,4 @@ a specific subset of that information.
 
 * [Web Scraping (Wikipedia)](https://en.wikipedia.org/wiki/Web_scraping)
 * [The Data Journalism Handbook: Getting Data from the Web](http://datajournalismhandbook.org/1.0/en/getting_data_3.html)
-
+* [Wragge's OzGlam workbench](https://github.com/wragge/ozglam-workbench/)
