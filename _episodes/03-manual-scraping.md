@@ -41,59 +41,35 @@ Either operation will bring up the Scraper window:
 
 ![Screenshot of the Scraper main window]({{ page.root }}/fig/scraper-ukparl-01.png)
 
-We recognize that Scraper has generated XPath queries that corresponds to the data we had
-selected upon calling it. The Selector (highlighted in red in the above screenshot)
- has been set to `//tbody/tr[td]` which selects
-all the rows of the table, delimiting the data we want to extract.
+## Xpath and the Document Object Model
 
-In fact, we can try out that query using the technique that we learned in the previous
-section by typing the following in the browser console:
+Note the "Selector" on the left column. It should read:
 
 ~~~
-$x("//tbody/tr[td]")
+//tbody/tr[td]
 ~~~
-{: .source}
 
-returns something like
+![A good output of the scraper]({{ page.root }}/fig/goodManualScrape.png)
 
-~~~
-<- Array [672]
-~~~
-{: .output}
 
-which we can explore in the console to make sure this is the right data.
-
-Scraper also recognized that there were two columns in that table, and has accordingly
-created two such columns (highlighted in blue in the screenshot), 
-each with its own XPath selector, `*[1]` and `*[2]`.
-
-To understand what this means, we have to remember that XPath queries are relative to the
-current context node. The context node has been set by the Selector query above, so
-those queries are relative to the array of `tr` elements that has been selected.
-
-We can replicate their effect by trying out 
+What happens if you don't highlight the full row and right click scrape similiar? We see something like:
 
 ~~~
-$x("//tbody/tr[td]/*[1]")
+//tr[2]/td
 ~~~
-{: .source}
+![A bad output of the scraper]({{ page.root }}/fig/badManualScrape.png)
 
-in the console. This should select only the first column of the table. The same goes for the
-second column.
+The difference in these two "XPath Queries" is where they're telling the scrape extension to look within the "Document object model" of the webpage. We will be exploring these in a few minutes, but right now, we need to get this data to a usable "spreadsheet" format.
 
-But in this case, we don't need to fiddle with the XPath queries too much, as Scraper was able to deduce
-them for us, and we can use the export functions to either create a Google Spreadsheet with the
-results, or copy them into the clipboard in Tab Separated Values (TSV) format for pasting into
-a text document, a spreadsheet or Open Refine.
+## Cleaning scraped Data
 
-There is one bit of data cleanup we might want to do, though. If we paste the data copied from Scraper
-into a text document, we see something like this:
+One characteristic of scraped data is that it is very seldom formatted for clean computer consumption. If we choose "Copy to Clipboard" and we paste the data copied from Scraper into a text document, we see something like this:
 
 ~~~
-Name	Constituency
-A	back to top
-                                 Abbott, Ms Diane                                 (Labour)                             	Hackney North and Stoke Newington
-                                 Abrahams, Debbie                                 (Labour)                             	Oldham East and Saddleworth
+Name  Constituency
+A back to top
+                                 Abbott, Ms Diane                                 (Labour)                              Hackney North and Stoke Newington
+                                 Abrahams, Debbie                                 (Labour)                              Oldham East and Saddleworth
 ~~~
 {: .output}
 
@@ -113,25 +89,26 @@ on the "Scrape" button. The preview will not noticeably change, but if we now co
 and paste them in our text editor, we should see
 
 ~~~
-Name	Constituency
-A	back to top
-Abbott, Ms Diane (Labour)	Hackney North and Stoke Newington
-Abrahams, Debbie (Labour)	Oldham East and Saddleworth
-Adams, Nigel (Conservative)	Selby and Ainsty
+Name  Constituency
+A back to top
+Abbott, Ms Diane (Labour) Hackney North and Stoke Newington
+Abrahams, Debbie (Labour) Oldham East and Saddleworth
+Adams, Nigel (Conservative) Selby and Ainsty
 ~~~
 {: .output}
 
 which is a bit cleaner.
 
-> ## Scrape the list of Ontario MPPs
-> Use Scraper to export the list of [current members of the Ontario Legislative Assembly](https://www.ola.org/en/members/current)
+> ## Scrape the list of Australian MPPs
+> Use Scraper to export the list of the first twelve [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q).
 > and try exporting the results in your favourite spreadsheet or data analysis
-> software.
->
-> Once you have done that, try adding a third column containing the URLs that are underneath
-> the names of the MPPs and that are leading to the detail page for each parliamentarian.
+> software. 
+> BBS FIXME
+> Once you have done that, try adding a third column containing the district of each member of parliment.
 >
 > Tips:
+> 
+> We first need to find the html tag that "holds" each row. 
 > 
 > * To add another column in Scraper, use the little green "+" icon in the columns list.
 > * Look at the source code and try out XPath queries in the console until you find what
@@ -161,115 +138,6 @@ which is a bit cleaner.
 > > {: .source}
 > >
 > > ![Screenshot of the Scraper window on the Ontario MPP page]({{ page.root }}/fig/scraper-ontparl-02.png)
-> >
-> {: .solution}
-{: .challenge}
-
-
-
-## Custom XPath queries
-
-Sometimes, however, we do have to do a bit of work to get Scraper to select the data elements
-that we are interested in.
-
-Going back to the example of the Canadian Parliament we saw in the introduction,
-there is a page on the same website that [lists the mailing addresses](http://www.parl.gc.ca/Parliamentarians/en/members/addresses) of all
-parliamentarians. We are interested in scraping those addresses.
-
-If we select the addresses for the first MP and try the "Scrape similar" function...
-
-![Screenshot of the Scraper context menu being used on an address block]({{ page.root }}/fig/scraper-canparl-01.png)
-
-Scraper produces this:
-
-![Screenshot of the Scraper window trying to scrape addresses]({{ page.root }}/fig/scraper-canparl-02.png)
-
-which does a nice job separating the address elements, but what if instead we want a table of
-the addresses of all MPs? Selecting multiple addresses instead does not help. Remember what we said
-about computers not being smart about structuring information? This is a good example. We humans
-know what the different blocks of texts on the screen mean, but the computer will need some help from
-us to make sense of it.
-
-We need to tell Scraper what exactly to scrape, using XPath.
-
-If we look at the HTML source code of that page, we see that individual MPs are all within `ul`
-elements:
-
-~~~
-(...)
-<ul>
-   <li><h3>Aboultaif, Ziad</h3></li>
-   <li>
-      <span class="addresstype">Hill Office</span>
-      <span>Telephone:</span>
-      <span>613-992-0946</span>
-      <span>Fax:</span>            
-      <span>613-992-0973</span>
-   </li>
-   <li>
-         <ul>       
-            <li><span class="addresstype">Constituency Office(s)</span></li>
-            <li>                            
-               <span>8119 - 160 Avenue (Main Office)</span>
-               <span>Suite 204A</span>
-               <span>Edmonton, Alberta</span>
-               <span>T5Z 0G3</span>
-               <span>Telephone:</span> <span>780-822-1540</span>
-               <span>Fax:</span> <span>780-822-1544</span>                                    
-               <span class="spacer"></span>
-            </li>                         
-      </ul>
-   </li>                                   
-</ul>   
-(...)
-~~~
-{: .output}
-
-So let's try changing the Selector XPath in Scraper to
-
-~~~
-//body/div[1]/div/ul
-~~~
-{: .source}
-
-and hit "Scrape". We get something that is closer to what we want, with one line per MP, but
-the addresses are still all in one block of unstructured text:
-
-![Screenshot of the Scraper window trying to scrape addresses]({{ page.root }}/fig/scraper-canparl-03.png)
-
-Looking closer at the HTML source, we see that name and addresses are separated by `li` elements
-within those `ul` elements. So let's add a few columns based on those elements:
-
-~~~
-./li[1] -> Name
-./li[2] -> Hill Office
-./li[3] -> Constituency
-~~~
-{: .source}
-
-This produces the following result:
-
-![Screenshot of the Scraper window scraping addresses]({{ page.root }}/fig/scraper-canparl-04.png)
-
-The addresses are still one big block of text each, but at least we now have a table for all MPs
-and the addresses are separated.
-
-> ## Scrape the Canadian MPs' phone numbers
-> Keep working on the example above to add a column for the Hill Office phone number
-> and fax number for each MP.
->
->
-> > ## Solution
-> > 
-> > Add columns with the XPath query
-> > 
-> > ~~~
-> > ./li[2]/span[3] -> Hill Office Phone
-> > ./li[2]/span[5] -> Hill Office Fax
-> > ~~~
-> > {: .source}
-> >
-> > ![Screenshot of the Scraper window on scraping MP phone numbers]({{ page.root }}/fig/scraper-canparl-05.png)
 > >
 > {: .solution}
 {: .challenge}

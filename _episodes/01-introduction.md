@@ -12,6 +12,7 @@ objectives:
 - "Offer a taste of how to scrape data from the web"
 keypoints:
 - "Humans are good at categorizing information, computers not so much."
+- "Often, data on a web site is not properly structured, making its extraction difficult."
 - "Web scraping is the process of automating the extraction of data from web sites."
 - "Web scraping works because HTML is structured data."
 - "Often, data on a web site is not well structured, making its extraction difficult."
@@ -45,73 +46,7 @@ text mining projects, say, collections of journal articles or digitised texts. T
 ability for investigative journalists to harvest data that is not always published in a form
 that allows analysis.
 
-
-## Using the Scraper Chrome extension
-
-In order to contextualise what we're talking about, let us do a rudimentary scrape of a website. 
-
-Let's go to the list of [UK House of Commons members](https://www.parliament.uk/mps-lords-and-offices/mps/). 
-
-We are interested in downloading this list to a spreadsheet, with columns for names and
-constituencies. Do do so, we will use the Scraper extension in the Chrome browser
-(refer to the [Setup]({{ page.root }}/setup/) section for help installing these tools).
-
-## Scrape similar
-
-With the extension installed, we can select the first row of the House of Commons members
-list, do a right click and choose "Scrape similar" from the contextual menu:
-
-![Screenshot of the Scraper contextual menu]({{ page.root }}/fig/scraper-contextmenu.png)
-
-Alternatively, the "Scrape similar" option can also be accessed from the Scraper extension
-icon:
-
-![Screenshot of the Scraper menu]({{ page.root }}/fig/scraper-menu.png)
-
-Either operation will bring up the Scraper window:
-
-![Screenshot of the Scraper main window]({{ page.root }}/fig/scraper-ukparl-01.png)
-
-We can then choose "Save to clipboard".
-
-Let's open a text file in our favourite text editor, and paste.
-
-You should see something like:
-
-~~~
-Surname, First name Constituency
-A   back to top
-                                 Abbott, Ms Diane                                 (Labour)                              Hackney North and Stoke Newington
-                                 Abrahams, Debbie                                 (Labour)                              Oldham East and Saddleworth
-                                 Adams, Nigel                                 (Conservative)                                Selby and Ainsty
-                                 Afolami, Bim                                 (Conservative)                                Hitchin and Harpenden
-                                 Afriyie, Adam                                 (Conservative)                               Windsor
-~~~
-
-
-> ## Exercise: Using the Scraper Chrome extension on Trove
-> 
-> In the later part of the lesson, we will be working with [Wragge's Trove Scraper](https://github.com/wragge/ozglam-workbench/blob/master/Trove/Cookbook/Harvesting-data-from-the-Bulletin.ipynb) python script. 
-> > ## Hard Mode
-> > If you are already deeply familiar with the DOM and XPath, try to follow that full script, including the OCRing. For the rest of us, we will be gently 
-exploring Australia's Trove database.
-> > 
-> {: .solution}
-> Trove offers a digitized [old Journal called "The Bulletin."](https://nla.gov.au/nla.obj-68375465/). This page uses dynamic HTML to show us a catalogue.
-> 
-> <table> <tr> <td style="width:50%"> <img src="{{ page.root }}/fig/catalogue.png" alt="catalogue"/></td><td style="width:50%"><img src="{{ page.root }}/fig/catalogueBrowse.png" alt="A list of journals"/></td></tr></table>
->
-> Your exercise is to get a list of the object names, Journal numbers, and dates into a text file
->
-> ~~~
->                                        nla.obj-124654480                 The bulletin.                     No. 1 (31 Jan 1880)                            8                     children                     Digitised                         
->                                        nla.obj-188284455                 The bulletin.                     No. 2 (7 Feb 1880)                            8                     children                     Digitised                         
->                                        nla.obj-188537163                 The bulletin.                     No. 3 (14 Feb 1880)   
-> ~~~
-{: .challenge}
-
-
-## Some legal and technical considerations
+## Some legal and technical considerations. 
 
 Scraping websites via automated means may or may not violate the law in your country. While we certainly do not have time to go into legal details here, sufficiently flagrant violations of a terms of service can cause potential issues for research projects. It's usually worth looking at the site's terms of service before performing any bulk operations on many of its pages. Before starting a thesis or research project based on scraped data, it's worth asking your university's legal team first. 
 
