@@ -1,7 +1,7 @@
 ---
 title: "Introduction: What is web scraping?"
 teaching: 45
-exercises: 20
+exercises: 25
 questions:
 - "What is web scraping and why is it useful?"
 - "What are typical use cases for web scraping?"
@@ -45,6 +45,80 @@ text mining projects, say, collections of journal articles or digitised texts. T
 [data journalism](https://en.wikipedia.org/wiki/Data_journalism), in particular, relies on the
 ability for investigative journalists to harvest data that is not always published in a form
 that allows analysis.
+
+
+## Using the Scraper Chrome extension
+
+In order to contextualise what we're talking about, let us do a rudimentary scrape of a website. 
+
+Let's go to the list of [UK House of Commons members](https://www.parliament.uk/mps-lords-and-offices/mps/). 
+
+We are interested in downloading this list to a spreadsheet, with columns for names and
+constituencies. Do do so, we will use the Scraper extension in the Chrome browser
+(refer to the [Setup]({{ page.root }}/setup/) section for help installing these tools).
+
+## Scrape similar
+
+With the extension installed, we can select the first row of the House of Commons members
+list, do a right click and choose "Scrape similar" from the contextual menu:
+
+![Screenshot of the Scraper contextual menu]({{ page.root }}/fig/scraper-contextmenu.png)
+
+Alternatively, the "Scrape similar" option can also be accessed from the Scraper extension
+icon:
+
+![Screenshot of the Scraper menu]({{ page.root }}/fig/scraper-menu.png)
+
+Either operation will bring up the Scraper window:
+
+![Screenshot of the Scraper main window]({{ page.root }}/fig/scraper-ukparl-01.png)
+
+We can then choose "Save to clipboard".
+
+Let's open a text file in our favourite text editor, and paste.
+
+You should see something like:
+
+~~~
+Surname, First name Constituency
+A   back to top
+                                 Abbott, Ms Diane                                 (Labour)                              Hackney North and Stoke Newington
+                                 Abrahams, Debbie                                 (Labour)                              Oldham East and Saddleworth
+                                 Adams, Nigel                                 (Conservative)                                Selby and Ainsty
+                                 Afolami, Bim                                 (Conservative)                                Hitchin and Harpenden
+                                 Afriyie, Adam                                 (Conservative)                               Windsor
+~~~
+
+
+> ## Exercise: Using the Scraper Chrome extension
+> 
+> In the later part of the lesson, we will be scraping data from governmental websites, because they tend to have very broad access policies without being too technically sophisticated. 
+> 
+> Let us visit [https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0] [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q).
+> Your exercise is to get a list of the members names and their websites into a text file. 
+>
+> * Right click the hyperlink to the first MP (as of June 2018 being Tony Abbott) and choose "Scrape Similiar"
+> * Click "Copy to Clipboard"
+> * Open your favourite text editor
+> * Paste and save as AusPol.tsv
+> * Open in your favourite spreadsheet application.
+> ~~~
+> Link  URL
+Hon Tony Abbott MP  /Senators_and_Members/Parliamentarian?MPID=EZ5
+Hon Anthony Albanese MP /Senators_and_Members/Parliamentarian?MPID=R36
+Mr John Alexander OAM, MP   /Senators_and_Members/Parliamentarian?MPID=M3M
+Dr Anne Aly MP  /Senators_and_Members/Parliamentarian?MPID=13050
+Hon Karen Andrews MP    /Senators_and_Members/Parliamentarian?MPID=230886
+Hon Kevin Andrews MP    /Senators_and_Members/Parliamentarian?MPID=HK5
+Mr Adam Bandt MP    /Senators_and_Members/Parliamentarian?MPID=M3C
+Ms Julia Banks MP   /Senators_and_Members/Parliamentarian?MPID=18661
+Hon Sharon Bird MP  /Senators_and_Members/Parliamentarian?MPID=DZP
+Hon Julie Bishop MP /Senators_and_Members/Parliamentarian?MPID=83P
+Hon Chris Bowen MP  /Senators_and_Members/Parliamentarian?MPID=DZS
+Mr Andrew Broad MP  /Senators_and_Members/Parliamentarian?MPID=30379
+> ~~~
+{: .challenge}
+
 
 ## Some legal and technical considerations. 
 
@@ -135,38 +209,6 @@ organized inside labeled elements:
 Thanks to these labels, we could relatively easily instruct a computer to look for all parliamentarians from
 Alberta and list their names and caucus information.
 
-
-
-> ## Exercise
-> 
-> While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
->
-> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [Backup link: https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media html for the top 5 listed members. 
->
-> First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au). 
->
-> * Search on "Members of Parliment" -- no hits for the federal parliment. (As of June 2018)
-> 
-> * Search on "twitter" -- no hits for governmental twitter handles. 
-> 
-> Obviously, if this was a real search we would look at more sources before turning to scraping. 
-> 
-> If we wanted to automate this, this would be the step where we looked at the site's terms of service. I've looked at the "Disclaimer" page, and it says it is freely available for our use, and does not forbid the action. Good enough.
->
-> Now, we need to find Tony's Social media HTML. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines of his social media handles (or whomever else is listed first at the time.)
-> 
-> You should see around line 670:
-> ~~~
-> <a href="http://www.facebook.com/TonyAbbottMP" class="social facebook" target="_blank"><i class="fa fa-lg margin-right fa-facebook"></i></a>
-> <a href="http://twitter.com/TonyAbbottMHR" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
-> ~~~
->
-> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live html (as adjusted by javascript) and with that specific element's html centred in the viewport. 
->
-> ![Chrome document inspector]({{ page.root }}/fig/Inspector.png)
-> 
-> Discuss why the document inspector is so useful when scraping webpages.
-{: .challenge}
 
 
 
@@ -262,6 +304,39 @@ In this lesson, we will continue exploring the examples above and try different 
 the information they contain. But before we launch into web scraping proper, we need to look
 a bit closer at how information is organized in an HTML document and how to build queries to access
 a specific subset of that information.
+
+
+
+> ## Exercise
+> 
+> While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
+>
+> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [Backup link: https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media html for the top 5 listed members. 
+>
+> First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au). 
+>
+> * Search on "Members of Parliment" -- no hits for the federal parliment. (As of June 2018)
+> 
+> * Search on "twitter" -- no hits for governmental twitter handles. 
+> 
+> Obviously, if this was a real search we would look at more sources before turning to scraping. 
+> 
+> If we wanted to automate this, this would be the step where we looked at the site's terms of service. I've looked at the "Disclaimer" page, and it says it is freely available for our use, and does not forbid the action. Good enough.
+>
+> Now, we need to find Tony's Social media HTML. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines of his social media handles (or whomever else is listed first at the time.)
+> 
+> You should see around line 670:
+> ~~~
+> <a href="http://www.facebook.com/TonyAbbottMP" class="social facebook" target="_blank"><i class="fa fa-lg margin-right fa-facebook"></i></a>
+> <a href="http://twitter.com/TonyAbbottMHR" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
+> ~~~
+>
+> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live html (as adjusted by javascript) and with that specific element's html centred in the viewport. 
+>
+> ![Chrome document inspector]({{ page.root }}/fig/Inspector.png)
+> 
+> Discuss why the document inspector is so useful when scraping webpages.
+{: .challenge}
 
 
 > ## Discussion: 

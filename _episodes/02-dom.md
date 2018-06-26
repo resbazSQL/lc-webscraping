@@ -1,6 +1,6 @@
 ---
 title: "Querying the Document Object Model with XPath"
-teaching: 45
+teaching: 30
 exercises: 30
 questions:
 - "How is a webpage organised from a code perspective?"
@@ -113,7 +113,7 @@ been removed for clarity):
     <title>{{page.title}}</title>
   </head>
   <body>
-	 (...)
+   (...)
   </body>
 </html>
 ~~~
@@ -151,7 +151,7 @@ The page is a living document, with a skeleton we can inspect, manipulate, and q
 
 > ## Discussion
 >
-> What does the inspect functionality allow us to do?
+> What does the inspect functionality of the browser allow us to do?
 >
 > * A. View the source of the webpage.
 > * B. Instead of reading the code, we can point at the element we want and have it identify itself to us, live.
@@ -359,7 +359,7 @@ $x("//blockquote")
 This produces a longer array of objects:
 
 ~~~
-<- Array [ <blockquote.objectives>, <blockquote.callout>, <blockquote.callout>, <blockquote.challenge>, <blockquote.callout>, <blockquote.callout>, <blockquote.challenge>, <blockquote.solution>, <blockquote.challenge>, <blockquote.solution>, 3 more… ]
+<- Array [ <blockquote.objectives>, <blockquote.callout>, <blockquote.callout>, <blockquote.challenge>, <blockquote.callout>, <blockquote.callout>, <blockquote.challenge>, <blockquote.solution>, <blockquote.challenge>, <blockquote.solution>, 3 more... ]
 ~~~
 {: .output}
 
@@ -461,15 +461,15 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > >     (...)
 > >   </head>
 > >   <body>
-> > 	<div class="container">
-> > 	(...)
-> > 	  <blockquote class="challenge">
-> > 	    <h2 id="select-this-challenge-box">Select this challenge box</h2>
-> > 	    <p>Using an XPath query in the JavaScript console of your browser...</p>
-> > 	    (...)
-> > 	  </blockquote>
-> > 	(...)
-> > 	</div>
+> >   <div class="container">
+> >   (...)
+> >     <blockquote class="challenge">
+> >       <h2 id="select-this-challenge-box">Select this challenge box</h2>
+> >       <p>Using an XPath query in the JavaScript console of your browser...</p>
+> >       (...)
+> >     </blockquote>
+> >   (...)
+> >   </div>
 > >   </body>
 > > </html>
 > > ~~~
