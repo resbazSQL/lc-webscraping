@@ -61,13 +61,15 @@ Any XML document follows basic syntax rules:
 * XML tags are case sensitive, e.g. `<catfood>` does not equal `<catFood>`
 * XML elements must be properly nested:
 
-```
+~~~
 <catfood>
   <manufacturer>Purina</manufacturer>
     <address> 12 Cat Way, Boise, Idaho, 21341</address>
   <date>2019-10-01</date>
 </catfood>
-```
+~~~
+{: .html}
+
 * Text nodes (data) are contained inside the opening and closing tags
 * XML attribute nodes contain values that must be quoted, e.g.
 ``` <catfood type="basic"></catfood> ```
@@ -117,7 +119,7 @@ been removed for clarity):
   </body>
 </html>
 ~~~
-{: .output}
+{: .html}
 
 We can see from the source code that the title of this page is in a `title` element that is itself inside the
 `head` element, which is itself inside an `html` element that contains the entire content of the page.
@@ -473,7 +475,7 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > >   </body>
 > > </html>
 > > ~~~
-> > {: .output}
+> > {: .html}
 > >
 > > We know that the `id` attribute should be unique, so we can use this to select the `h2` element inside
 > > the challenge box:

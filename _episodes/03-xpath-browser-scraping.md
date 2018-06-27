@@ -150,7 +150,7 @@ elements:
 </ul>   
 (...)
 ~~~
-{: .output}
+{: .html}
 
 So let's try changing the Selector XPath in Scraper to
 

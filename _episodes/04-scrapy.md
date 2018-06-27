@@ -525,14 +525,14 @@ interactive python console because the prompt will have changed to `>>>`:
 [s]   view(response)    View response in a browser
 >>>
 ~~~
-{: .output}
+{: .language-python}
 
 We can now try running the XPath query we used last lesson in scrapy.
 
 ~~~
 >>> response.xpath("//h4[@class='title']/a/text()")
 ~~~
-{: .source}
+{: .language-python}
 
 
 We see:
@@ -577,7 +577,7 @@ Those objects are pointers to the different elements in the scraped page (`h4` t
 >>> response.xpath("//h4[@class='title']/a/text()").extract()
 ['Hon Tony Abbott MP', 'Hon Anthony Albanese MP', 'Mr John Alexander OAM, MP', 'Dr Anne Aly MP', 'Hon Karen Andrews MP', 'Hon Kevin Andrews MP', 'Mr Adam Bandt MP', 'Ms Julia Banks MP', 'Hon Sharon Bird MP', 'Hon Julie Bishop MP', 'Hon Chris Bowen MP', 'Mr Andrew Broad MP']
 ~~~
-{: .output}
+{: .language-python}
 
 
 Since we have an XPath query we know will extract the names we are looking for, we can now use the `xpath()` method and update the spider accordingly:

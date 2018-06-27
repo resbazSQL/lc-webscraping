@@ -204,7 +204,7 @@ organized inside labeled elements:
 
 (...)
 ~~~
-{: .output}
+{: .html}
 
 Thanks to these labels, we could relatively easily instruct a computer to look for all parliamentarians from
 Alberta and list their names and caucus information.
@@ -270,7 +270,7 @@ Here is the code for this page:
 </table>
 (...)
 ~~~
-{: .output}
+{: .html}
 
 We see that this data has been structured for displaying purposes (it is arranged in rows inside
 a table) but the different elements of information are not clearly labeled.

@@ -49,7 +49,7 @@ We can use `extract_first()`` here because the links are identical.
 ~~~
 >>> response.xpath("//a[@title='Next page']/@href").extract_first()
 ~~~
-{: .source}
+{: .language-python}
 
 returns
 
@@ -291,7 +291,7 @@ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=R
 ~~~
 >>> response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract()
 ~~~
-{: .output}
+{: .language-python}
 
 We will use the `dd[1]`` here because otherwise we're going to enter into far more complex selectors.
 
