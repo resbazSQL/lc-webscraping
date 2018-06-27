@@ -42,7 +42,7 @@ We see:
 ~~~
 [<Selector xpath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>, <Selector xpath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>]
 ~~~
-{: .output}
+{: .language-html .output}
 
 We can use `extract_first()`` here because the links are identical.
 
@@ -168,6 +168,7 @@ And this prints out the next page url.
 https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1
 (...)
 ~~~
+{: .output}
 
 Now we need our spider to follow that link and we need to make sure that the spider *stops* when the link isn't present. We can do this through a technique called "recursion" which means calling a thing from itself.
 
@@ -262,7 +263,7 @@ rm output.csv
 scrapy crawl austmpdata -o output.csv
 wc -l output.csv 
 ~~~
-{: .source}
+{: .language-bash}
 
 We get all 145 members of parliment + 1 line for the header:
 ~~~
@@ -381,7 +382,7 @@ rm -f output.csv
 scrapy crawl austmpdata -o output.csv
 head -3 output.csv
 ~~~
-{: .source}
+{: .language-bash}
 
 gets us
 

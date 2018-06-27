@@ -63,7 +63,7 @@ You can verify that you have the latest version of Scrapy installed by typing
 ~~~
 scrapy version
 ~~~
-{: .source}
+{: .language-bash}
 
 in a shell. If all is good, you should get the following back (as of February 2017):
 
@@ -93,7 +93,7 @@ unsure about how to do that). Then, type the following
 ~~~
 scrapy startproject austmps
 ~~~
-{: .source}
+{: .language-bash}
 
 where `austmps` is the name of our project.
 
@@ -115,7 +115,7 @@ If we list the files in the directory we ran the previous command
 ~~~ 
 ls -F
 ~~~
-{: .source}
+{: .language-bash}
 
 we should see that a new directory was created:
 
@@ -130,14 +130,14 @@ directory
 ~~~
 cd austmps
 ~~~
-{: .source}
+{: .language-bash}
 
 we can see that it contains two items:
 
 ~~~
 ls -F
 ~~~
-{: .source}
+{: .language-bash}
 
 ~~~
 austmps/    scrapy.cfg
@@ -150,7 +150,7 @@ directory. Inside that _second_ directory, we see a bunch of additional files:
 ~~~
 ls -F austmps
 ~~~
-{: .source}
+{: .language-bash}
 
 ~~~
 __init__.py items.py    settings.py
@@ -198,7 +198,7 @@ To create a spider, Scrapy provides a handy command-line tool:
 ~~~
 scrapy genspider <SCRAPER NAME> <START URL>
 ~~~
-{: .source}
+{: .language-bash}
   
 We just need to replace `<SCRAPER NAME>` with the name we want to give our spider and `<START URL>` with
 the URL we want to spider to crawl. In our case, we can type:
@@ -206,7 +206,7 @@ the URL we want to spider to crawl. In our case, we can type:
 ~~~
 scrapy genspider austmpdata "www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
 ~~~
-{: .source}
+{: .language-bash}
 
 > ## Important note about URLs and the command line.
 > 
@@ -365,7 +365,7 @@ we are located in the project's top level directory (where the `scrapy.cfg` file
 ~~~
 scrapy crawl austmpdata
 ~~~
-{: .source}
+{: .language-bash}
 
 Note that we can now use the name we have chosen for our spider (`austmpdata`, as specified in the `name` attribute)
 to call it. This should produce the following result
@@ -434,7 +434,7 @@ Now, if we go back to the command line and run our spider again
 ~~~
 scrapy crawl austmpdata
 ~~~
-{: .source}
+{: .language-bash}
 
 we should get similar debugging output as before, but there should also now be a file called
 `test.html` in our project's root directory:
@@ -442,7 +442,7 @@ we should get similar debugging output as before, but there should also now be a
 ~~~
 ls -F
 ~~~
-{: .source}
+{: .language-bash}
 
 ~~~
 austmps/    scrapy.cfg  test.html
@@ -454,7 +454,7 @@ We can check that it contains the HTML from our target URL:
 ~~~
 head -n 12 test.html
 ~~~
-{: .source}
+{: .language-bash}
 
 ~~~
 <!doctype html>
@@ -468,7 +468,7 @@ head -n 12 test.html
     Senators & Members Search Results
 
 ~~~
-{: .html}
+{: .language-html .output}
 
 # *Status quo ante*: outputting to a tab delimited file
 
@@ -525,7 +525,7 @@ interactive python console because the prompt will have changed to `>>>`:
 [s]   view(response)    View response in a browser
 >>>
 ~~~
-{: .language-python}
+{: .output}
 
 We can now try running the XPath query we used last lesson in scrapy.
 
@@ -539,7 +539,7 @@ We see:
 ~~~
 [<Selector xpath="//h4[@class='title']/a/text()" data='Hon Tony Abbott MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Anthony Albanese MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr John Alexander OAM, MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Dr Anne Aly MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Karen Andrews MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Kevin Andrews MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr Adam Bandt MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Ms Julia Banks MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Sharon Bird MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Julie Bishop MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Chris Bowen MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr Andrew Broad MP'>]
 ~~~
-{: .html}
+{: .language-html .output}
 
 This tells us that we have accurately targeted scrapy. We can then use this to find more variables as soon as we're finished with the spider.
 
@@ -577,7 +577,7 @@ Those objects are pointers to the different elements in the scraped page (`h4` t
 >>> response.xpath("//h4[@class='title']/a/text()").extract()
 ['Hon Tony Abbott MP', 'Hon Anthony Albanese MP', 'Mr John Alexander OAM, MP', 'Dr Anne Aly MP', 'Hon Karen Andrews MP', 'Hon Kevin Andrews MP', 'Mr Adam Bandt MP', 'Ms Julia Banks MP', 'Hon Sharon Bird MP', 'Hon Julie Bishop MP', 'Hon Chris Bowen MP', 'Mr Andrew Broad MP']
 ~~~
-{: .language-python}
+{: .language-python .output}
 
 
 Since we have an XPath query we know will extract the names we are looking for, we can now use the `xpath()` method and update the spider accordingly:
@@ -694,7 +694,7 @@ Let's try `response.xpath("//h4[@class='title']/..")`
 ~~~
 [<Selector xpath="//h4[@class='title']/.." data='<div class="medium-8 columns">\r\n        '>
 ~~~
-{: .output}
+{: .language-html .output}
 
 To the page inspector! 
 
@@ -931,7 +931,7 @@ district,link,name
 "Warringah, New South Wales",/Senators_and_Members/Parliamentarian?MPID=EZ5,Hon Tony Abbott MP
 "Grayndler, New South Wales",/Senators_and_Members/Parliamentarian?MPID=R36,Hon Anthony Albanese MP
 ~~~
-
+{: .output}
 
 
 > ## Exercise: Add the rest of the columns from the previous manual browser scraping to the csv.
