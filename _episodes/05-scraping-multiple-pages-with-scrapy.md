@@ -76,14 +76,14 @@ returns
 > ~~~
 > >>> testurl = response.xpath("//a[@title='Next page']/@href").extract_first()
 > ~~~
-> {: .source}
+> {: .language-python}
 >
 > Then, we can try passing it on to the `urljoin()` method:
 >
 > ~~~
 > >>> response.urljoin(testurl)
 > ~~~
-> {: .source}
+> {: .language-python}
 >
 > which returns
 >
@@ -135,7 +135,7 @@ class AustmpdataSpider(scrapy.Spider):
 
             yield item
 ~~~
-{: .source}            
+{: .language-python}            
 
 
 ## Extracting URLs using the spider
@@ -159,7 +159,7 @@ Since we have an XPath query we know will extract the URLs we are looking for, w
         #     yield item
 (...)
 ~~~
-{: .source}
+{: .language-python}
 
 And this prints out the next page url. 
 ~~~
@@ -191,7 +191,7 @@ To our function parse, we add a call to itself: the function parse.
             print("Found url: {}".format(nextpage)) # Write a debug statement
             yield scrapy.Request(nextpage, callback=self.parse) # Return a call to the function "parse"      
 ~~~
-{: .source}
+{: .language-python}
 
 And now, with a single invocation of the scraper, we get:
 
@@ -253,7 +253,7 @@ class AustmpdataSpider(scrapy.Spider):
 
 
 ~~~
-{: .source}
+{: .language-python}
 
 If we run:
 
@@ -310,7 +310,7 @@ class AustmpsItem(scrapy.Item):
     party = scrapy.Field()
     phonenumber = scrapy.Field()
 ~~~
-
+{: .language-python}
 Next, we need to make another function called `get_phonenumber(self, response)`. 
 
 Looking at the [scrapy documentation](https://doc.scrapy.org/en/latest/topics/request-response.html#passing-additional-data-to-callback-functions), we can "pass" the item class around using `.meta` 
@@ -372,7 +372,7 @@ class AustmpdataSpider(scrapy.Spider):
         item['phonenumber'] = response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract_first()
         yield item #Return the new phonenumber'd item back to scrape
 ~~~
-{: .source}
+{: .language-python}
 
 and running:
 

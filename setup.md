@@ -43,9 +43,9 @@ you can easilly install Scrapy by doing the following:
 >
 {: .source}
 
-Alternatively, if you have another distribution of Python, you can try using pip:
+Alternatively, if you have another distribution of Python, you can try using pip (or pip3 if you're on ubuntu):
 
-> pip install Scrapy
+> pip install scrapy
 >
 {: .source}
 

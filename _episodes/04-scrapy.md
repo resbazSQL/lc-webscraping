@@ -236,7 +236,7 @@ class AustmpdataSpider(scrapy.Spider):
         pass
 
 ~~~
-{: .source}
+{: .language-python}
 
 Note that here some comments have been added for extra clarity, they will not be there upon
 first creating a spider.
@@ -352,7 +352,7 @@ class AustmpdataSpider(scrapy.Spider):
 
 
 ~~~
-{: .source}
+{: .language-python}
 
 Don't forget to save the file once changes have been applied.
 
@@ -427,7 +427,7 @@ class AustmpdataSpider(scrapy.Spider):
 
 
 ~~~
-{: .source}
+{: .language-python}
 
 Now, if we go back to the command line and run our spider again
 
@@ -468,7 +468,7 @@ head -n 12 test.html
     Senators & Members Search Results
 
 ~~~
-{: .output}
+{: .html}
 
 # *Status quo ante*: outputting to a tab delimited file
 
@@ -539,7 +539,7 @@ We see:
 ~~~
 [<Selector xpath="//h4[@class='title']/a/text()" data='Hon Tony Abbott MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Anthony Albanese MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr John Alexander OAM, MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Dr Anne Aly MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Karen Andrews MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Kevin Andrews MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr Adam Bandt MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Ms Julia Banks MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Sharon Bird MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Julie Bishop MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Chris Bowen MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr Andrew Broad MP'>]
 ~~~
-{: .output}
+{: .html}
 
 This tells us that we have accurately targeted scrapy. We can then use this to find more variables as soon as we're finished with the spider.
 
@@ -569,7 +569,7 @@ Those objects are pointers to the different elements in the scraped page (`h4` t
 ~~~
 >>> response.xpath("//h4[@class='title']/a/text()").extract_first()
 ~~~
-{: .source}
+{: .language-python}
 
 ~~~
 >>> response.xpath("//h4[@class='title']/a/text()").extract_first()
@@ -597,7 +597,7 @@ class AustmpdataSpider(scrapy.Spider):
         
 
 ~~~
-{: .source}
+{: .language-python}
 
 We now need to re-run the spider.
 
@@ -635,7 +635,7 @@ class AustmpdataSpider(scrapy.Spider):
         for resource in response.xpath("//h4[@class='title']/a/text()"):
             print(resource.extract())
 ~~~
-{: .source}
+{: .language-python}
 
 We see:
 
@@ -717,7 +717,7 @@ class AustmpdataSpider(scrapy.Spider):
             name = resource.xpath("h4/a/text()").extract_first()
             print(name)
 ~~~
-{: .source}
+{: .language-python}
 
 Running it produces:
 
@@ -824,7 +824,7 @@ class AustmpsItem(scrapy.Item):
     pass
 
 ~~~
-{: .source}
+{: .language-python}
 
 
 Let's add a few fields to store the data we aim to extract from the detail pages
@@ -839,7 +839,7 @@ class AustmpsItem(scrapy.Item):
     district = scrapy.Field()
     link = scrapy.Field()
 ~~~
-{: .source}
+{: .language-python}
 
 Then save this file. We can then edit our spider one more time:
 
@@ -875,7 +875,7 @@ class AustmpdataSpider(scrapy.Spider):
         
 
 ~~~
-{: .source}
+{: .language-python}
 
 We made two significant changes to the file above:
 * We've included the line `from austmps.items import AustmpsItem` at the top. This is required
@@ -963,7 +963,7 @@ district,link,name
 > >    twitter = scrapy.Field()
 > >    party = scrapy.Field()
 > > ~~~
-> > {: .source} 
+> > {: .language-python} 
 > >Editing `austmpdata.py`:
 > >~~~
 > >import scrapy
@@ -994,7 +994,7 @@ district,link,name
 > >
 > >            yield item
 > >~~~
-> >{: .source}            
+> >{: .language-python}            
 > {: .solution}
 > 
 > And once we run the spider and head on the csv, we see:
