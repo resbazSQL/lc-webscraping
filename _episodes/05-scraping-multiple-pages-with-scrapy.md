@@ -127,11 +127,11 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = resource.XPath("h4/a/text()").extract_first()
-            item['link'] = resource.XPath("h4/a/@href").extract_first()
-            item['district'] = resource.XPath("dl/dd/text()").extract_first()
-            item['twitter'] = resource.XPath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = resource.XPath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['name'] = response.xpath("h4/a/text()").extract_first()
+            item['link'] = response.xpath("h4/a/@href").extract_first()
+            item['district'] = response.xpath("dl/dd/text()").extract_first()
+            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             yield item
 ~~~
@@ -244,11 +244,11 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = resource.XPath("h4/a/text()").extract_first()
-            item['link'] = resource.XPath("h4/a/@href").extract_first()
-            item['district'] = resource.XPath("dl/dd/text()").extract_first()
-            item['twitter'] = resource.XPath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = resource.XPath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['name'] = response.xpath("h4/a/text()").extract_first()
+            item['link'] = response.xpath("h4/a/@href").extract_first()
+            item['district'] = response.xpath("dl/dd/text()").extract_first()
+            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             yield item
 
@@ -351,16 +351,16 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = resource.XPath("h4/a/text()").extract_first()
+            item['name'] = response.xpath("h4/a/text()").extract_first()
 
 
             # Instead of just writing the relative path of the profile page, lets make the full profile page so we can use it later.
-            profilepage = response.urljoin(resource.XPath("h4/a/@href").extract_first())
+            profilepage = response.urljoin(response.xpath("h4/a/@href").extract_first())
             item['link'] = profilepage
 
-            item['district'] = resource.XPath("dl/dd/text()").extract_first()
-            item['twitter'] = resource.XPath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = resource.XPath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['district'] = response.xpath("dl/dd/text()").extract_first()
+            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             # We need to make a new variable that the scraper will return that will get passed through another callback. We're calling that variable "request"
             request= scrapy.Request(profilepage, callback=self.get_phonenumber)

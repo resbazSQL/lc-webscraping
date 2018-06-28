@@ -714,7 +714,7 @@ class AustmpdataSpider(scrapy.Spider):
 
     def parse(self, response):
         for resource in response.xpath("//h4[@class='title']/.."):
-            name = resource.XPath("h4/a/text()").extract_first()
+            name = response.xpath("h4/a/text()").extract_first()
             print(name)
 ~~~
 {: .language-python}
@@ -761,9 +761,9 @@ Mr Andrew Broad MP
 > > 
 > >     def parse(self, response):
 > >         for resource in response.xpath("//h4[@class='title']/.."):
-> >             name = resource.XPath("h4/a/text()").extract_first()
-> >             link = resource.XPath("h4/a/@href").extract_first()
-> >             district = resource.XPath("dl/dd/text()").extract_first()
+> >             name = response.xpath("h4/a/text()").extract_first()
+> >             link = response.xpath("h4/a/@href").extract_first()
+> >             district = response.xpath("dl/dd/text()").extract_first()
 > >             print(name, district, link)
 > > ~~~
 > > {: .source}
@@ -866,9 +866,9 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = resource.XPath("h4/a/text()").extract_first()
-            item['link'] = resource.XPath("h4/a/@href").extract_first()
-            item['district'] = resource.XPath("dl/dd/text()").extract_first()
+            item['name'] = response.xpath("h4/a/text()").extract_first()
+            item['link'] = response.xpath("h4/a/@href").extract_first()
+            item['district'] = response.xpath("dl/dd/text()").extract_first()
 
             yield item
 
@@ -986,11 +986,11 @@ district,link,name
 > >            # Loop over each item on the page. 
 > >            item = AustmpsItem() # Creating a new Item object
 > >
-> >            item['name'] = resource.XPath("h4/a/text()").extract_first()
-> >            item['link'] = resource.XPath("h4/a/@href").extract_first()
-> >            item['district'] = resource.XPath("dl/dd/text()").extract_first()
-> >            item['twitter'] = resource.XPath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-> >            item['party'] = resource.XPath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+> >            item['name'] = response.xpath("h4/a/text()").extract_first()
+> >            item['link'] = response.xpath("h4/a/@href").extract_first()
+> >            item['district'] = response.xpath("dl/dd/text()").extract_first()
+> >            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+> >            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 > >
 > >            yield item
 > >~~~
