@@ -30,7 +30,7 @@ But our problem was the horrible whitespace in the clipboard and wondering about
 
 ![Screenshot of the Scraper main window]({{ page.root }}/fig/scraper-ukparl-01.png)
 
-## Xpath and the Document Object Model
+## XPath and the Document Object Model
 
 Note the "Selector" on the left column. It should read:
 
@@ -48,7 +48,7 @@ What happens if you don't highlight the full row and right click scrape similiar
 ~~~
 ![A bad output of the scraper]({{ page.root }}/fig/badManualScrape.png)
 
-The difference in these two "XPath Queries" is where they're telling the scrape extension to look within the "Document object model" of the webpage. We will be exploring these in a few minutes, but right now, we need to get this data to a usable "spreadsheet" format.
+The difference in these two "XPath Queries" is where they're telling the scrape extension to look within the "Document Object Model" of the webpage. We will be exploring these in a few minutes, but right now, we need to get this data to a usable "spreadsheet" format.
 
 
 
@@ -234,7 +234,7 @@ We see:
 
 ## Exercises: Scrape the list of Australian members of parliment, their page URLs, their districts, their parties, and their twitter handles.
 
-Let us remind ourselves of the handy set of xpath expressions referenced in the prior section.
+Let us remind ourselves of the handy set of XPath expressions referenced in the prior section.
 
 
 | Expression   | Description |
@@ -259,13 +259,13 @@ Let us remind ourselves of the handy set of xpath expressions referenced in the 
 > 
 > Use Scraper to export the list of the first twelve [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q).
 > 
-> We want to get a spreadsheet of three columns: Their name, their profile URL, and their district. 
+> We want to get a spreadsheet of three columns: their name, their profile URL, and their district. 
 > * Explore highlighting different parts of each member's `div` until you get a list of results by name.
 > * Use the inspector to find the elements that contain the data you want.
-> * Use xpath relative paths to indicate those elements into their own columns.
+> * Use XPath relative paths to indicate those elements into their own columns.
 > Tips:
 > 
-> We first need to find the html tag that "holds" each row. Or we can play around with highlighting     
+> We first need to find the HTML tag that "holds" each row. Or we can play around with highlighting     
 > 
 > * To add another column in Scraper, use the little green "+" icon in the columns list.
 > * Look at the source code and try out XPath queries in the console until you find what
@@ -275,7 +275,7 @@ Let us remind ourselves of the handy set of xpath expressions referenced in the 
 > 
 > > ## Solution
 > > 
-> > `//div[2]/div[2]/div[1]/div[3]/div` worked for the selected xpath. 
+> > `//div[2]/div[2]/div[1]/div[3]/div` worked for the selected XPath. 
 > > 
 > > My three columns were:
 > > 
@@ -327,14 +327,14 @@ Modern "responsive" web-pages make pesudo-tables out of divs. Usually, these tab
 
 We need to introduce two new functions in this exercise: `text()` and the idea of `following-sibling::`. 
 
-We can interrogate the content of an element inside an xpath selector by saying `[text()='foo']` which will return to us every element containing exactly the text "foo". When webpage designers don't put their data in container-elements, searching by `text()` still allows us to automate searching through the data.
+We can interrogate the content of an element inside an XPath selector by saying `[text()='foo']` which will return to us every element containing exactly the text "foo". When webpage designers don't put their data in container-elements, searching by `text()` still allows us to automate searching through the data.
 
 We can test for "containing" with the `element[contains(haystack, needle)]` function. 
 
-Therefore we need to explore some more [axes of Xpath](https://www.w3schools.com/xml/xpath_axes.asp). Specifically, we need to explore the way of saying: "get me the tag after this tag." In this instance, this is the axis of `following-sibling::`. 
+Therefore we need to explore some more [axes of XPath](https://www.w3schools.com/xml/XPath_axes.asp). Specifically, we need to explore the way of saying: "get me the tag after this tag." In this instance, this is the axis of `following-sibling::`. 
 
 
-We now need to build the xpath cheatsheet out more by adding `contains()` and `following-sibling`. 
+We now need to build the XPath cheatsheet out more by adding `contains()` and `following-sibling`. 
 
 | Expression   | Description |
 |-----------------|:-------------|
@@ -366,7 +366,7 @@ We now need to build the xpath cheatsheet out more by adding `contains()` and `f
 > 
 > > ## Solution
 > > 
-> > `//div[@class='row border-bottom padding-top']` worked for the selected xpath. 
+> > `//div[@class='row border-bottom padding-top']` worked for the selected XPath. 
 > > 
 > > My three columns were:
 > > 
@@ -393,7 +393,7 @@ Hon Chris Bowen MP  Australian Labor Party  http://twitter.com/Bowenchris
 Mr Andrew Broad MP  The Nationals   https://twitter.com/broad4mallee
 > > ~~~
 > > 
-> > Let us break down the xpaths used here.
+> > Let us break down the XPaths used here.
 > > 
 > > `//div[@class='row border-bottom padding-top']` matches the specific row styling of the results. We can't use `class='row'` because that matches other `div` elements. This method is slightly more robust than the relative path example used in part 1 because even if they move elements around or change headers, this primary "search result box" will be consistent. This page, however, is designed for output rendering without any semantic coding, so while this is slightly more robust, it's not *that* much stronger. It is, however, easier to debug.
 > > 
@@ -406,12 +406,12 @@ Mr Andrew Broad MP  The Nationals   https://twitter.com/broad4mallee
 > > `*/dl/dd/a[contains(@class, 'twitter')]/@href` follows a similar idea. "Say what we want to search for, then get it". Here, we don't need to search for the word "connect" because only items in connect have `<a>` elements. However, we need to search for the word twitter in the various class items of those elements with `a[contains(@class, 'twitter')]`. Once we *find* the link, we then need to get the `href` attribute of the link with `/@href`.
 > {: .solution}
 > 
-> A mistake (I, the author) kept making while creating this exercise was to confuse the part of the xpath where I was "searching" for something with the part of the xpath telling me what it is I wanted. The difficult part of finding the twitter url was `a[contains(@class, 'twitter')]`.
+> A mistake (I, the author) kept making while creating this exercise was to confuse the part of the XPath where I was "searching" for something with the part of the XPath telling me what it is I wanted. The difficult part of finding the twitter url was `a[contains(@class, 'twitter')]`.
 > 
 > 
 {: .challenge}
 
-This page, unfortunately doesn't have any useful elements deliniated by id. As a final takeaway, most of these xpath queries have been well answered on stack overflow. It is worth searching on [Questions tagged "Xpath"](https://stackoverflow.com/questions/tagged/xpath) when exploring a query you are trying to write. In the process of writing this lesson, I had to refer to three separate answers.
+This page, unfortunately doesn't have any useful elements deliniated by id. As a final takeaway, most of these XPath queries have been well answered on stack overflow. It is worth searching on [Questions tagged "XPath"](https://stackoverflow.com/questions/tagged/XPath) when exploring a query you are trying to write. In the process of writing this lesson, I had to refer to three separate answers.
 
 > ## Discussion
 > 
@@ -430,5 +430,5 @@ This page, unfortunately doesn't have any useful elements deliniated by id. As a
 
 # References
 
-* [The w3schools XPath tutorial is a great cheat sheet for the syntax](https://www.w3schools.com/xml/xpath_intro.asp)
-* [Questions tagged "Xpath" on Stack Overflow](https://stackoverflow.com/questions/tagged/xpath)
+* [The w3schools XPath tutorial is a great cheat sheet for the syntax](https://www.w3schools.com/xml/XPath_intro.asp)
+* [Questions tagged "XPath" on Stack Overflow](https://stackoverflow.com/questions/tagged/XPath)

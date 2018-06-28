@@ -14,7 +14,7 @@ keypoints:
 
 # Walking over the site we want to scrape
 
-The primary advantage of a spider over a manual tool scraping a website is that it can follow links. Let's use the scraper extension to identify the xpath of the "next page" link. 
+The primary advantage of a spider over a manual tool scraping a website is that it can follow links. Let's use the scraper extension to identify the XPath of the "next page" link. 
 
 * Right click on "Next" and choose Inspect
 
@@ -33,21 +33,21 @@ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search
 
 with
 ~~~
-response.xpath("//a[@title='Next page']/@href")
+response.XPath("//a[@title='Next page']/@href")
 ~~~
 {: .source}
 
 We see:
 
 ~~~
-[<Selector xpath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>, <Selector xpath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>]
+[<Selector XPath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>, <Selector XPath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>]
 ~~~
 {: .language-html .output}
 
 We can use `extract_first()`` here because the links are identical.
 
 ~~~
->>> response.xpath("//a[@title='Next page']/@href").extract_first()
+>>> response.XPath("//a[@title='Next page']/@href").extract_first()
 ~~~
 {: .language-python}
 
@@ -74,7 +74,7 @@ returns
 > variable:
 >
 > ~~~
-> >>> testurl = response.xpath("//a[@title='Next page']/@href").extract_first()
+> >>> testurl = response.XPath("//a[@title='Next page']/@href").extract_first()
 > ~~~
 > {: .language-python}
 >
@@ -123,15 +123,15 @@ class AustmpdataSpider(scrapy.Spider):
             yield item
 
     def scrape(self, response):
-        for resource in response.xpath("//h4[@class='title']/.."):
+        for resource in response.XPath("//h4[@class='title']/.."):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = resource.xpath("h4/a/text()").extract_first()
-            item['link'] = resource.xpath("h4/a/@href").extract_first()
-            item['district'] = resource.xpath("dl/dd/text()").extract_first()
-            item['twitter'] = resource.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = resource.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['name'] = resource.XPath("h4/a/text()").extract_first()
+            item['link'] = resource.XPath("h4/a/@href").extract_first()
+            item['district'] = resource.XPath("dl/dd/text()").extract_first()
+            item['twitter'] = resource.XPath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = resource.XPath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             yield item
 ~~~
@@ -140,7 +140,7 @@ class AustmpdataSpider(scrapy.Spider):
 
 ## Extracting URLs using the spider
 
-Since we have an XPath query we know will extract the URLs we are looking for, we can now use the `xpath()` method and update the spider accordingly. We are going to comment out the response parsing and save it for later.
+Since we have an XPath query we know will extract the URLs we are looking for, we can now use the `XPath()` method and update the spider accordingly. We are going to comment out the response parsing and save it for later.
 
 (editing `austmps/austmps/spiders/austmpdata.py`)
 
@@ -151,7 +151,7 @@ Since we have an XPath query we know will extract the URLs we are looking for, w
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        nextpageurl = response.xpath("//a[@title='Next page']/@href").extract_first()
+        nextpageurl = response.XPath("//a[@title='Next page']/@href").extract_first()
         nextpage = response.urljoin(nextpageurl)
         print(nextpage)
        
@@ -183,7 +183,7 @@ To our function parse, we add a call to itself: the function parse.
         # for item in self.scrape(response):
         #     yield item
 
-        nextpageurl = response.xpath("//a[@title='Next page']/@href")
+        nextpageurl = response.XPath("//a[@title='Next page']/@href")
 
         if nextpageurl:
             # If we've found a pattern which matches
@@ -228,7 +228,7 @@ class AustmpdataSpider(scrapy.Spider):
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        nextpageurl = response.xpath("//a[@title='Next page']/@href")
+        nextpageurl = response.XPath("//a[@title='Next page']/@href")
 
         for item in self.scrape(response):
             yield item
@@ -240,15 +240,15 @@ class AustmpdataSpider(scrapy.Spider):
             yield scrapy.Request(nextpage, callback=self.parse)
 
     def scrape(self, response):
-        for resource in response.xpath("//h4[@class='title']/.."):
+        for resource in response.XPath("//h4[@class='title']/.."):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = resource.xpath("h4/a/text()").extract_first()
-            item['link'] = resource.xpath("h4/a/@href").extract_first()
-            item['district'] = resource.xpath("dl/dd/text()").extract_first()
-            item['twitter'] = resource.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = resource.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['name'] = resource.XPath("h4/a/text()").extract_first()
+            item['link'] = resource.XPath("h4/a/@href").extract_first()
+            item['district'] = resource.XPath("dl/dd/text()").extract_first()
+            item['twitter'] = resource.XPath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = resource.XPath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             yield item
 
@@ -277,7 +277,7 @@ Now that we're scraping and following links, what happens if we want to add a me
 
 We will need to tell the scraper to load their profile page (which we have the url for) and to write a second scraper function to find the data we want from this specific page.
 
-First, use the tools we've explored today to find the correct xpath for the electorate office phone number.
+First, use the tools we've explored today to find the correct XPath for the electorate office phone number.
 
 Tip: "Electorate Office " has a space inside the `h3`. And we're going to need to use `following-sibling::``.
 
@@ -290,13 +290,13 @@ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=R
 
 
 ~~~
->>> response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract()
+>>> response.XPath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract()
 ~~~
 {: .language-python}
 
 We will use the `dd[1]`` here because otherwise we're going to enter into far more complex selectors.
 
-Now that we have the xpath solution, we need to make sure the items.py object has a phone number that it can accept.
+Now that we have the XPath solution, we need to make sure the items.py object has a phone number that it can accept.
 
 ~~~
 import scrapy
@@ -334,7 +334,7 @@ class AustmpdataSpider(scrapy.Spider):
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        nextpageurl = response.xpath("//a[@title='Next page']/@href")
+        nextpageurl = response.XPath("//a[@title='Next page']/@href")
 
         for item in self.scrape(response):
             yield item
@@ -347,20 +347,20 @@ class AustmpdataSpider(scrapy.Spider):
 
         
     def scrape(self, response):
-        for resource in response.xpath("//h4[@class='title']/.."):
+        for resource in response.XPath("//h4[@class='title']/.."):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = resource.xpath("h4/a/text()").extract_first()
+            item['name'] = resource.XPath("h4/a/text()").extract_first()
 
 
             # Instead of just writing the relative path of the profile page, lets make the full profile page so we can use it later.
-            profilepage = response.urljoin(resource.xpath("h4/a/@href").extract_first())
+            profilepage = response.urljoin(resource.XPath("h4/a/@href").extract_first())
             item['link'] = profilepage
 
-            item['district'] = resource.xpath("dl/dd/text()").extract_first()
-            item['twitter'] = resource.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = resource.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['district'] = resource.XPath("dl/dd/text()").extract_first()
+            item['twitter'] = resource.XPath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = resource.XPath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             # We need to make a new variable that the scraper will return that will get passed through another callback. We're calling that variable "request"
             request= scrapy.Request(profilepage, callback=self.get_phonenumber)
@@ -370,7 +370,7 @@ class AustmpdataSpider(scrapy.Spider):
     def get_phonenumber(self, response):
         # A scraper designed to operate on one of the profile pages
         item = response.meta['item'] #Get the item we passed from scrape()        
-        item['phonenumber'] = response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract_first()
+        item['phonenumber'] = response.XPath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract_first()
         yield item #Return the new phonenumber'd item back to scrape
 ~~~
 {: .language-python}

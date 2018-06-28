@@ -1,5 +1,5 @@
 ---
-title: "Introduction: What is web scraping?"
+title: "Introduction: What is Web Scraping?"
 teaching: 45
 exercises: 25
 questions:
@@ -120,7 +120,7 @@ Mr Andrew Broad MP  /Senators_and_Members/Parliamentarian?MPID=30379
 {: .challenge}
 
 
-## Some legal and technical considerations. 
+## Some legal and technical considerations
 
 Scraping websites via automated means may or may not violate the law in your country. While we certainly do not have time to go into legal details here, sufficiently flagrant violations of a terms of service can cause potential issues for research projects. It's usually worth looking at the site's terms of service before performing any bulk operations on many of its pages. Before starting a thesis or research project based on scraped data, it's worth asking your university's legal team first. 
 
@@ -311,7 +311,7 @@ a specific subset of that information.
 > 
 > While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
 >
-> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [Backup link: https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media html for the top 5 listed members. 
+> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [Backup link: https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q). We want to find the social media HTML for the top 5 listed members. 
 >
 > First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au). 
 >
@@ -331,7 +331,7 @@ a specific subset of that information.
 > <a href="http://twitter.com/TonyAbbottMHR" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
 > ~~~
 >
-> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live html (as adjusted by javascript) and with that specific element's html centred in the viewport. 
+> Now, close the "View Source" window. We will use the inspector instead. Right click on Tony's twitter icon and choose "Inspect element." A sidebar should open up with the page's live HTML (as adjusted by Javascript) and with that specific element's HTML centred in the viewport. 
 >
 > ![Chrome document inspector]({{ page.root }}/fig/Inspector.png)
 > 
