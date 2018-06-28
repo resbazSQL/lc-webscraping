@@ -44,7 +44,7 @@ programming language.
 
 >
 > A framework is a reusable, "semi-complete" application that can be specialized to produce custom applications.
-> (Source: [Johnson & Foote, 1988](http://www1.cse.wustl.edu/~schmidt/CACM-frameworks.html))
+> (Source: [Johnson & Foote, 1988](http://www1.cse.wustl.edu/~schmidt/CACM-frameworks.html)) [ACM link](https://dl.acm.org/citation.cfm?id=262798)
 >
 
 In other words, the Scrapy framework provides a set of Python scripts that contain most of the code required
@@ -79,7 +79,7 @@ To introduce the use of Scrapy, we will reuse the same example we used in the pr
 
 We will be working the the australian MP data and paths you were just working on. However, instead of scraping the *first twelve* MPs, we will be scraping all of them, and going into their profiles as well. 
 
-* First dozen [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q).
+* First dozen [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). Backup link: [https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=).
 
 
 ## Setup a new Scrapy project
@@ -331,7 +331,7 @@ has automatically generated.
 > > ~~~
 > > allowed_domains = ["www.aph.gov.au"]
 > > ~~~
-> > {: .source}
+> > {: .source .language-python}
 > >
 > {: .solution}
 >
@@ -366,9 +366,15 @@ we are located in the project's top level directory (where the `scrapy.cfg` file
 `cd` as required, then we can run:
 
 ~~~
-scrapy crawl austmpdata
+scrapy crawl austmpdata  -s DEPTH_LIMIT=1
 ~~~
 {: .language-bash}
+
+> ## A note on DEPTH_LIMIT
+>
+> We're running `-s DEPTH_LIMIT=1` to limit how many pages the spider crawls. It's always a good idea not to run with "unlimited depth" while debugging a spider designed to go over multiple pages.
+{: .callout}
+
 
 Note that we can now use the name we have chosen for our spider (`austmpdata`, as specified in the `name` attribute)
 to call it. This should produce the following result
@@ -435,7 +441,7 @@ class AustmpdataSpider(scrapy.Spider):
 Now, if we go back to the command line and run our spider again. Make sure to change to your project's root directory first before running this, so we don't leave random files around.
 
 ~~~
-scrapy crawl austmpdata
+scrapy crawl austmpdata  -s DEPTH_LIMIT=1
 ~~~
 {: .language-bash}
 
@@ -608,7 +614,7 @@ class AustmpdataSpider(scrapy.Spider):
 We now need to re-run the spider.
 
 ~~~
-scrapy crawl austmpdata
+scrapy crawl austmpdata -s DEPTH_LIMIT=1
 ~~~
 {: .source}
 
@@ -772,7 +778,7 @@ Mr Andrew Broad MP
 > >             district = response.xpath("dl/dd/text()").extract_first()
 > >             print(name, district, link)
 > > ~~~
-> > {: .source}
+> > {: .source .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -893,7 +899,7 @@ We made two significant changes to the file above:
 If we now run our spider again:
 
 ~~~
-scrapy crawl austmpdata
+scrapy crawl austmpdata -s DEPTH_LIMIT=1
 ~~~
 {: .source}
 
@@ -919,6 +925,12 @@ specifies the name of an output file with a `.csv` file extension:
 scrapy crawl austmpdata -o output.csv
 ~~~
 {: .source}
+
+> ## No depth limit?
+> 
+> Since we're now happy with our scraper and want its output, we'll remove the ` -s DEPTH_LIMIT=1` debug flag to let it run completely. 
+> 
+{: .callout}
 
 This produces similar debugging output as the previous run, but now let's look inside the
 directory in which we just ran Scrapy and we'll see that it has created a file called

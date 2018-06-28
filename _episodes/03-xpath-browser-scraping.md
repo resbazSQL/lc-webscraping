@@ -23,7 +23,7 @@ Let us get back to where we were in the introduction.
 
 We proposed the following scenario:
 
-> Let's go to the list of [UK House of Commons members](https://www.parliament.uk/mps-lords-and-offices/mps/). [Backup link: https://perma.cc/M8BC-JUJ8](https://perma.cc/M8BC-JUJ8). We are interested in downloading this list to a spreadsheet, with columns for names and
+> Let's go to the list of [UK House of Commons members](https://www.parliament.uk/mps-lords-and-offices/mps/). Backup link: [ https://perma-archives.org/warc/M8BC-JUJ8/https://www.parliament.uk/mps-lords-and-offices/mps/](https://perma-archives.org/warc/M8BC-JUJ8/https://www.parliament.uk/mps-lords-and-offices/mps/). We are interested in downloading this list to a spreadsheet, with columns for names and
 constituencies. 
 
 But our problem was the horrible whitespace in the clipboard and wondering about what that "XPath" thing was. Now let's unpack that a bit more. 
@@ -100,7 +100,7 @@ Sometimes, however, we do have to do a bit of work to get Scraper to select the 
 that we are interested in.
 
 Going back to the example of the Canadian Parliament we saw in the introduction,
-there is a page on the same website that [lists the mailing addresses](http://www.ourcommons.ca/Parliamentarians/en/members/addresses) With Backup link [https://perma.cc/ZBM9-4VRE](https://perma.cc/ZBM9-4VRE) of all
+there is a page on the same website that [lists the mailing addresses](http://www.ourcommons.ca/Parliamentarians/en/members/addresses) With Backup link [https://perma-archives.org/warc/ZBM9-4VRE/http://www.ourcommons.ca/Parliamentarians/en/members/addresses](https://perma-archives.org/warc/ZBM9-4VRE/http://www.ourcommons.ca/Parliamentarians/en/members/addresses) of all
 parliamentarians. We are interested in scraping those addresses.
 
 If we select the addresses for the first MP and try the "Scrape similar" function...
@@ -257,7 +257,7 @@ Let us remind ourselves of the handy set of XPath expressions referenced in the 
 
 > ## Part 1: get scraped list by element
 > 
-> Use Scraper to export the list of the first twelve [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q).
+> Use Scraper to export the list of the first twelve [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). Backup link: [https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=).
 > 
 > We want to get a spreadsheet of three columns: their name, their profile URL, and their district. 
 > * Explore highlighting different parts of each member's `div` until you get a list of results by name.
