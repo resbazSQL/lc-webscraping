@@ -118,7 +118,6 @@ Hon Julie Bishop MP /Senators_and_Members/Parliamentarian?MPID=83P
 Hon Chris Bowen MP  /Senators_and_Members/Parliamentarian?MPID=DZS
 Mr Andrew Broad MP  /Senators_and_Members/Parliamentarian?MPID=30379
 >>> ~~~
-> {: .solution}
 {: .challenge}
 
 
