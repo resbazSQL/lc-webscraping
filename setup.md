@@ -15,7 +15,7 @@ For the first half of the lesson, we will use a Chrome browser extension to get 
 ## Part two: Write Python programs to automatically scrape data
 
 ### Shell and Python
-The second part of the lesson requires the Python programming language and access to a command-line interface (shell) on your computer.
+The second part of the lesson requires the Python programming language (Version 3.5 or greater) and access to a command-line interface (shell) on your computer.
 Please refer to [the Software Carpentry setup instructions](http://swcarpentry.github.io/workshop-template/#setup) for
 *the Bash shell* and *Python* if you need guidance.
 
@@ -31,7 +31,7 @@ Please refer to [the Software Carpentry setup instructions](http://swcarpentry.g
 
 ### Scrapy
 
-Once you have a working installation of Python, the next step is to install [Scrapy](https://scrapy.org/).
+Once you have a working installation of Python 3, the next step is to install [Scrapy](https://scrapy.org/).
 
 If you have installed Python using the Anaconda framework as suggested by the Software Carpentry setup instructions,
 you can easilly install Scrapy by doing the following:

@@ -7,7 +7,7 @@ Web scraping is the process of extracting data from websites. Some data is prese
 For example it might be contained in a PDF, or a table on a website, or spread across multiple web pages.
 
 There are a variety of ways to _scrape_ a website to extract information for reuse.
-In its simplest form, this can be achieved by copying and pasting snippets from a web page, but this is impractical when there is a large amount of data to extract, or when it is spread over many pages. Instead, specialized tools and techniques exist to automate the process. You can define what sites to visit, what information to look for, when to stop, and when to continue. Yes, these tools will follow hyperlinks and extract data recursively from multiple pages. You can also automate web scraping to run at regular intervals and capture changes in the data.
+In its simplest form, this can be achieved by copying and pasting snippets from a web page, but this is impractical when there is a large amount of data to extract, or when it is spread over many pages. Instead, specialized tools and techniques exist to automate the process. You can define what sites to visit, what information to look for, when to stop, and when to continue. These tools will follow hyperlinks and extract data recursively from multiple pages. You can also automate web scraping to run at regular intervals and capture changes in the data.
 
 
 > ## Prerequisites
@@ -17,10 +17,9 @@ In its simplest form, this can be achieved by copying and pasting snippets from 
 > This lesson therefore assumes that learners will have some familiarity with [HTML](https://en.wikipedia.org/wiki/HTML)
 > and the [Document Object Model](https://en.wikipedia.org/wiki/Document_Object_Model) (DOM).
 >  
-> The first part of this lesson will use browser extensions to introduce the concepts of web scraping
-> as well as introduce the XPath syntax for selecting elements on a web page
-> and requires no further specific knowledge.
-> The second part will introduce the use of specialized libraries to scrape websites by writing
+> * For chapters 2 and 3 of this lesson, all you need is [Google Chrome](https://www.google.com/chrome/) and the [Scraper extension](https://chrome.google.com/webstore/detail/scraper/mbigbapnjcgaffohmbkdlecaccepngjd).
+> 
+> * Chapters 4 and 5 of this lesson introduce the use of specialized libraries to scrape websites by writing
 > custom computer programs and will require some familiarity with the 
 > [Python programming language](https://swcarpentry.github.io/python-novice-inflammation/)
 > and [object-oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming).
