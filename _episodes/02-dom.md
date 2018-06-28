@@ -380,19 +380,52 @@ at the list of `blockquote` elements returned by the previous query, and by look
 source, we can see that the blockquote elements on this page are of different classes
 (challenge, solution, callout, etc.).
 
-To refine the above query to get all the `blockquote` elements of the `challenge` class, we can type
-
+Let's have a look at the HTML code of this page, around this challenge box (using the "Inspect" option in our browser). The code looks something like this:
 ~~~
-$x("//blockquote[@class='challenge']")
+<!doctype html>
+<html lang="en">
+  <head>
+    (...)
+  </head>
+  <body>
+  <div class="container">
+  (...)
+    
+<blockquote class="challenge">
+  <h2 id="exercise-select-all-challenge-boxes-by-class">Exercise: select all challenge boxes by class</h2>
+  <p>Using an XPath query in the Javascript console of your browser, select the element that contains the text
+you are currently reading on this page.</p>
+      (...)
+    </blockquote>
+  (...)
+  </div>
+  </body>
+</html>
+~~~
+{: .language-html}
+
+We know that the `class` attribute is characteristic of all of the challenge boxes. This means we can create an Javascript query of XPath of 
+~~~
+$x("//blockquote[@class='challenge']");
 ~~~
 {: .source}
-
-which returns
-
+This should return something like:
 ~~~
-Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge> ]
+(5) [blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge]
 ~~~
 {: .output}
+
+Let's walk through that syntax:
+|-----------------|:-------------|
+| `$x("`| This function tells the browser we want it to execute an XPath query. |
+| `//`| Look anywhere in the document... |
+| `blockquote`| ... for an blockquote element ... |
+| `[@class = 'challenge']`| ... that has an `class` attribute set to `challenge`... |
+| `");` | end of the Javascript function. |
+
+By hovering on the object returned by your XPath query in the console, your browser should helpfully highlight
+that object in the document, enabling you to make sure you got the right ones.
+
 
 
 > ## Exercise: select the "Introduction" title by ID
@@ -439,68 +472,45 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 
 
 
-> ## Exercise: select all challenge boxes by class
-> Using an XPath query in the Javascript console of your browser, select the element that contains the text
-> you are currently reading on this page.
->
-> While we *can* select this challenge box by `$x("//h2[@id='exercise-select-this-challenge-box']/..")` what happens if we want to iterate over all challenge `<div>` elements on this page?
->
-> Make sure you create an XPath which returns each of the challenge boxes, but *only* the challenge boxes. 
->
+
+> ## Exercise: Combining the above
+> 
+> Unfortunately, on most websites, the data we want is seldom so easily extracted. 
+> 
+> Consider the following quotation from a book by [Neil Stephenson](https://www.nealstephenson.com/):
+> 
+> <blockquote class="quotation">
+> <p>Moral reforms and deteriorations are moved by large forces, and they are mostly caused by reactions from the habits of a preceding period. Backwards and forwards swings the great pendulum, and its alterations are not determined by a few distinguished folk clinging to the end of it. </p>
+> <p>Sir Charles Petrie, <a href="https://trove.nla.gov.au/work/5842140?q&versionId=12043210">The Victorians</a>. Epigraph from <a href="https://trove.nla.gov.au/work/15024537">The Diamond Age</a> by Neal Stephenson</p>
+> </blockquote>
+> 
+> Write an XPath query which can get only titles of the books inside that quote.
+> 
+>  We know that we can select challenge blockquotes through `$x("//blockquote[@class='challenge']");`. And we know we can follow elements into each other by using `/`. And we know we can get the text of an element through `text()`. How do we combine these ideas?
+>  
 > > ## Solution
-> > Let's have a look at the HTML code of this page, around this challenge box (using the "Inspect" option in our browser). The code looks something like this:
+> >  
+> >  `$x("//blockquote[@class='quotation']/p/a/text()");`
+> >  
+> >  We start with `class='quotation'` to find the container which has an identifiable class. If we don't restrict to `class='quotation'` then we get that trap link to Neil Stephenson I included above. 
+> >  
+> >  We then descend down through the `<p>`aragraph element, to the `<a>` elements. Since the preceeding paragraph doesn't have any hyperlinks, nothing in it is matched. We then use `text()` to get the text of those two links.
 > >
-> > ~~~
-> > <!doctype html>
-> > <html lang="en">
-> >   <head>
+> >  ~~~
+> > (2) [text, text]
+> >   0: text
 > >     (...)
-> >   </head>
-> >   <body>
-> >   <div class="container">
-> >   (...)
-> >     
-> > <blockquote class="challenge">
-> >   <h2 id="exercise-select-all-challenge-boxes-by-class">Exercise: select all challenge boxes by class</h2>
-> >   <p>Using an XPath query in the Javascript console of your browser, select the element that contains the text
-> > you are currently reading on this page.</p>
-> >       (...)
-> >     </blockquote>
-> >   (...)
-> >   </div>
-> >   </body>
-> > </html>
-> > ~~~
-> > {: .language-html}
-> >
-> > We know that the `class` attribute is characteristic of all of the challenge boxes. This means we can create an Javascript query of XPath of 
-> >
-> > ~~~
-> > $x("//blockquote[@class='challenge']");
-> > ~~~
-> > {: .source}
-> >
-> > This should return something like:
-> >
-> > ~~~
-> > (5) [blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge]
-> > ~~~
-> > {: .output}
-> >
-> > Let's walk through that syntax:
-> >
-> > |-----------------|:-------------|
-> > | `$x("`| This function tells the browser we want it to execute an XPath query. |
-> > | `//`| Look anywhere in the document... |
-> > | `blockquote`| ... for an blockquote element ... |
-> > | `[@class = 'challenge']`| ... that has an `class` attribute set to `challenge`... |
-> > | `");` | end of the Javascript function. |
-> > 
-> > By hovering on the object returned by your XPath query in the console, your browser should helpfully highlight
-> > that object in the document, enabling you to make sure you got the right ones.
-> >
-> {: .solution}
+> >     data: "The Victorians"
+> >   1: text
+> >     (...)
+> >     data: "The Diamond Age"
+> >  ~~~
+> >  {: .output}
+> {: .solution} 
+>  
 {: .challenge}
+
+
 
 # Wrapping up XPath
 

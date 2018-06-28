@@ -550,7 +550,7 @@ We see:
 ~~~
 {: .language-html .output}
 
-We should now exit the shell. We can do so with <kbd>Ctrl-c</kbd>
+We should now exit the shell. We can do so with <kbd>Ctrl</kbd>+><kbd>c</kbd>
 
 
 This tells us that we have accurately targeted scrapy. We can then use this to find more variables as soon as we're finished with the spider.

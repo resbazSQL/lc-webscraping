@@ -24,10 +24,7 @@ Web scraping is a technique for extracting information from websites. This can b
 but it is usually faster, more efficient and less error-prone if it can be automated.
 
 Web scraping allows you to convert non-tabular or poorly structured data into a usable, structured format,
-such as a .csv file or spreadsheet.
-
-Scraping can help you acquire data made inaccessible by the way it has been presented online.
-But scraping is about more than just acquiring data: it can help you track changes to data online, and
+such as a .csv file or spreadsheet. But scraping is about more than just acquiring data: it can help you track changes to data online, and
 help you archive data. In short, it's a skill worth learning.
 
 It is closely related to the practice of
@@ -226,9 +223,11 @@ Thanks to these labels, we could relatively easily instruct a computer to look f
 > * D. Not everything on the web is in a table tag. These techniques help us make tables out of those things.
 >
 > > ## Solution
-> > The answer is C, because we want to tell a computer what to do so that the computer can go do it at scale. If we want to make comparisons between groups of data and don't otherwise have access to the data in the form that the developers of the webpage has it, we can use webscraping to turn the data back into a format a computer can process.
+> > The answer is C, because we want to tell a computer what to do so that the computer can go do it at scale. 
+> > 
+> > If we want to make comparisons between groups of data and don't otherwise have access to the data except through the web page, we can use webscraping to turn the data back into a format a computer can process.
 > >
-> > Note well that there exist techqniues for getting data out of pdfs, but they are somewhat outside the scope of this course. [Wragge's OzGlam Workbench](https://github.com/wragge/ozglam-workbench/) offers a number of approaches in this direction.
+> > Note well that there exist techniques for getting data out of pdfs, but they are somewhat outside the scope of this course. [Wragge's OzGlam Workbench](https://github.com/wragge/ozglam-workbench/) offers a number of approaches in this direction.
 > {: .solution}
 {: .discussion}
 
@@ -298,7 +297,7 @@ In this lesson, we will continue exploring the examples above and try different 
 >
 > While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
 >
-> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. Backup link [at perma.cc](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=). We want to find the social media html for the top 5 listed members.
+> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. Backup link [at perma.cc](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=). Some MPs have links to twitter  as part of their profiles. Let's go find them.
 >
 > First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au).
 >
@@ -310,7 +309,7 @@ In this lesson, we will continue exploring the examples above and try different 
 >
 > If we wanted to automate this, this would be the step where we looked at the site's terms of service. I've looked at the "Disclaimer" page, and it says it is freely available for our use, and does not forbid the action. Good enough.
 >
-> Now, we need to find Tony's Social media HTML. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines of his social media handles (or whomever else is listed first at the time.)
+> Now, we need to find the HTML which presents Tony's social media accounts. Let's do this the annoying way first. Right click on the page and choose "View page source (in chrome)." Now, find Tony Abbot's profile and the two lines linking to his social media handles (or whomever else is listed first at the time.)
 >
 > You should see around line 670:
 > ~~~
