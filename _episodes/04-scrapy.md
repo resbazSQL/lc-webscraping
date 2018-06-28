@@ -480,7 +480,7 @@ While we can use the relative path we discovered in the prior exercise, it is fr
 
 `//h4[@class='title']/a/text()`
 
-To review, let us break down this xpath into each component.
+To review, let us break down this XPath into each component.
 
 We have `//h4[@class='title']` which says "Find any h4 element" with its css class being "title".
 
@@ -537,7 +537,7 @@ We can now try running the XPath query we used last lesson in scrapy.
 
 We see:
 ~~~
-[<Selector xpath="//h4[@class='title']/a/text()" data='Hon Tony Abbott MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Anthony Albanese MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr John Alexander OAM, MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Dr Anne Aly MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Karen Andrews MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Kevin Andrews MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr Adam Bandt MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Ms Julia Banks MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Sharon Bird MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Julie Bishop MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Chris Bowen MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr Andrew Broad MP'>]
+[<Selector XPath="//h4[@class='title']/a/text()" data='Hon Tony Abbott MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Anthony Albanese MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Mr John Alexander OAM, MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Dr Anne Aly MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Karen Andrews MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Kevin Andrews MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Mr Adam Bandt MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Ms Julia Banks MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Sharon Bird MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Julie Bishop MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Chris Bowen MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Mr Andrew Broad MP'>]
 ~~~
 {: .language-html .output}
 
@@ -550,8 +550,8 @@ object supports a variety of methods to act on its contents:
 
 |Method|Description|
 |-----------------|:-------------|
-|`xpath()`| Returns a list of selectors, each of which points to the nodes selected by the XPath query given as argument|
-|`css()`| Works similarly to the `xpath()` method, but uses CSS expressions to select elements.|
+|`XPath()`| Returns a list of selectors, each of which points to the nodes selected by the XPath query given as argument|
+|`css()`| Works similarly to the `XPath()` method, but uses CSS expressions to select elements.|
 
 Those methods will return objects of a different type, called `selectors`. As their name implies,
 these objects are "pointers" to the elements we are looking for inside the scraped page. In order
@@ -580,7 +580,7 @@ Those objects are pointers to the different elements in the scraped page (`h4` t
 {: .language-python .output}
 
 
-Since we have an XPath query we know will extract the names we are looking for, we can now use the `xpath()` method and update the spider accordingly:
+Since we have an XPath query we know will extract the names we are looking for, we can now use the `XPath()` method and update the spider accordingly:
 
 (editing `austmps/austmps/spiders/austmpdata.py`)
 
@@ -692,7 +692,7 @@ We know that `response.xpath("//h4[@class='title']/a/text()")` is the link insid
 Let's try `response.xpath("//h4[@class='title']/..")`
 
 ~~~
-[<Selector xpath="//h4[@class='title']/.." data='<div class="medium-8 columns">\r\n        '>
+[<Selector XPath="//h4[@class='title']/.." data='<div class="medium-8 columns">\r\n        '>
 ~~~
 {: .language-html .output}
 
@@ -714,7 +714,7 @@ class AustmpdataSpider(scrapy.Spider):
 
     def parse(self, response):
         for resource in response.xpath("//h4[@class='title']/.."):
-            name = resource.xpath("h4/a/text()").extract_first()
+            name = response.xpath("h4/a/text()").extract_first()
             print(name)
 ~~~
 {: .language-python}
@@ -739,9 +739,9 @@ Mr Andrew Broad MP
 {: .output}
 
 
-> ## Exercise: Get the two other columns we want.
+> ## Exercise: get the two other columns we want.
 >
-> Now that we are extracting one column. Reference the xpaths from your prior code to print out the other columns.
+> Now that we are extracting one column. Reference the XPaths from your prior code to print out the other columns.
 > 
 > > ## Solution
 > > 
@@ -761,9 +761,9 @@ Mr Andrew Broad MP
 > > 
 > >     def parse(self, response):
 > >         for resource in response.xpath("//h4[@class='title']/.."):
-> >             name = resource.xpath("h4/a/text()").extract_first()
-> >             link = resource.xpath("h4/a/@href").extract_first()
-> >             district = resource.xpath("dl/dd/text()").extract_first()
+> >             name = response.xpath("h4/a/text()").extract_first()
+> >             link = response.xpath("h4/a/@href").extract_first()
+> >             district = response.xpath("dl/dd/text()").extract_first()
 > >             print(name, district, link)
 > > ~~~
 > > {: .source}
@@ -866,9 +866,9 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = resource.xpath("h4/a/text()").extract_first()
-            item['link'] = resource.xpath("h4/a/@href").extract_first()
-            item['district'] = resource.xpath("dl/dd/text()").extract_first()
+            item['name'] = response.xpath("h4/a/text()").extract_first()
+            item['link'] = response.xpath("h4/a/@href").extract_first()
+            item['district'] = response.xpath("dl/dd/text()").extract_first()
 
             yield item
 
@@ -934,17 +934,17 @@ district,link,name
 {: .output}
 
 
-> ## Exercise: Add the rest of the columns from the previous manual browser scraping to the csv.
+> ## Exercise: add the rest of the columns from the previous manual browser scraping to the csv.
 > 
-> On [browser scraping](/03-xpath-browser-scraping), exercise 2, we had other columns: Their party affiliation, and their twitter handle. Let's add them to this exporter.
+> On [browser scraping](/03-XPath-browser-scraping), exercise 2, we had other columns: their party affiliation, and their twitter handle. Let's add them to this exporter.
 > 
-> The xpaths that we found last time were:
+> The XPaths that we found last time were:
 > 
 > |---|---|
 > | `*/dl/dt[text()='Party']/following-sibling::dd` | Party |
 > | `*/dl/dd/a[contains(@class, 'twitter')]/@href` | Twitter |
 > 
-> Adapt these xpaths and edit the spider to add these columns to the csv.
+> Adapt these XPaths and edit the spider to add these columns to the csv.
 > 
 > Tip: make sure to remove the output file before re-running the spider. will just append to the end of the file if you don't.
 > 
@@ -986,11 +986,11 @@ district,link,name
 > >            # Loop over each item on the page. 
 > >            item = AustmpsItem() # Creating a new Item object
 > >
-> >            item['name'] = resource.xpath("h4/a/text()").extract_first()
-> >            item['link'] = resource.xpath("h4/a/@href").extract_first()
-> >            item['district'] = resource.xpath("dl/dd/text()").extract_first()
-> >            item['twitter'] = resource.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-> >            item['party'] = resource.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+> >            item['name'] = response.xpath("h4/a/text()").extract_first()
+> >            item['link'] = response.xpath("h4/a/@href").extract_first()
+> >            item['district'] = response.xpath("dl/dd/text()").extract_first()
+> >            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+> >            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 > >
 > >            yield item
 > >~~~

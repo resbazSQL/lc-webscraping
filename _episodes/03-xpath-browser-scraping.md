@@ -30,7 +30,7 @@ But our problem was the horrible whitespace in the clipboard and wondering about
 
 ![Screenshot of the Scraper main window]({{ page.root }}/fig/scraper-ukparl-01.png)
 
-## Xpath and the Document Object Model
+## XPath and the Document Object Model
 
 Note the "Selector" on the left column. It should read:
 
@@ -48,7 +48,7 @@ What happens if you don't highlight the full row and right click scrape similiar
 ~~~
 ![A bad output of the scraper]({{ page.root }}/fig/badManualScrape.png)
 
-The difference in these two "XPath Queries" is where they're telling the scrape extension to look within the "Document object model" of the webpage. We will be exploring these in a few minutes, but right now, we need to get this data to a usable "spreadsheet" format.
+The difference in these two "XPath Queries" is where they're telling the scrape extension to look within the "Document Object Model" of the webpage. We will be exploring these in a few minutes, but right now, we need to get this data to a usable "spreadsheet" format.
 
 
 
@@ -79,7 +79,7 @@ normalize-space(*[2])
 
 We now need to tell Scraper to scrape the data again by using our new selectors, this is done by clicking
 on the "Scrape" button. The preview will not noticeably change, but if we now copy again the results
-and paste them in our text editor, we should see
+and paste them in our text editor, we should see:
 
 ~~~
 Name  Constituency
@@ -100,7 +100,7 @@ Sometimes, however, we do have to do a bit of work to get Scraper to select the 
 that we are interested in.
 
 Going back to the example of the Canadian Parliament we saw in the introduction,
-there is a page on the same website that [lists the mailing addresses](http://www.ourcommons.ca/Parliamentarians/en/members/addresses) [Backup link https://perma.cc/ZBM9-4VRE](https://perma.cc/ZBM9-4VRE) of all
+there is a page on the same website that [lists the mailing addresses](http://www.ourcommons.ca/Parliamentarians/en/members/addresses) With Backup link [https://perma.cc/ZBM9-4VRE](https://perma.cc/ZBM9-4VRE) of all
 parliamentarians. We are interested in scraping those addresses.
 
 If we select the addresses for the first MP and try the "Scrape similar" function...
@@ -155,7 +155,7 @@ elements:
 So let's try changing the Selector XPath in Scraper to
 
 ~~~
-//body/div[1]/div/ul
+//body/div[@class='container']/div/div/ul
 ~~~
 {: .source}
 
@@ -205,7 +205,9 @@ and the addresses are separated.
 
 ## Getting attribute data from elements.
 
-What if we wanted to get their profile URIs as well? This isn't something that can be solved by being careful with our selection criteria. We'll have to add another column in the scraper. 
+Let us explore the UK parlimentary website for a moment. Can we get the profile URIs of the members?
+
+This isn't something that can be solved by being careful with our selection criteria. We'll have to add another column in the scraper. 
 
 First, we must identify where the data is that we want. 
 Open up the inspector on the first link (currently Ms Diane Abbot) and we see:
@@ -232,7 +234,7 @@ We see:
 
 ## Exercises: Scrape the list of Australian members of parliment, their page URLs, their districts, their parties, and their twitter handles.
 
-Let us remind ourselves of the handy set of xpath expressions referenced in the prior section.
+Let us remind ourselves of the handy set of XPath expressions referenced in the prior section.
 
 
 | Expression   | Description |
@@ -257,14 +259,23 @@ Let us remind ourselves of the handy set of xpath expressions referenced in the 
 > 
 > Use Scraper to export the list of the first twelve [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). [https://perma.cc/8ATF-RT3Q](https://perma.cc/8ATF-RT3Q).
 > 
-> We want to get a spreadsheet of three columns: Their name, their profile URL, and their district. 
+> We want to get a spreadsheet of three columns: their name, their profile URL, and their district. 
 > * Explore highlighting different parts of each member's `div` until you get a list of results by name.
 > * Use the inspector to find the elements that contain the data you want.
-> * Use xpath relative paths to indicate those elements into their own columns.
+> * Use XPath relative paths to indicate those elements into their own columns.
+> Tips:
+> 
+> We first need to find the HTML tag that "holds" each row. Or we can play around with highlighting     
+> 
+> * To add another column in Scraper, use the little green "+" icon in the columns list.
+> * Look at the source code and try out XPath queries in the console until you find what
+>   you are looking for.
+> * The syntax to select the value of an attribute of the type `<element attribute="value">`
+>   is `element/@attribute`.> 
 > 
 > > ## Solution
 > > 
-> > `//div[2]/div[2]/div[1]/div[3]/div` worked for the selected xpath. 
+> > `//div[2]/div[2]/div[1]/div[3]/div` worked for the selected XPath. 
 > > 
 > > My three columns were:
 > > 
@@ -292,15 +303,6 @@ Hon Tony Abbott MP  Warringah, New South Wales  /Senators_and_Members/Parliament
 > > ~~~
 > > 
 > {: .solution}
-> Tips:
-> 
-> We first need to find the html tag that "holds" each row. Or we can play around with highlighting     
-> 
-> * To add another column in Scraper, use the little green "+" icon in the columns list.
-> * Look at the source code and try out XPath queries in the console until you find what
->   you are looking for.
-> * The syntax to select the value of an attribute of the type `<element attribute="value">`
->   is `element/@attribute`.
 {: .challenge}
 
 
@@ -310,7 +312,7 @@ Hon Tony Abbott MP  Warringah, New South Wales  /Senators_and_Members/Parliament
 {: .discussion}
 
 
-## Part 2: get scraped list by class (Adavanced)
+## Part 2: get scraped list by class (Advanced)
 
 
 > # Discussion
@@ -323,14 +325,16 @@ Hon Tony Abbott MP  Warringah, New South Wales  /Senators_and_Members/Parliament
 Modern "responsive" web-pages make pesudo-tables out of divs. Usually, these tables have specific "class" stylings to make them behave like tables. We can take advantage of this fact. 
 
 
-We need to introduce two new functions in this exercise. text() and the idea of following-sibling. 
+We need to introduce two new functions in this exercise: `text()` and the idea of `following-sibling::`. 
 
-We can interrogate the content of an element inside an xpath selector by saying `[text()='foo']`. Will return to us every element containing exactly the text "foo". This capability allows us to identify elements which are labels by virtue of their position-on-page instead of the fact that they are in proper containers. We can test for "containing" with the `element[contains(haystack, needle)]` function. 
+We can interrogate the content of an element inside an XPath selector by saying `[text()='foo']` which will return to us every element containing exactly the text "foo". When webpage designers don't put their data in container-elements, searching by `text()` still allows us to automate searching through the data.
 
-Therefore we need to explore some more [axes of Xpath](https://www.w3schools.com/xml/xpath_axes.asp). Specifically, we need to explore the way of saying: "get me the tag after this tag." In this instance, this is the axis of `following-sibling::`. 
+We can test for "containing" with the `element[contains(haystack, needle)]` function. 
+
+Therefore we need to explore some more [axes of XPath](https://www.w3schools.com/xml/XPath_axes.asp). Specifically, we need to explore the way of saying: "get me the tag after this tag." In this instance, this is the axis of `following-sibling::`. 
 
 
-That handy list, but with the above added.
+We now need to build the XPath cheatsheet out more by adding `contains()` and `following-sibling`. 
 
 | Expression   | Description |
 |-----------------|:-------------|
@@ -343,7 +347,7 @@ That handy list, but with the above added.
 |```[@attribute = 'value']```   |Select nodes with a particular attribute value|
 |`text()`| Select the text content of a node|
 |`normalize-space()`| Remove all of the whitespace around text|
-| &#124;|Pipe chains expressions and brings back results from either expression, think of a set union |
+| `&#124;` |Pipe chains expressions and brings back results from either expression, think of a set union |
 |`element[contains(haystack, needle)]`| Matches elements which have the needle string in their haystack (which can be, among other things, @class or text(). )|
 |`following-sibling::element`| Finds the element which is a *sibling* of the parent instead of a *child* of the parent.|
 
@@ -358,13 +362,11 @@ That handy list, but with the above added.
 > 
 > [It's a trap!](https://www.youtube.com/watch?v=4F4qzPbcFiA)
 > 
-> If we use */dl/dd, it works for Tones, but the moment someone has a position, our data becomes garbage. We need to be more creative. We know that the "Definition list" has the word "party" in its `dt`, 
-> 
-> A mistake (I, the author) kept making while creating this exercise was to confuse the part of the xpath where I was "searching" for something with the part of the xpath telling me what it is I wanted. The difficult part of finding the twitter url was `a[contains(@class, 'twitter')]`.
+> If we use `*/dl/dd`, it works for Tony, but the moment someone has a position, our data becomes garbage. We need to be more creative. We know that the "Definition list" has the word "party" in its `dt`, 
 > 
 > > ## Solution
 > > 
-> > `//div[@class='row border-bottom padding-top']` worked for the selected xpath. 
+> > `//div[@class='row border-bottom padding-top']` worked for the selected XPath. 
 > > 
 > > My three columns were:
 > > 
@@ -391,23 +393,25 @@ Hon Chris Bowen MP  Australian Labor Party  http://twitter.com/Bowenchris
 Mr Andrew Broad MP  The Nationals   https://twitter.com/broad4mallee
 > > ~~~
 > > 
-> > Let us break down the xpaths used here
+> > Let us break down the XPaths used here.
 > > 
 > > `//div[@class='row border-bottom padding-top']` matches the specific row styling of the results. We can't use `class='row'` because that matches other `div` elements. This method is slightly more robust than the relative path example used in part 1 because even if they move elements around or change headers, this primary "search result box" will be consistent. This page, however, is designed for output rendering without any semantic coding, so while this is slightly more robust, it's not *that* much stronger. It is, however, easier to debug.
 > > 
 > > `normalize-space(*/h4)` is the same pattern as before.
 > > 
-> > `*/dl/dt[text()='Party']/following-sibling::dd` is the first "evil line." By asking for Party instead of Location, I removed our ability to say `/dl/dd[2].` As that will match party for some and position for others. Instead, we need a way of articulating which row of the "definition list" (the dl/dt/dd thing) we are interested in. We do that with `*/dl/dt[text()='Party']`. Unfortunately, that alone produces a column of "Party". While everyone attending a party is enjoyable, it is not what we are after. 
+> > `*/dl/dt[text()='Party']/following-sibling::dd` is the first "evil line." By asking for "Party" instead of "Location", I removed our ability to say `/dl/dd[2].` As that will match party for some and position for others. Instead, we need a way of articulating which row of the "definition list" (the `dl/dt/dd` thing) we are interested in. We do that with `*/dl/dt[text()='Party']`. Unfortunately, that alone produces a column of "Party". While everyone attending a party is enjoyable, it is not what we are after. 
 > > 
-> > By using the `following-sibling::` axis, we can say "Give us the dd element which follows this dt element." This took a fair amount of googling on my part, but will be a very useful pattern for you to know. 
+> > By using the `following-sibling::` axis, we can say "Give us the `<dd>` element which follows this `<dt>` element." This took a fair amount of googling on my part, but will be a very useful pattern for you to know. 
 > > 
 > > `*/dl/dd/a[contains(@class, 'twitter')]/@href` follows a similar idea. "Say what we want to search for, then get it". Here, we don't need to search for the word "connect" because only items in connect have `<a>` elements. However, we need to search for the word twitter in the various class items of those elements with `a[contains(@class, 'twitter')]`. Once we *find* the link, we then need to get the `href` attribute of the link with `/@href`.
 > {: .solution}
 > 
+> A mistake (I, the author) kept making while creating this exercise was to confuse the part of the XPath where I was "searching" for something with the part of the XPath telling me what it is I wanted. The difficult part of finding the twitter url was `a[contains(@class, 'twitter')]`.
+> 
 > 
 {: .challenge}
 
-This page, unfortunately doesn't have any useful elements deliniated by id. As a final takeaway, most of these xpath queries have been well answered on stack overflow. It is worth searching on [Questions tagged "Xpath"](https://stackoverflow.com/questions/tagged/xpath) when exploring a query you are trying to write. In the process of writing this lesson, I had to refer to three separate answers.
+This page, unfortunately doesn't have any useful elements deliniated by id. As a final takeaway, most of these XPath queries have been well answered on stack overflow. It is worth searching on [Questions tagged "XPath"](https://stackoverflow.com/questions/tagged/XPath) when exploring a query you are trying to write. In the process of writing this lesson, I had to refer to three separate answers.
 
 > ## Discussion
 > 
@@ -420,11 +424,11 @@ This page, unfortunately doesn't have any useful elements deliniated by id. As a
 > 
 > > ## Solution
 > > 
-> >  D. Because the data we wanted "moved around" for each div we were looking in, we need to be more specific in how we find the data. Semantic markup *would* have allowed easier addressing, but it also isn't involved in relative positioning. 
+> >  D. Because the data we wanted "moved around" for each `<div>` we were looking in, we need to be more specific in how we find the data. Semantic markup *would* have allowed easier addressing, but it also isn't involved in relative positioning. 
 > {: .solution}
 {: .discussion}
 
 # References
 
-* [The w3schools XPath tutorial is a great cheat sheet for the syntax](https://www.w3schools.com/xml/xpath_intro.asp)
-* [Questions tagged "Xpath" on Stack Overflow](https://stackoverflow.com/questions/tagged/xpath)
+* [The w3schools XPath tutorial is a great cheat sheet for the syntax](https://www.w3schools.com/xml/XPath_intro.asp)
+* [Questions tagged "XPath" on Stack Overflow](https://stackoverflow.com/questions/tagged/XPath)

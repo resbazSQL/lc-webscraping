@@ -27,7 +27,7 @@ Before we delve into web scraping proper, we will first spend some time introduc
 some of the techniques that are required to indicate exactly what should be
 extracted from the web pages we aim to scrape.
 
-The material in this section was adapted from the [XPath and XQuery Tutorial](https://github.com/code4libtoronto/2016-07-28-librarycarpentrylessons/blob/master/xpath-xquery/lesson.md)
+The material in this section was adapted from the [XPath and XQuery Tutorial](https://github.com/code4libtoronto/2016-07-28-librarycarpentrylessons/blob/master/XPath-xquery/lesson.md)
 written by [Kim Pham](https://github.com/kimpham54) ([@tolloid](https://twitter.com/tolloid))
 for the July 2016 [Library Carpentry workshop](https://code4libtoronto.github.io/2016-07-28-librarycarpentry/) in Toronto.
 
@@ -74,20 +74,20 @@ Any XML document follows basic syntax rules:
 * XML attribute nodes contain values that must be quoted, e.g.
 ``` <catfood type="basic"></catfood> ```
 
-# The Document Object Model.
+# The Document Object Model
 
-This lesson cannot really teach HTML and javascript from scratch. However, we need to make sure we review some things about html. For a good discussion on the Document object model, see this <a href="https://www.w3schools.com/Js/js_htmldom.asp">W3Schools tutorial</a>.
+This lesson cannot really teach HTML and Javascript from scratch. However, we need to make sure we review some things about HTML. For a good discussion on the Document Object Model, see this <a href="https://www.w3schools.com/Js/js_htmldom.asp">W3Schools tutorial</a>.
 
 The <a href="https://www.w3.org/DOM/">W3C defines</a> the DOM as:
 
 > The Document Object Model is a platform- and language-neutral interface that will allow programs and scripts to dynamically access and update the content, structure and style of documents. The document can be further processed and the results of that processing can be incorporated back into the presented page.
 
-This idea of a living software "object" being an html "page" is what allows us to have our dynamic and interactive web today. 
+This idea of a living software "object" being an HTML "page" is what allows us to have our dynamic and interactive web today. 
 
-Every html page that we scrape is a container of containers which contain... containers and eventually text. We can, using an xpath expression, address any container or any pattern of containers. Before we continue, let us explore editing a page's DOM.
+Every HTML page that we scrape is a container of containers which contain... containers and eventually text. We can, using an XPath expression, address any container or any pattern of containers. Before we continue, let us explore editing a page's DOM.
 
 
-## Playing with the DOM.
+## Playing with the DOM
 
 We will use the HTML code that describes this very page you are reading as an example. By default, a web browser
 interprets the HTML code to determine what markup to apply to the various elements of a document, and the code is
@@ -100,7 +100,7 @@ a web page.
 >
 > If you are using Safari, you must first turn on the "Develop" menu in order to view the page source, and use the
 > functions that we will use later in this section. To do so, navigate to Safari > Preferences and in the Advanced tab
-> select the "Show Develop in menu bar" option. Note: In recent versions of Safari you must first turn on the "Develop" menu (in Preferences) and then navigate to `Develop > Show Javascript Console` and then click on the "Console" tab.
+> select the "Show Develop in menu bar" option. Note: in recent versions of Safari you must first turn on the "Develop" menu (in Preferences) and then navigate to `Develop > Show Javascript Console` and then click on the "Console" tab.
 >
 {: .callout}
 
@@ -122,11 +122,11 @@ been removed for clarity):
 {: .html}
 
 We can see from the source code that the title of this page is in a `title` element that is itself inside the
-`head` element, which is itself inside an `html` element that contains the entire content of the page.
+`head` element, which is itself inside an `HTML` element that contains the entire content of the page.
 
 
 
-> ## Exercise: Interactively edit this page
+> ## Exercise: interactively edit this page
 > Using your favourite browser, open up the browser "inspector" or developer console.
 > 
 > Edit the following sentence by removing the word "not":
@@ -137,13 +137,13 @@ We can see from the source code that the title of this page is in a `title` elem
 >
 > ![The developer console with the span highlighted]({{ page.root }}/fig/not.png)
 > 
-> Now, right click on the html `<span style...` and choose "delete element."
+> Now, right click on the HTML `<span style...` and choose "delete element."
 > 
 > Observe how the page changes to:
 >
 > ![Ready to continue now]({{ page.root }}/fig/ready.png)
 >
-> Now, refresh the page, and play around with the text and html (change the colour of the word, for example) in this exercise box. Note how it returns to the original html when you refresh the page.
+> Now, refresh the page, and play around with the text and HTML (change the colour of the word, for example) in this exercise box. Note how it returns to the original HTML when you refresh the page.
 {: .challenge}
 
 
@@ -161,13 +161,13 @@ The page is a living document, with a skeleton we can inspect, manipulate, and q
 > * D. Quickly open the developer tools.
 > 
 > > ## Solution
-> > While D and A are kind of answers, choosing "view source" allows us to see the *original* source of the webpage (instead of the source of what is actually being displayed to us) and the function key <kbd>F12</kbd> is faster than choosing right-click, inspect, and then scrolling around. The inspect functionality allows us to precicely target elements in the *actual* web page we are looking at in front of us. 
+> > B. The inspector allows us to interact with the page in front of us, using graphical manipulation to select elements. While D and A are kind of answers, choosing "view source" allows us to see the *original* source of the webpage (instead of the source of what is actually being displayed to us) and the function key <kbd>F12</kbd> is faster than choosing right-click, inspect, and then scrolling around. The inspect functionality allows us to precicely target elements in the *actual* web page we are looking at in front of us. 
 > {: .solution}
 > 
 {: .discussion}
 
 
-# XPath Expressions
+# XPath expressions
 
 XPath is written using expressions, and when these expressions are evaluated on XML documents they return an object
 containing the node(s) that you aim to select. Contrary to a flat text document, XML data is structured, as it is
@@ -221,7 +221,7 @@ Paths in XPath are defined using slashes (`/`) to separate the steps in a node c
 URLs or Unix directories.
 
 In XPath, all expressions are evaluated based on a *context node*. The context node is the node in which a path
-starts from. The default context is the root node, indicated by a single slash (/), as in the example above.
+starts from. The default context is the root node, indicated by a single `/`, as in the example above.
 
 The most useful path expressions are listed below:
 
@@ -229,7 +229,7 @@ The most useful path expressions are listed below:
 |-----------------|:-------------|
 | ```nodename```| Select all nodes with the name "nodename"   |
 | ```/```  | A beginning single slash indicates a select from the root node, subsequent slashes indicate selecting a child node from current node  |
-| ```//``` | Select direct and indirect child nodes in the document from the current node - this gives us the ability to "skip levels" |
+| ```//``` | Select direct and indirect child nodes in the document from the current node - this gives us the ability to "skip levels". If we start out a query with `//`, this means we can find any child HTML element in the document without addressing its full path from `<html>`  |
 | ```.```       | Select the current context node   |
 |```..```  | Select the parent of the context node|
 |```@```  | Select attributes of the context node|
@@ -244,7 +244,7 @@ The most useful path expressions are listed below:
 > Is the DOM?
 >
 > * A. A way of finding data
-> * B. html code
+> * B. HTML code
 > * C. Something that a web browser has
 > * D. A Hierarchy of elements which contain other elements
 > 
@@ -261,12 +261,12 @@ There are many many web technologies which provide for: "Find me this specific e
 This next exercise will allow us to practice with an XPath directly. It can also be very useful for debugging XPaths when you are using them in other programs and scripts.
 
 
-We can run XPath queries directly from within all major modern browsers, by enabling the built-in JavaScript console.
+We can run XPath queries directly from within all major modern browsers, by enabling the built-in Javascript console.
 
-> ## Exercise: Display the console in your browser
+> ## Exercise: display the console in your browser
 >
 > * In Firefox, use to the *Tools > Web Developer > Web Console* menu item.
-> * In Chrome, use the *View > Developer > JavaScript Console* menu item.
+> * In Chrome, use the *View > Developer > Javascript Console* menu item.
 > * In Safari, use the *Develop > Show Error Console* menu item. If your Safari browser doesn't have a Develop menu,
 >   you must first enable this option in the Preferences, see above.
 >
@@ -274,12 +274,12 @@ We can run XPath queries directly from within all major modern browsers, by enab
 
 Here is how the console looks like in the Firefox browser:
 
-![JavaScript console in Firefox]({{ page.root }}/fig/firefox-console.png)
+![Javascript console in Firefox]({{ page.root }}/fig/firefox-console.png)
 
 For now, don't worry too much about error messages if you see any in the console when you open it. The console
 should display a _prompt_ with a `> ` character (`>>` in Firefox) inviting you to type commands.
 
-The syntax to run an XPath query within the JavaScript console is `$x("XPATH_QUERY")`, for example:
+The syntax to run an XPath query within the Javascript console is `$x("XPath_QUERY")`, for example:
 
 ~~~
 $x("/html/head/title/text()")
@@ -301,7 +301,7 @@ the _root_ of the document. With that query, we told the browser to
 
 |-----------------|:-------------|
 | `/`| Start at the root of the document... |
-| `html/`| ... navigate to the `html` node ... |
+| `html/`| ... navigate to the `HTML` node ... |
 | `head/`| ... then to the `head` node  that's inside it... |
 | `title/`| ... then to the `title` node that's inside it... |
 | `text()`| and select the text node contained in that element |
@@ -370,7 +370,7 @@ This produces a longer array of objects:
 > you should see that it contains objects like `<blockquote.solution>` that were not
 > included in the results of the first query. Why is this so?
 >
-> Tip: Look at the source code and see how the challenges and solutions elements are
+> Tip: look at the source code and see how the challenges and solutions elements are
 > organised.
 >
 {: .challenge}
@@ -395,7 +395,7 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 {: .output}
 
 
-> ## Exercise: Select the "Introduction" title by ID
+> ## Exercise: select the "Introduction" title by ID
 > In a previous challenge, we were able to select the "Introduction" title because we knew it was
 > the first `h1` element on the page. But what if we didn't know how many such elements were on the
 > page. In other words, is there a different attribute that allows us to uniquely identify that title
@@ -404,17 +404,25 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > Using the path expressions introduced above, rewrite your XPath query to select
 > the "Introduction" title without using the `[1]` index notation.
 >
+>
 > Tips:
 >
-> * Look at the source of the page or use the "Inspect element" function of your browser to see what
->   other information would enable us to uniquely identify that element.
+> * In principle, `id` attributes in HTML are unique on a page. This means that if you know the `id`
+>   of the element you are looking for, you should be able to construct an XPath that looks for this value
+>   without having to worry about where in the node tree the target element is located.
 > * The syntax for selecting an element like `<div id="mytarget">` is `div[@id = 'mytarget']`.
+> * Remember that XPath queries are relative to a context node, and by default that node is the root node.
+> * Use the `//` syntax to select for elements regardless of where they are in the tree.
+> * The syntax to select the parent element relative to a context node is `..`
+> * The `$x(...)` Javascript syntax will always return an array of nodes, regardless of the number of
+>   nodes returned by the query. Contrary to XPath, Javascript uses _zero based indexing_, so the syntax to get
+>   the first element of that array is therefore `$x(...)[0]`.
 >
 >
 > > ## Solution
 > >
 > > ~~~
-> > $x("/html/body/div/h1[@id='introduction']")
+> > $x("/html/body/div/article/h1[@id='introduction']")
 > > ~~~
 > > {: .source}
 > >
@@ -431,30 +439,16 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 
 
 
-> ## Exercise: Select this challenge box
-> Using an XPath query in the JavaScript console of your browser, select the element that contains the text
+> ## Exercise: select all challenge boxes by class
+> Using an XPath query in the Javascript console of your browser, select the element that contains the text
 > you are currently reading on this page.
 >
-> Tips:
+> While we *can* select this challenge box by `$x("//h2[@id='exercise-select-this-challenge-box']/..")` what happens if we want to iterate over all challenge `<div>` elements on this page?
 >
-> * In principle, `id` attributes in HTML are unique on a page. This means that if you know the `id`
->   of the element you are looking for, you should be able to construct an XPath that looks for this value
->   without having to worry about where in the node tree the target element is located.
-> * The syntax for selecting an element like `<div id="mytarget">` is `div[@id = 'mytarget']`.
-> * Remember that XPath queries are relative to a context node, and by default that node is the root node.
-> * Use the `//` syntax to select for elements regardless of where they are in the tree.
-> * The syntax to select the parent element relative to a context node is `..`
-> * The `$x(...)` JavaScript syntax will always return an array of nodes, regardless of the number of
->   nodes returned by the query. Contrary to XPath, JavaScript uses _zero based indexing_, so the syntax to get
->   the first element of that array is therefore `$x(...)[0]`.
->
-> Make sure you select this entire challenge box. If the result of your query displays only the title of
-> this box, have a second look at the HTML structure of the document and try to figure out how to "expand"
-> your selection to the entire challenge box.
+> Make sure you create an XPath which returns each of the challenge boxes, but *only* the challenge boxes. 
 >
 > > ## Solution
-> > Let's have a look at the HTML code of this page, around this challenge box (using the "View Source" option)
-> > in our browser). The code looks something like this:
+> > Let's have a look at the HTML code of this page, around this challenge box (using the "Inspect" option in our browser). The code looks something like this:
 > >
 > > ~~~
 > > <!doctype html>
@@ -465,9 +459,11 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > >   <body>
 > >   <div class="container">
 > >   (...)
-> >     <blockquote class="challenge">
-> >       <h2 id="select-this-challenge-box">Select this challenge box</h2>
-> >       <p>Using an XPath query in the JavaScript console of your browser...</p>
+> >     
+> > <blockquote class="challenge">
+> >   <h2 id="exercise-select-all-challenge-boxes-by-class">Exercise: select all challenge boxes by class</h2>
+> >   <p>Using an XPath query in the Javascript console of your browser, select the element that contains the text
+> > you are currently reading on this page.</p>
 > >       (...)
 > >     </blockquote>
 > >   (...)
@@ -475,20 +471,19 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > >   </body>
 > > </html>
 > > ~~~
-> > {: .html}
+> > {: .language-html}
 > >
-> > We know that the `id` attribute should be unique, so we can use this to select the `h2` element inside
-> > the challenge box:
+> > We know that the `class` attribute is characteristic of all of the challenge boxes. This means we can create an Javascript query of XPath of `$x("//blockquote[@class='challenge']");`
 > >
 > > ~~~
-> > $x("//h2[@id = 'select-this-challenge-box']/..")[0]
+> > 
 > > ~~~
 > > {: .source}
 > >
 > > This should return something like
 > >
 > > ~~~
-> > <- <blockquote class="challenge">
+> > (5) [blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge]
 > > ~~~
 > > {: .output}
 > >
@@ -497,16 +492,12 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > > |-----------------|:-------------|
 > > | `$x("`| This function tells the browser we want it to execute an XPath query. |
 > > | `//`| Look anywhere in the document... |
-> > | `h2`| ... for an h2 element ... |
-> > | `[@id = 'select-this-challenge-box']`| ... that has an `id` attribute set to `select-this-challenge-box`... |
-> > | `//`| and select the parent node of that h2 element |
-> > | `")"`| This is the end of the XPath query. |
-> > | `[0]`| Select the first element of the resulting array (since `$x()` returns an array of nodes and we are only interested in the first one).|
-> >
+> > | `blockquote`| ... for an blockquote element ... |
+> > | `[@class = 'challenge']`| ... that has an `class` attribute set to `challenge`... |
+> > | `");` | end of the Javascript function.
 > > By hovering on the object returned by your XPath query in the console, your browser should helpfully highlight
-> > that object in the document, enabling you to make sure you got the right one:
+> > that object in the document, enabling you to make sure you got the right ones.
 > >
-> > ![Hovering over a resulting node in Firefox]({{ page.root }}/fig/firefox-hover.png)
 > {: .solution}
 {: .challenge}
 
@@ -519,13 +510,13 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 >
 > What are three ways of finding elements we want?
 >
-> * A. By path, by ID, and by Class
+> * A. By path, by ID, and by class
 > * B. By XPath, //, and, ${}
 > * C. By path, element name, and relative position
 > * D. View source, Ctrl-F, the element inspector
 > 
 > > ## Solution
-> > A. We can address the elements relative to each other or the root, `/html/body/div/article/blockquote`, by a unique property they have (id): `[@id = 'select-this-challenge-box']` or by a shared property we are interested in (class): `//blockquote[@class='challenge']` 
+> > A. We can address the elements relative to each other or the root, `/html/body/div/article/blockquote`, by a unique property they have (id): `//blockquote[@id = 'select-this-challenge-box']` or by a shared property we are interested in (class): `//blockquote[@class='challenge']` 
 > {: .solution}
 > 
 {: .discussion}
