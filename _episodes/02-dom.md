@@ -404,17 +404,25 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > Using the path expressions introduced above, rewrite your XPath query to select
 > the "Introduction" title without using the `[1]` index notation.
 >
+>
 > Tips:
 >
-> * Look at the source of the page or use the "Inspect element" function of your browser to see what
->   other information would enable us to uniquely identify that element.
+> * In principle, `id` attributes in HTML are unique on a page. This means that if you know the `id`
+>   of the element you are looking for, you should be able to construct an XPath that looks for this value
+>   without having to worry about where in the node tree the target element is located.
 > * The syntax for selecting an element like `<div id="mytarget">` is `div[@id = 'mytarget']`.
+> * Remember that XPath queries are relative to a context node, and by default that node is the root node.
+> * Use the `//` syntax to select for elements regardless of where they are in the tree.
+> * The syntax to select the parent element relative to a context node is `..`
+> * The `$x(...)` JavaScript syntax will always return an array of nodes, regardless of the number of
+>   nodes returned by the query. Contrary to XPath, JavaScript uses _zero based indexing_, so the syntax to get
+>   the first element of that array is therefore `$x(...)[0]`.
 >
 >
 > > ## Solution
 > >
 > > ~~~
-> > $x("/html/body/div/h1[@id='introduction']")
+> > $x("/html/body/div/article/h1[@id='introduction']")
 > > ~~~
 > > {: .source}
 > >
@@ -431,30 +439,16 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 
 
 
-> ## Exercise: Select this challenge box
+> ## Exercise: Select all challenge boxes by class
 > Using an XPath query in the JavaScript console of your browser, select the element that contains the text
 > you are currently reading on this page.
 >
-> Tips:
+> While we *can* select this challenge box by `$x("//h2[@id='exercise-select-this-challenge-box']/..")` what happens if we want to iterate over all challenge `<div>` elements on this page?
 >
-> * In principle, `id` attributes in HTML are unique on a page. This means that if you know the `id`
->   of the element you are looking for, you should be able to construct an XPath that looks for this value
->   without having to worry about where in the node tree the target element is located.
-> * The syntax for selecting an element like `<div id="mytarget">` is `div[@id = 'mytarget']`.
-> * Remember that XPath queries are relative to a context node, and by default that node is the root node.
-> * Use the `//` syntax to select for elements regardless of where they are in the tree.
-> * The syntax to select the parent element relative to a context node is `..`
-> * The `$x(...)` JavaScript syntax will always return an array of nodes, regardless of the number of
->   nodes returned by the query. Contrary to XPath, JavaScript uses _zero based indexing_, so the syntax to get
->   the first element of that array is therefore `$x(...)[0]`.
->
-> Make sure you select this entire challenge box. If the result of your query displays only the title of
-> this box, have a second look at the HTML structure of the document and try to figure out how to "expand"
-> your selection to the entire challenge box.
+> Make sure you create an XPath which returns each of the challenge boxes, but *only* the challenge boxes. 
 >
 > > ## Solution
-> > Let's have a look at the HTML code of this page, around this challenge box (using the "View Source" option)
-> > in our browser). The code looks something like this:
+> > Let's have a look at the HTML code of this page, around this challenge box (using the "Inspect" option in our browser). The code looks something like this:
 > >
 > > ~~~
 > > <!doctype html>
@@ -465,9 +459,11 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > >   <body>
 > >   <div class="container">
 > >   (...)
-> >     <blockquote class="challenge">
-> >       <h2 id="select-this-challenge-box">Select this challenge box</h2>
-> >       <p>Using an XPath query in the JavaScript console of your browser...</p>
+> >     
+> > <blockquote class="challenge">
+> >   <h2 id="exercise-select-all-challenge-boxes-by-class">Exercise: Select all challenge boxes by class</h2>
+> >   <p>Using an XPath query in the JavaScript console of your browser, select the element that contains the text
+> > you are currently reading on this page.</p>
 > >       (...)
 > >     </blockquote>
 > >   (...)
@@ -475,20 +471,19 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > >   </body>
 > > </html>
 > > ~~~
-> > {: .html}
+> > {: .language-html}
 > >
-> > We know that the `id` attribute should be unique, so we can use this to select the `h2` element inside
-> > the challenge box:
+> > We know that the `class` attribute is characteristic of all of the challenge boxes. This means we can create an javascript query of xpath of `$x("//blockquote[@class='challenge']");`
 > >
 > > ~~~
-> > $x("//h2[@id = 'select-this-challenge-box']/..")[0]
+> > 
 > > ~~~
 > > {: .source}
 > >
 > > This should return something like
 > >
 > > ~~~
-> > <- <blockquote class="challenge">
+> > (5) [blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge]
 > > ~~~
 > > {: .output}
 > >
@@ -497,16 +492,12 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > > |-----------------|:-------------|
 > > | `$x("`| This function tells the browser we want it to execute an XPath query. |
 > > | `//`| Look anywhere in the document... |
-> > | `h2`| ... for an h2 element ... |
-> > | `[@id = 'select-this-challenge-box']`| ... that has an `id` attribute set to `select-this-challenge-box`... |
-> > | `//`| and select the parent node of that h2 element |
-> > | `")"`| This is the end of the XPath query. |
-> > | `[0]`| Select the first element of the resulting array (since `$x()` returns an array of nodes and we are only interested in the first one).|
-> >
+> > | `blockquote`| ... for an blockquote element ... |
+> > | `[@class = 'challenge']`| ... that has an `class` attribute set to `challenge`... |
+> > | `");` | end of the javascript function.
 > > By hovering on the object returned by your XPath query in the console, your browser should helpfully highlight
-> > that object in the document, enabling you to make sure you got the right one:
+> > that object in the document, enabling you to make sure you got the right ones.
 > >
-> > ![Hovering over a resulting node in Firefox]({{ page.root }}/fig/firefox-hover.png)
 > {: .solution}
 {: .challenge}
 

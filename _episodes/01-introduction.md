@@ -54,7 +54,7 @@ In order to contextualise what we're talking about, let us do a rudimentary scra
 Let's go to the list of [UK House of Commons members](https://www.parliament.uk/mps-lords-and-offices/mps/). 
 
 We are interested in downloading this list to a spreadsheet, with columns for names and
-constituencies. Do do so, we will use the Scraper extension in the Chrome browser
+constituencies. To do so, we will use the Scraper extension in the Chrome browser
 (refer to the [Setup]({{ page.root }}/setup/) section for help installing these tools).
 
 ## Scrape similar
@@ -154,7 +154,7 @@ As useful as scraping is, there might be better options. Choose the right (i.e. 
 
 - Check whether or not you can copy and paste data from a site into Excel or Google Sheets.
 - Look for existing structured data (it may exist).
-- use Freedom of information requests (be specific about the format you want data in).
+- Use Freedom of information requests (be specific about the format you want data in).
 
 ## Example: scraping government websites for contact addresses
 
@@ -164,7 +164,7 @@ of why this information would be useful could be an advocacy group wishing to ma
 for citizens to contact their representatives about a particular issue. 
 
 Let's start by looking at the current list of members of the Canadian parliament, which is available
-on the [Parliament of Canada website](http://www.ourcommons.ca/Parliamentarians/en/members) [Backup link: https://perma.cc/W8Y9-HPWF](https://perma.cc/W8Y9-HPWF).
+on the [Parliament of Canada website](http://www.ourcommons.ca/Parliamentarians/en/members) In case they change the website, the [Backup Perma.cc link is https://perma.cc/W8Y9-HPWF](https://perma.cc/W8Y9-HPWF).
 
 This is how this page appears in November 2016:
 
@@ -245,7 +245,7 @@ Alberta and list their names and caucus information.
 >
 {: .callout}
 
-Let's look now at the current list of members for the [UK House of Commons](https://www.parliament.uk/mps-lords-and-offices/mps/) [Backup link: https://perma.cc/M8BC-JUJ8](https://perma.cc/M8BC-JUJ8). 
+Let's look now at the current list of members for the [UK House of Commons](https://www.parliament.uk/mps-lords-and-offices/mps/) And the [Backup link is https://perma.cc/M8BC-JUJ8](https://perma.cc/M8BC-JUJ8). 
 
 ![Screenshot of the UK House of Commons website]({{ page.root }}/fig/ukparl.png)
 

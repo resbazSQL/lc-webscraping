@@ -155,7 +155,7 @@ elements:
 So let's try changing the Selector XPath in Scraper to
 
 ~~~
-//body/div[1]/div/ul
+//body/div[@class='container']/div/div/ul
 ~~~
 {: .source}
 
@@ -205,7 +205,9 @@ and the addresses are separated.
 
 ## Getting attribute data from elements.
 
-What if we wanted to get their profile URIs as well? This isn't something that can be solved by being careful with our selection criteria. We'll have to add another column in the scraper. 
+Let us explore the UK parlimentary website for a moment. Can we get the profile URIs of the members?
+
+This isn't something that can be solved by being careful with our selection criteria. We'll have to add another column in the scraper. 
 
 First, we must identify where the data is that we want. 
 Open up the inspector on the first link (currently Ms Diane Abbot) and we see:
