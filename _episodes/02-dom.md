@@ -27,7 +27,7 @@ Before we delve into web scraping proper, we will first spend some time introduc
 some of the techniques that are required to indicate exactly what should be
 extracted from the web pages we aim to scrape.
 
-The material in this section was adapted from the [XPath and XQuery Tutorial](https://github.com/code4libtoronto/2016-07-28-librarycarpentrylessons/blob/master/XPath-xquery/lesson.md)
+The material in this section was adapted from the [XPath and XQuery Tutorial](https://github.com/code4libtoronto/2016-07-28-librarycarpentrylessons/blob/master/xpath-xquery/lesson.md)
 written by [Kim Pham](https://github.com/kimpham54) ([@tolloid](https://twitter.com/tolloid))
 for the July 2016 [Library Carpentry workshop](https://code4libtoronto.github.io/2016-07-28-librarycarpentry/) in Toronto.
 
@@ -68,7 +68,7 @@ Any XML document follows basic syntax rules:
   <date>2019-10-01</date>
 </catfood>
 ~~~
-{: .html}
+{: .language-html}
 
 * Text nodes (data) are contained inside the opening and closing tags
 * XML attribute nodes contain values that must be quoted, e.g.
@@ -121,8 +121,8 @@ been removed for clarity):
 ~~~
 {: .html}
 
-We can see from the source code that the title of this page is in a `title` element that is itself inside the
-`head` element, which is itself inside an `HTML` element that contains the entire content of the page.
+We can see from the source code that the title of this page is in a `<title>` element that is itself inside the
+`<head>` element, which is itself inside an `<html>` element that contains the entire content of the page.
 
 
 

@@ -97,14 +97,14 @@ A   back to top
 > Let us visit [Australian members and senators](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=).
 > Your exercise is to get a list of the members names and their websites into a text file.
 >
->>  ## Solution
->> * Right click the hyperlink to the first MP (as of June 2018 being Tony Abbott) and choose "Scrape Similiar"
->> * Click "Copy to Clipboard"
->> * Open your favourite text editor
->> * Paste and save as AusPol.tsv
->> * Open in your favourite spreadsheet application.
->> ~~~
->> Link  URL
+> > ## Solution
+> > * Right click the hyperlink to the first MP (as of June 2018 being Tony Abbott) and choose "Scrape Similiar"
+> > * Click "Copy to Clipboard"
+> > * Open your favourite text editor
+> > * Paste and save as AusPol.tsv
+> > * Open in your favourite spreadsheet application.
+> > ~~~
+> > Link  URL
 Hon Tony Abbott MP  /Senators_and_Members/Parliamentarian?MPID=EZ5
 Hon Anthony Albanese MP /Senators_and_Members/Parliamentarian?MPID=R36
 Mr John Alexander OAM, MP   /Senators_and_Members/Parliamentarian?MPID=M3M
@@ -117,7 +117,7 @@ Hon Sharon Bird MP  /Senators_and_Members/Parliamentarian?MPID=DZP
 Hon Julie Bishop MP /Senators_and_Members/Parliamentarian?MPID=83P
 Hon Chris Bowen MP  /Senators_and_Members/Parliamentarian?MPID=DZS
 Mr Andrew Broad MP  /Senators_and_Members/Parliamentarian?MPID=30379
->> ~~~
+> > ~~~
 > {: .solution}
 {: .challenge}
 
@@ -143,8 +143,8 @@ Websites change. The original version of this lesson used a governmental website
 </td>
 </tr>
 <tr>
-    <td> How the site appeared when this lesson was written. </td>
-    <td> How the site appeared on the . </td>
+    <td> How the site appeared when this lesson was first written in 2016. </td>
+    <td> How the site appeared on 27 June 2018. </td>
 </tr>
 </table>
 
@@ -168,7 +168,7 @@ of why this information would be useful could be an advocacy group wishing to ma
 for citizens to contact their representatives about a particular issue.
 
 Let's start by looking at the current list of members of the Canadian parliament, which is available
-on the [Parliament of Canada website](http://www.ourcommons.ca/Parliamentarians/en/members) [Backup link](https://perma-archives.org/warc/W8Y9-HPWF/http://www.ourcommons.ca/Parliamentarians/en/members).
+on the [Parliament of Canada website](http://www.ourcommons.ca/Parliamentarians/en/members) Backup link [at perma.cc](https://perma-archives.org/warc/W8Y9-HPWF/http://www.ourcommons.ca/Parliamentarians/en/members).
 
 This is how this page appears in November 2016:
 
@@ -208,7 +208,7 @@ organized inside labeled elements:
 
 (...)
 ~~~
-{: .html}
+{: .language-html}
 
 Thanks to these labels, we could relatively easily instruct a computer to look for all parliamentarians from Alberta and list their names and caucus information.
 
@@ -272,7 +272,7 @@ Here is the code for this page:
 </table>
 (...)
 ~~~
-{: .html}
+{: .language-html}
 
 We see that this data has been structured for displaying purposes (it is arranged in rows inside
 a table) but the different elements of information are not clearly labeled.
@@ -297,7 +297,7 @@ In this lesson, we will continue exploring the examples above and try different 
 >
 > While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
 >
-> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. [Backup link](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=). We want to find the social media html for the top 5 listed members.
+> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. Backup link [at perma.cc](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=). We want to find the social media html for the top 5 listed members.
 >
 > First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au).
 >
@@ -352,4 +352,4 @@ In this lesson, we will continue exploring the examples above and try different 
 
 * [Web Scraping (Wikipedia)](https://en.wikipedia.org/wiki/Web_scraping)
 * [The Data Journalism Handbook: Getting Data from the Web](http://datajournalismhandbook.org/1.0/en/getting_data_3.html)
-* [Wragge's OzGlam workbench](https://github.com/wragge/ozglam-workbench/)
+* [Wragge's OzGlam workbench](https://github.com/wragge/ozglam-workbench/) has a number of advanced web scraping tools. If you know the DOM well, try exploring one of his scraping tools until we get to scrapy.
