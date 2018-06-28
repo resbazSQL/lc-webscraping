@@ -119,7 +119,6 @@ A   back to top
 >>Mr Andrew Broad MP  /Senators_and_Members/Parliamentarian?MPID=30379
 >> ~~~
 >> {: .output}
-> {: .solution}
 {: .challenge}
 
 
