@@ -530,7 +530,7 @@ interactive python console because the prompt will have changed to `>>>`:
 We can now try running the XPath query we used last lesson in scrapy.
 
 ~~~
->>> response.XPath("//h4[@class='title']/a/text()")
+>>> response.xpath("//h4[@class='title']/a/text()")
 ~~~
 {: .language-python}
 
@@ -567,14 +567,14 @@ to get the "content" that the `selectors` are pointing to, the following methods
 Those objects are pointers to the different elements in the scraped page (`h4` text) as defined by our XPath query. To get to the actual content of those elements (the text of the links), we can use the `extract()` method. A variant of that method is `extract_first()` which does the same thing as `extract()` but only returns the first element if there are more than one:
 
 ~~~
->>> response.XPath("//h4[@class='title']/a/text()").extract_first()
+>>> response.xpath("//h4[@class='title']/a/text()").extract_first()
 ~~~
 {: .language-python}
 
 ~~~
->>> response.XPath("//h4[@class='title']/a/text()").extract_first()
+>>> response.xpath("//h4[@class='title']/a/text()").extract_first()
 'Hon Tony Abbott MP'
->>> response.XPath("//h4[@class='title']/a/text()").extract()
+>>> response.xpath("//h4[@class='title']/a/text()").extract()
 ['Hon Tony Abbott MP', 'Hon Anthony Albanese MP', 'Mr John Alexander OAM, MP', 'Dr Anne Aly MP', 'Hon Karen Andrews MP', 'Hon Kevin Andrews MP', 'Mr Adam Bandt MP', 'Ms Julia Banks MP', 'Hon Sharon Bird MP', 'Hon Julie Bishop MP', 'Hon Chris Bowen MP', 'Mr Andrew Broad MP']
 ~~~
 {: .language-python .output}
@@ -593,7 +593,7 @@ class AustmpdataSpider(scrapy.Spider):
     start_urls = ['http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0/']
 
     def parse(self, response):
-        print(response.XPath("//h4[@class='title']/a/text()").extract())
+        print(response.xpath("//h4[@class='title']/a/text()").extract())
         
 
 ~~~
@@ -632,7 +632,7 @@ class AustmpdataSpider(scrapy.Spider):
     start_urls = ['http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0/']
 
     def parse(self, response):
-        for resource in response.XPath("//h4[@class='title']/a/text()"):
+        for resource in response.xpath("//h4[@class='title']/a/text()"):
             print(resource.extract())
 ~~~
 {: .language-python}
@@ -687,9 +687,9 @@ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search
 ~~~
 {: .source}
 
-We know that `response.XPath("//h4[@class='title']/a/text()")` is the link inside the `h4`. What if we go the other direction? Just like changing directories `..` moves to the parent, we can use the same thing here.
+We know that `response.xpath("//h4[@class='title']/a/text()")` is the link inside the `h4`. What if we go the other direction? Just like changing directories `..` moves to the parent, we can use the same thing here.
 
-Let's try `response.XPath("//h4[@class='title']/..")`
+Let's try `response.xpath("//h4[@class='title']/..")`
 
 ~~~
 [<Selector XPath="//h4[@class='title']/.." data='<div class="medium-8 columns">\r\n        '>
@@ -713,7 +713,7 @@ class AustmpdataSpider(scrapy.Spider):
     start_urls = ['http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0/']
 
     def parse(self, response):
-        for resource in response.XPath("//h4[@class='title']/.."):
+        for resource in response.xpath("//h4[@class='title']/.."):
             name = resource.XPath("h4/a/text()").extract_first()
             print(name)
 ~~~
@@ -760,7 +760,7 @@ Mr Andrew Broad MP
     > > start_urls = ['http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0/']
 > > 
 > >     def parse(self, response):
-> >         for resource in response.XPath("//h4[@class='title']/.."):
+> >         for resource in response.xpath("//h4[@class='title']/.."):
 > >             name = resource.XPath("h4/a/text()").extract_first()
 > >             link = resource.XPath("h4/a/@href").extract_first()
 > >             district = resource.XPath("dl/dd/text()").extract_first()
@@ -862,7 +862,7 @@ class AustmpdataSpider(scrapy.Spider):
         # as the 'response' object.
 
 
-        for resource in response.XPath("//h4[@class='title']/.."):
+        for resource in response.xpath("//h4[@class='title']/.."):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
@@ -982,7 +982,7 @@ district,link,name
 > >        # 'start_url' argument above. The content of the scraped URL is passed on
 > >        # as the 'response' object.
 > >
-> >        for resource in response.XPath("//h4[@class='title']/.."):
+> >        for resource in response.xpath("//h4[@class='title']/.."):
 > >            # Loop over each item on the page. 
 > >            item = AustmpsItem() # Creating a new Item object
 > >

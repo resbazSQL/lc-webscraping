@@ -33,7 +33,7 @@ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search
 
 with
 ~~~
-response.XPath("//a[@title='Next page']/@href")
+response.xpath("//a[@title='Next page']/@href")
 ~~~
 {: .source}
 
@@ -47,7 +47,7 @@ We see:
 We can use `extract_first()`` here because the links are identical.
 
 ~~~
->>> response.XPath("//a[@title='Next page']/@href").extract_first()
+>>> response.xpath("//a[@title='Next page']/@href").extract_first()
 ~~~
 {: .language-python}
 
@@ -74,7 +74,7 @@ returns
 > variable:
 >
 > ~~~
-> >>> testurl = response.XPath("//a[@title='Next page']/@href").extract_first()
+> >>> testurl = response.xpath("//a[@title='Next page']/@href").extract_first()
 > ~~~
 > {: .language-python}
 >
@@ -123,7 +123,7 @@ class AustmpdataSpider(scrapy.Spider):
             yield item
 
     def scrape(self, response):
-        for resource in response.XPath("//h4[@class='title']/.."):
+        for resource in response.xpath("//h4[@class='title']/.."):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
@@ -151,7 +151,7 @@ Since we have an XPath query we know will extract the URLs we are looking for, w
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        nextpageurl = response.XPath("//a[@title='Next page']/@href").extract_first()
+        nextpageurl = response.xpath("//a[@title='Next page']/@href").extract_first()
         nextpage = response.urljoin(nextpageurl)
         print(nextpage)
        
@@ -183,7 +183,7 @@ To our function parse, we add a call to itself: the function parse.
         # for item in self.scrape(response):
         #     yield item
 
-        nextpageurl = response.XPath("//a[@title='Next page']/@href")
+        nextpageurl = response.xpath("//a[@title='Next page']/@href")
 
         if nextpageurl:
             # If we've found a pattern which matches
@@ -228,7 +228,7 @@ class AustmpdataSpider(scrapy.Spider):
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        nextpageurl = response.XPath("//a[@title='Next page']/@href")
+        nextpageurl = response.xpath("//a[@title='Next page']/@href")
 
         for item in self.scrape(response):
             yield item
@@ -240,7 +240,7 @@ class AustmpdataSpider(scrapy.Spider):
             yield scrapy.Request(nextpage, callback=self.parse)
 
     def scrape(self, response):
-        for resource in response.XPath("//h4[@class='title']/.."):
+        for resource in response.xpath("//h4[@class='title']/.."):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
@@ -290,7 +290,7 @@ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=R
 
 
 ~~~
->>> response.XPath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract()
+>>> response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract()
 ~~~
 {: .language-python}
 
@@ -334,7 +334,7 @@ class AustmpdataSpider(scrapy.Spider):
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        nextpageurl = response.XPath("//a[@title='Next page']/@href")
+        nextpageurl = response.xpath("//a[@title='Next page']/@href")
 
         for item in self.scrape(response):
             yield item
@@ -347,7 +347,7 @@ class AustmpdataSpider(scrapy.Spider):
 
         
     def scrape(self, response):
-        for resource in response.XPath("//h4[@class='title']/.."):
+        for resource in response.xpath("//h4[@class='title']/.."):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
@@ -370,7 +370,7 @@ class AustmpdataSpider(scrapy.Spider):
     def get_phonenumber(self, response):
         # A scraper designed to operate on one of the profile pages
         item = response.meta['item'] #Get the item we passed from scrape()        
-        item['phonenumber'] = response.XPath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract_first()
+        item['phonenumber'] = response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract_first()
         yield item #Return the new phonenumber'd item back to scrape
 ~~~
 {: .language-python}
