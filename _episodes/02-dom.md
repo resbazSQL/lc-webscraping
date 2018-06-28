@@ -473,14 +473,14 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > > ~~~
 > > {: .language-html}
 > >
-> > We know that the `class` attribute is characteristic of all of the challenge boxes. This means we can create an Javascript query of XPath of `$x("//blockquote[@class='challenge']");`
+> > We know that the `class` attribute is characteristic of all of the challenge boxes. This means we can create an Javascript query of XPath of 
 > >
 > > ~~~
-> > 
+> > $x("//blockquote[@class='challenge']");
 > > ~~~
 > > {: .source}
 > >
-> > This should return something like
+> > This should return something like:
 > >
 > > ~~~
 > > (5) [blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge]
@@ -494,7 +494,8 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > > | `//`| Look anywhere in the document... |
 > > | `blockquote`| ... for an blockquote element ... |
 > > | `[@class = 'challenge']`| ... that has an `class` attribute set to `challenge`... |
-> > | `");` | end of the Javascript function.
+> > | `");` | end of the Javascript function. |
+> > 
 > > By hovering on the object returned by your XPath query in the console, your browser should helpfully highlight
 > > that object in the document, enabling you to make sure you got the right ones.
 > >

@@ -24,7 +24,7 @@ This is important because whenever we're scraping a site we always want to start
 
 Here, we see some useful things. That there is a `class="next` and that there's a characteristic `li/a` with a title "Next Page". These are all attributes we can target.
 
-We can see immediately that we can't use a relative path for this. What happens if we take some cues from the source and run the Scrapy Shell:
+What happens if we take some cues from the source and run the Scrapy Shell:
 
 ~~~
 scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
@@ -40,7 +40,7 @@ response.xpath("//a[@title='Next page']/@href")
 We see:
 
 ~~~
-[<Selector XPath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>, <Selector XPath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>]
+[<Selector xpath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>, <Selector xpath="//a[@title='Next page']/@href" data='?page=2&q=&mem=1&par=-1&gen=0&ps=12&st=1'>]
 ~~~
 {: .language-html .output}
 
@@ -140,7 +140,7 @@ class AustmpdataSpider(scrapy.Spider):
 
 ## Extracting URLs using the spider
 
-Since we have an XPath query we know will extract the URLs we are looking for, we can now use the `XPath()` method and update the spider accordingly. We are going to comment out the response parsing and save it for later.
+Since we have an XPath query we know will extract the URLs we are looking for, we can now use the `XPath()` method and update the spider accordingly.
 
 (editing `austmps/austmps/spiders/austmpdata.py`)
 
@@ -155,8 +155,8 @@ Since we have an XPath query we know will extract the URLs we are looking for, w
         nextpage = response.urljoin(nextpageurl)
         print(nextpage)
        
-        # for item in self.scrape(response):
-        #     yield item
+        for item in self.scrape(response):
+            yield item
 (...)
 ~~~
 {: .language-python}
@@ -273,13 +273,13 @@ We get all 145 members of parliment + 1 line for the header:
 
 ## Visiting child pages
 
-Now that we're scraping and following links, what happens if we want to add a member's electorate office phone number to this data sheet?
+Now that we're scraping and following links, what happens if we want to add a member's Electorate Office phone number to this data sheet?
 
-We will need to tell the scraper to load their profile page (which we have the url for) and to write a second scraper function to find the data we want from this specific page.
+We will need to tell the scraper to load their profile page (which we have the URL for) and to write a second scraper function to find the data we want from this specific page.
 
-First, use the tools we've explored today to find the correct XPath for the electorate office phone number.
+First, use the tools we've explored today to find the correct XPath for the Electorate Office phone number.
 
-Tip: "Electorate Office " has a space inside the `h3`. And we're going to need to use `following-sibling::``.
+Tip: `"Electorate Office "` has a space inside the `h3`. And we're going to need to use `following-sibling::`.
 
 Using scrapy shell 
 
@@ -294,7 +294,7 @@ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=R
 ~~~
 {: .language-python}
 
-We will use the `dd[1]`` here because otherwise we're going to enter into far more complex selectors.
+We will use the `dd[1]` here because otherwise we're going to enter into far more complex selectors.
 
 Now that we have the XPath solution, we need to make sure the items.py object has a phone number that it can accept.
 

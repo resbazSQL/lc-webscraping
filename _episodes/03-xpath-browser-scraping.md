@@ -232,7 +232,7 @@ Note how this shows us the *text* inside the first element called `a` in the fir
 We see:
 ![Adding td/a/@href gives us url]({{page.root}}/fig/href.png)
 
-## Exercises: Scrape the list of Australian members of parliment, their page URLs, their districts, their parties, and their twitter handles.
+## Exercises: scrape the list of Australian members of parliment, their page URLs, their districts, their parties, and their twitter handles.
 
 Let us remind ourselves of the handy set of XPath expressions referenced in the prior section.
 

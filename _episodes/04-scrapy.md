@@ -18,7 +18,7 @@ keypoints:
 - "In Scrapy, a \"Spider\" is the code that tells it what to do on a specific website."
 - "A Scrapy project can have more than one spider but needs at least one."
 - "With Scrapy, we can use XPath, CSS selectors and Regular Expressions to define what elements to scrape from a page."
-- "Extracted data can be stored in \"Item\" objects. Such objects must be defined before they can be used."
+- "Extracted data can be stored in `Item` objects. Such objects must be defined before they can be used."
 - "Scrapy will automatically stored extracted data in CSV, JSON or XML format based on the file extension given in the -o option."
 ---
 
@@ -153,8 +153,7 @@ ls -F austmps
 {: .language-bash}
 
 ~~~
-__init__.py items.py    settings.py
-__pycache__ pipelines.py    spiders/
+__init__.py  items.py  middlewares.py  pipelines.py  __pycache__/  settings.py  spiders/
 ~~~
 {: .output}
 
@@ -167,9 +166,13 @@ austmps/            # the root project directory
     austmps/        # project's Python module, you'll import your code from here
         __init__.py
 
-        items.py        # project items file
+        items.py        # Holds the structure of the data we want to collect
 
-        pipelines.py    # project pipelines file
+        middlewares.py  # We aren't going to use this today. 
+                        # A file to manipulate how spiders process input, incase pretending to be a normal HTTP browser doesn't work.
+
+        pipelines.py    # We aren't going to use this today, either.
+                        # Once our spider writes things to the "item," we can use pipelines to do additional processing before we export it.
 
         settings.py # project settings file
 
@@ -300,7 +303,7 @@ has automatically generated.
 > > ## Solution
 > > 
 > > `allowed_domains` is a safeguard for our spider, it will restrict its ability to scrape pages
-> > outside of a certain realm. An URL is structured as a path to a resource, with the root directory
+> > outside of a certain realm. A URL is structured as a path to a resource, with the root directory
 > > at the beginning and a set of "subdirectories" after that. In `www.mydomain.ca/house/dog.html`,
 > > `http://www.mydomain.ca/` is the root, `house/` is a first level directory and `dog.html` is a file
 > > sitting inside the `house/` directory.
@@ -314,7 +317,7 @@ has automatically generated.
 > > To answer the question, leaving `allowed_domains = ["www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"]`
 > > would restrict the spider to pages with URLs of the same pattern, and 
 > > `https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=EZ5`
-> > if of a different pattern, so Scrapy would prevent the spider from scraping it.
+> > is of a different pattern, so Scrapy would prevent the spider from scraping it.
 > >
 > {: .solution}
 >
@@ -429,7 +432,7 @@ class AustmpdataSpider(scrapy.Spider):
 ~~~
 {: .language-python}
 
-Now, if we go back to the command line and run our spider again
+Now, if we go back to the command line and run our spider again. Make sure to change to your project's root directory first before running this, so we don't leave random files around.
 
 ~~~
 scrapy crawl austmpdata
@@ -537,9 +540,12 @@ We can now try running the XPath query we used last lesson in scrapy.
 
 We see:
 ~~~
-[<Selector XPath="//h4[@class='title']/a/text()" data='Hon Tony Abbott MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Anthony Albanese MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Mr John Alexander OAM, MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Dr Anne Aly MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Karen Andrews MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Kevin Andrews MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Mr Adam Bandt MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Ms Julia Banks MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Sharon Bird MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Julie Bishop MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Hon Chris Bowen MP'>, <Selector XPath="//h4[@class='title']/a/text()" data='Mr Andrew Broad MP'>]
+[<Selector xpath="//h4[@class='title']/a/text()" data='Hon Tony Abbott MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Anthony Albanese MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr John Alexander OAM, MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Dr Anne Aly MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Karen Andrews MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Kevin Andrews MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr Adam Bandt MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Ms Julia Banks MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Sharon Bird MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Julie Bishop MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Hon Chris Bowen MP'>, <Selector xpath="//h4[@class='title']/a/text()" data='Mr Andrew Broad MP'>]
 ~~~
 {: .language-html .output}
+
+We should now exit the shell. We can do so with <kbd>Ctrl-c</kbd>
+
 
 This tells us that we have accurately targeted scrapy. We can then use this to find more variables as soon as we're finished with the spider.
 
@@ -550,8 +556,8 @@ object supports a variety of methods to act on its contents:
 
 |Method|Description|
 |-----------------|:-------------|
-|`XPath()`| Returns a list of selectors, each of which points to the nodes selected by the XPath query given as argument|
-|`css()`| Works similarly to the `XPath()` method, but uses CSS expressions to select elements.|
+|`xpath()`| Returns a list of selectors, each of which points to the nodes selected by the XPath query given as argument|
+|`css()`| Works similarly to the `xpath()` method, but uses CSS expressions to select elements.|
 
 Those methods will return objects of a different type, called `selectors`. As their name implies,
 these objects are "pointers" to the elements we are looking for inside the scraped page. In order
@@ -580,7 +586,7 @@ Those objects are pointers to the different elements in the scraped page (`h4` t
 {: .language-python .output}
 
 
-Since we have an XPath query we know will extract the names we are looking for, we can now use the `XPath()` method and update the spider accordingly:
+Since we have an XPath query we know will extract the names we are looking for, we can now use the `xpath()` method and update the spider accordingly:
 
 (editing `austmps/austmps/spiders/austmpdata.py`)
 
@@ -692,7 +698,7 @@ We know that `response.xpath("//h4[@class='title']/a/text()")` is the link insid
 Let's try `response.xpath("//h4[@class='title']/..")`
 
 ~~~
-[<Selector XPath="//h4[@class='title']/.." data='<div class="medium-8 columns">\r\n        '>
+[<Selector xpath="//h4[@class='title']/.." data='<div class="medium-8 columns">\r\n        '>
 ~~~
 {: .language-html .output}
 
@@ -798,16 +804,16 @@ Mr Andrew Broad MP Mallee, Victoria /Senators_and_Members/Parliamentarian?MPID=3
 ~~~
 {: .output}
 
-## Using Items to store scraped data
+## Using `Item`s to store scraped data
 
 Scrapy conveniently includes a mechanism to collect scraped data and output it
-in several different useful ways. It uses objects called `Items`. Those are akin
-to Python dictionaries in that each Item can contain one or more fields to
+in several different useful ways. It uses objects called `Item`s. Those are akin
+to Python dictionaries in that each `Item` can contain one or more fields to
 store individual data element. Another way to put it is, if you visualize the
-data as a spreadsheet, each Item represents a row of data, and the fields within
+data as a spreadsheet, each `Item` represents a row of data, and the fields within
 each item are columns.
 
-Before we can begin using Items, we need to define their structure. Using our editor,
+Before we can begin using `Item`s, we need to define their structure. Using our editor,
 let's navigate and edit the following file that Scrapy has created for us when we
 first created our project: `austmps/austmps/items.py`
 
