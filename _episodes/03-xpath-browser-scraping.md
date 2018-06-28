@@ -255,7 +255,7 @@ Let us remind ourselves of the handy set of XPath expressions referenced in the 
 
 
 
-> ## Part 1: get scraped list by element
+> ## Part 1: Get scraped list by element
 > 
 > Use Scraper to export the list of the first twelve [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). Backup link: [https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=).
 > 
@@ -312,7 +312,7 @@ Hon Tony Abbott MP  Warringah, New South Wales  /Senators_and_Members/Parliament
 {: .discussion}
 
 
-## Part 2: get scraped list by class (Advanced)
+## Part 2: Get scraped list by class (Advanced)
 
 
 > # Discussion

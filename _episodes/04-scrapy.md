@@ -751,7 +751,7 @@ Mr Andrew Broad MP
 {: .output}
 
 
-> ## Exercise: get the two other columns we want.
+> ## Exercise: Get the two other columns we want.
 >
 > Now that we are extracting one column. Reference the XPaths from your prior code to print out the other columns.
 > 
@@ -952,7 +952,7 @@ district,link,name
 {: .output}
 
 
-> ## Exercise: add the rest of the columns from the previous manual browser scraping to the csv.
+> ## Exercise: Add the rest of the columns from the previous manual browser scraping to the csv.
 > 
 > On [browser scraping](/03-XPath-browser-scraping), exercise 2, we had other columns: their party affiliation, and their twitter handle. Let's add them to this exporter.
 > 

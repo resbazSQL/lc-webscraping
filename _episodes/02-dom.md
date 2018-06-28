@@ -126,7 +126,7 @@ We can see from the source code that the title of this page is in a `<title>` el
 
 
 
-> ## Exercise: interactively edit this page
+> ## Exercise: Interactively edit this page
 > Using your favourite browser, open up the browser "inspector" or developer console.
 > 
 > Edit the following sentence by removing the word "not":
@@ -263,7 +263,7 @@ This next exercise will allow us to practice with an XPath directly. It can also
 
 We can run XPath queries directly from within all major modern browsers, by enabling the built-in Javascript console.
 
-> ## Exercise: display the console in your browser
+> ## Exercise: Display the console in your browser
 >
 > * In Firefox, use to the *Tools > Web Developer > Web Console* menu item.
 > * In Chrome, use the *View > Developer > Javascript Console* menu item.
@@ -392,7 +392,7 @@ Let's have a look at the HTML code of this page, around this challenge box (usin
   (...)
     
 <blockquote class="challenge">
-  <h2 id="exercise-select-all-challenge-boxes-by-class">Exercise: select all challenge boxes by class</h2>
+  <h2 id="exercise-select-all-challenge-boxes-by-class">Exercise: Select all challenge boxes by class</h2>
   <p>Using an XPath query in the Javascript console of your browser, select the element that contains the text
 you are currently reading on this page.</p>
       (...)
@@ -428,7 +428,7 @@ that object in the document, enabling you to make sure you got the right ones.
 
 
 
-> ## Exercise: select the "Introduction" title by ID
+> ## Exercise: Select the "Introduction" title by ID
 > In a previous challenge, we were able to select the "Introduction" title because we knew it was
 > the first `h1` element on the page. But what if we didn't know how many such elements were on the
 > page. In other words, is there a different attribute that allows us to uniquely identify that title

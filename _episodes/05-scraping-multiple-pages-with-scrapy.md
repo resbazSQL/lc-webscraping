@@ -1,7 +1,7 @@
 ---
 title: "Scraping multiple pages"
 teaching: 30
-exercises: 0
+exercises: 30
 questions:
 - "How do I tell Scrapy to follow URLs and scrape their contents?"
 objectives:
@@ -394,3 +394,7 @@ district,link,name,party,phonenumber,twitter
 {: .output}
 
 Triumph! 
+
+> ## Summative exercise: Write a new web scraper
+> 
+> Now that we've built this web scraper. Use the list of [Members of the house of commons](https://www.parliament.uk/mps-lords-and-offices/mps/) and extract their name, constituency, party, twitter handle, and phone number.
