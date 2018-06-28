@@ -103,8 +103,8 @@ A   back to top
 >> * Open your favourite text editor
 >> * Paste and save as AusPol.tsv
 >> * Open in your favourite spreadsheet application.
->> ~~~
->> Link  URL
+>>> ~~~
+>>> Link  URL
 Hon Tony Abbott MP  /Senators_and_Members/Parliamentarian?MPID=EZ5
 Hon Anthony Albanese MP /Senators_and_Members/Parliamentarian?MPID=R36
 Mr John Alexander OAM, MP   /Senators_and_Members/Parliamentarian?MPID=M3M
@@ -117,7 +117,7 @@ Hon Sharon Bird MP  /Senators_and_Members/Parliamentarian?MPID=DZP
 Hon Julie Bishop MP /Senators_and_Members/Parliamentarian?MPID=83P
 Hon Chris Bowen MP  /Senators_and_Members/Parliamentarian?MPID=DZS
 Mr Andrew Broad MP  /Senators_and_Members/Parliamentarian?MPID=30379
->> ~~~
+>>> ~~~
 > {: .solution}
 {: .challenge}
 
@@ -144,12 +144,13 @@ Websites change. The original version of this lesson used a governmental website
 </tr>
 <tr>
     <td> How the site appeared when this lesson was written. </td>
-    <td> How the site appeared on the . </td>
+    <td> How the site appeared on the 12th of June 2018. </td>
 </tr>
 </table>
 
-Crucially, going to the [wayback machine at archive.org](https://web.archive.org/web/*/https://www.ola.org/en/members/current) indicates that this *governmental archive* was indexed on June 12, 2018. Far too late to save the data from the previous election. When you think a site is important enough to scrape, the site is important enough to archive. Visiting the site at [archive.org](https://archive.org) can (unless their robots.txt file prohibits it), index the site. Another service used by many law libraries is [perma.cc](https://perma.cc), which makes delightful short URIs which are good for including in papers.
-In fact, you may have noticed that the site we just scraped in the exercise above was a permanent record created through perma.cc!
+Crucially, going to the [wayback machine at archive.org](https://web.archive.org/web/*/https://www.ola.org/en/members/current) indicates that this *governmental archive* was indexed on June 12, 2018. Far too late to save the data from the previous election. When you think a site is important enough to scrape, the site is important enough to archive. Visiting the site at [archive.org](https://archive.org) can (unless their robots.txt file prohibits it), index the site.
+
+Another service used by many law libraries is [perma.cc](https://perma.cc), which makes delightful short URIs which are good for including in papers. In fact, you may have noticed that the site we just scraped in the exercise above was a permanent record created through perma.cc!
 
 
 ### Consider other options
