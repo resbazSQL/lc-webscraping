@@ -74,7 +74,7 @@ Any XML document follows basic syntax rules:
 * XML attribute nodes contain values that must be quoted, e.g.
 ``` <catfood type="basic"></catfood> ```
 
-# The Document Object Model.
+# The Document Object Model
 
 This lesson cannot really teach HTML and javascript from scratch. However, we need to make sure we review some things about html. For a good discussion on the Document object model, see this <a href="https://www.w3schools.com/Js/js_htmldom.asp">W3Schools tutorial</a>.
 
@@ -87,7 +87,7 @@ This idea of a living software "object" being an html "page" is what allows us t
 Every html page that we scrape is a container of containers which contain... containers and eventually text. We can, using an xpath expression, address any container or any pattern of containers. Before we continue, let us explore editing a page's DOM.
 
 
-## Playing with the DOM.
+## Playing with the DOM
 
 We will use the HTML code that describes this very page you are reading as an example. By default, a web browser
 interprets the HTML code to determine what markup to apply to the various elements of a document, and the code is
@@ -161,7 +161,7 @@ The page is a living document, with a skeleton we can inspect, manipulate, and q
 > * D. Quickly open the developer tools.
 > 
 > > ## Solution
-> > While D and A are kind of answers, choosing "view source" allows us to see the *original* source of the webpage (instead of the source of what is actually being displayed to us) and the function key <kbd>F12</kbd> is faster than choosing right-click, inspect, and then scrolling around. The inspect functionality allows us to precicely target elements in the *actual* web page we are looking at in front of us. 
+> > B. The inspector allows us to interact with the page in front of us, using graphical manipulation to select elements. While D and A are kind of answers, choosing "view source" allows us to see the *original* source of the webpage (instead of the source of what is actually being displayed to us) and the function key <kbd>F12</kbd> is faster than choosing right-click, inspect, and then scrolling around. The inspect functionality allows us to precicely target elements in the *actual* web page we are looking at in front of us. 
 > {: .solution}
 > 
 {: .discussion}
@@ -221,7 +221,7 @@ Paths in XPath are defined using slashes (`/`) to separate the steps in a node c
 URLs or Unix directories.
 
 In XPath, all expressions are evaluated based on a *context node*. The context node is the node in which a path
-starts from. The default context is the root node, indicated by a single slash (/), as in the example above.
+starts from. The default context is the root node, indicated by a single `/`, as in the example above.
 
 The most useful path expressions are listed below:
 
@@ -229,7 +229,7 @@ The most useful path expressions are listed below:
 |-----------------|:-------------|
 | ```nodename```| Select all nodes with the name "nodename"   |
 | ```/```  | A beginning single slash indicates a select from the root node, subsequent slashes indicate selecting a child node from current node  |
-| ```//``` | Select direct and indirect child nodes in the document from the current node - this gives us the ability to "skip levels" |
+| ```//``` | Select direct and indirect child nodes in the document from the current node - this gives us the ability to "skip levels". If we start out a query with `//`, this means we can find any child html element in the document without addressing its full path from `<html>`  |
 | ```.```       | Select the current context node   |
 |```..```  | Select the parent of the context node|
 |```@```  | Select attributes of the context node|
@@ -244,7 +244,7 @@ The most useful path expressions are listed below:
 > Is the DOM?
 >
 > * A. A way of finding data
-> * B. html code
+> * B. HTML code
 > * C. Something that a web browser has
 > * D. A Hierarchy of elements which contain other elements
 > 
@@ -510,13 +510,13 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 >
 > What are three ways of finding elements we want?
 >
-> * A. By path, by ID, and by Class
+> * A. By path, by ID, and by class
 > * B. By XPath, //, and, ${}
 > * C. By path, element name, and relative position
 > * D. View source, Ctrl-F, the element inspector
 > 
 > > ## Solution
-> > A. We can address the elements relative to each other or the root, `/html/body/div/article/blockquote`, by a unique property they have (id): `[@id = 'select-this-challenge-box']` or by a shared property we are interested in (class): `//blockquote[@class='challenge']` 
+> > A. We can address the elements relative to each other or the root, `/html/body/div/article/blockquote`, by a unique property they have (id): `//blockquote[@id = 'select-this-challenge-box']` or by a shared property we are interested in (class): `//blockquote[@class='challenge']` 
 > {: .solution}
 > 
 {: .discussion}
