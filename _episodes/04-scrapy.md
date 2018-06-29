@@ -61,7 +61,7 @@ required libraries as well.
 You can verify that you have the latest version of Scrapy installed by typing
 
 ~~~
-scrapy version
+$ scrapy version
 ~~~
 {: .language-bash}
 
@@ -91,7 +91,7 @@ Carpentry's lesson about the [UNIX shell](http://swcarpentry.github.io/shell-nov
 unsure about how to do that). Then, type the following
 
 ~~~
-scrapy startproject austmps
+$ scrapy startproject austmps
 ~~~
 {: .language-bash}
 
@@ -113,7 +113,7 @@ You can start your first spider with:
 If we list the files in the directory we ran the previous command
 
 ~~~ 
-ls -F
+$ ls -F
 ~~~
 {: .language-bash}
 
@@ -128,14 +128,14 @@ austmps/
 directory
 
 ~~~
-cd austmps
+$ cd austmps
 ~~~
 {: .language-bash}
 
 we can see that it contains two items:
 
 ~~~
-ls -F
+$ ls -F
 ~~~
 {: .language-bash}
 
@@ -148,7 +148,7 @@ Yes, confusingly, Scrapy creates a subdirectory called `austmps` within the `aus
 directory. Inside that _second_ directory, we see a bunch of additional files:
 
 ~~~
-ls -F austmps
+$ ls -F austmps
 ~~~
 {: .language-bash}
 
@@ -207,7 +207,7 @@ We just need to replace `<SCRAPER NAME>` with the name we want to give our spide
 the URL we want to spider to crawl. In our case, we can type:
 
 ~~~
-scrapy genspider austmpdata "www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
+$ scrapy genspider austmpdata "www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
 ~~~
 {: .language-bash}
 
@@ -366,7 +366,7 @@ we are located in the project's top level directory (where the `scrapy.cfg` file
 `cd` as required, then we can run:
 
 ~~~
-scrapy crawl austmpdata  -s DEPTH_LIMIT=1
+$ scrapy crawl austmpdata  -s DEPTH_LIMIT=1
 ~~~
 {: .language-bash}
 
@@ -441,7 +441,7 @@ class AustmpdataSpider(scrapy.Spider):
 Now, if we go back to the command line and run our spider again. Make sure to change to your project's root directory first before running this, so we don't leave random files around.
 
 ~~~
-scrapy crawl austmpdata  -s DEPTH_LIMIT=1
+$ scrapy crawl austmpdata  -s DEPTH_LIMIT=1
 ~~~
 {: .language-bash}
 
@@ -449,7 +449,7 @@ we should get similar debugging output as before, but there should also now be a
 `test.html` in our project's root directory:
 
 ~~~
-ls -F
+$ ls -F
 ~~~
 {: .language-bash}
 
@@ -461,7 +461,7 @@ austmps/    scrapy.cfg  test.html
 We can check that it contains the HTML from our target URL:
 
 ~~~
-head -n 12 test.html
+$ head -n 12 test.html
 ~~~
 {: .language-bash}
 
@@ -507,7 +507,7 @@ queries from within Scrapy.
 This is achieved by calling the _Scrapy shell_ from the command line:
 
 ~~~
-scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
+$ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
 ~~~
 {: .source}
 
@@ -614,7 +614,7 @@ class AustmpdataSpider(scrapy.Spider):
 We now need to re-run the spider.
 
 ~~~
-scrapy crawl austmpdata -s DEPTH_LIMIT=1
+$ scrapy crawl austmpdata -s DEPTH_LIMIT=1
 ~~~
 {: .source}
 
@@ -690,12 +690,12 @@ Which is great.
 
 ## Getting more data
 
-But! I hear someone cry, there's only one column! Now, let's fix that. First, we need to find the element holding the data we want. 
+But! We hear someone cry, there's only one column! Now, let's fix that. First, we need to find the element holding the data we want. 
 
 Let's launch scrapy shell again.
 
 ~~~
-scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
+$ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
 ~~~
 {: .source}
 
@@ -726,7 +726,7 @@ class AustmpdataSpider(scrapy.Spider):
 
     def parse(self, response):
         for resource in response.xpath("//h4[@class='title']/.."):
-            name = response.xpath("h4/a/text()").extract_first()
+            name = resource.xpath("h4/a/text()").extract_first()
             print(name)
 ~~~
 {: .language-python}
@@ -825,7 +825,6 @@ first created our project: `austmps/austmps/items.py`
 
 Scrapy has pre-populated this file with an empty "austmpsItem" class:
 
-(editing `austmps/austmps/items.py`)
 
 ~~~
 import scrapy
@@ -841,6 +840,8 @@ class AustmpsItem(scrapy.Item):
 
 Let's add a few fields to store the data we aim to extract from the detail pages
 for each politician:
+
+(editing `austmps/austmps/items.py`)
 
 ~~~
 import scrapy
@@ -883,9 +884,6 @@ class AustmpdataSpider(scrapy.Spider):
             item['district'] = resource.xpath("dl/dd/text()").extract_first()
 
             yield item
-
-        
-
 ~~~
 {: .language-python}
 
@@ -899,9 +897,9 @@ We made two significant changes to the file above:
 If we now run our spider again:
 
 ~~~
-scrapy crawl austmpdata -s DEPTH_LIMIT=1
+$ scrapy crawl austmpdata -s DEPTH_LIMIT=1
 ~~~
-{: .source}
+{: .language-bash}
 
 We see:
 
@@ -922,9 +920,9 @@ But let's now try running the spider with an extra `-o` ('o' for 'output') argum
 specifies the name of an output file with a `.csv` file extension:
 
 ~~~
-scrapy crawl austmpdata -o output.csv
+$ scrapy crawl austmpdata -o output.csv
 ~~~
-{: .source}
+{: .language-bash}
 
 > ## No depth limit?
 > 
@@ -939,9 +937,9 @@ scraped data, conveniently arranged using the Comma-Separated Values (CSV) forma
 to be imported into our favourite spreadsheet!
 
 ~~~
-head -3 output.csv
+$ head -3 output.csv
 ~~~
-{: .source}
+{: .language-bash}
 
 We see:
 ~~~
@@ -1004,11 +1002,11 @@ district,link,name
 > >            # Loop over each item on the page. 
 > >            item = AustmpsItem() # Creating a new Item object
 > >
-> >            item['name'] = response.xpath("h4/a/text()").extract_first()
-> >            item['link'] = response.xpath("h4/a/@href").extract_first()
-> >            item['district'] = response.xpath("dl/dd/text()").extract_first()
-> >            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-> >            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+> >            item['name'] = resource.xpath("h4/a/text()").extract_first()
+> >            item['link'] = resource.xpath("h4/a/@href").extract_first()
+> >            item['district'] = resource.xpath("dl/dd/text()").extract_first()
+> >            item['twitter'] = resource.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+> >            item['party'] = resource.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 > >
 > >            yield item
 > >~~~
