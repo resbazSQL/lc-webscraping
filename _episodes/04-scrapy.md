@@ -773,9 +773,9 @@ Mr Andrew Broad MP
 > > 
 > >     def parse(self, response):
 > >         for resource in response.xpath("//h4[@class='title']/.."):
-> >             name = response.xpath("h4/a/text()").extract_first()
-> >             link = response.xpath("h4/a/@href").extract_first()
-> >             district = response.xpath("dl/dd/text()").extract_first()
+> >             name = resource.xpath("h4/a/text()").extract_first()
+> >             link = resource.xpath("h4/a/@href").extract_first()
+> >             district = resource.xpath("dl/dd/text()").extract_first()
 > >             print(name, district, link)
 > > ~~~
 > > {: .source .language-python}
