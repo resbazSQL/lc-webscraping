@@ -27,15 +27,15 @@ Here, we see some useful things. That there is a `class="next` and that there's 
 What happens if we take some cues from the source and run the Scrapy Shell:
 
 ~~~
-scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
+$ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
 ~~~
-{: .source}
+{: .source .language-bash}
 
 with
 ~~~
-response.xpath("//a[@title='Next page']/@href")
+>>> response.xpath("//a[@title='Next page']/@href")
 ~~~
-{: .source}
+{: .source .language-python}
 
 We see:
 
@@ -127,11 +127,11 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = response.xpath("h4/a/text()").extract_first()
-            item['link'] = response.xpath("h4/a/@href").extract_first()
-            item['district'] = response.xpath("dl/dd/text()").extract_first()
-            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['name'] = resource.xpath("h4/a/text()").extract_first()
+            item['link'] = resource.xpath("h4/a/@href").extract_first()
+            item['district'] = resource.xpath("dl/dd/text()").extract_first()
+            item['twitter'] = resource.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = resource.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             yield item
 ~~~
@@ -160,6 +160,11 @@ Since we have an XPath query we know will extract the URLs we are looking for, w
 (...)
 ~~~
 {: .language-python}
+
+~~~
+$ scrapy crawl austmpdata -s DEPTH_LIMIT=1
+~~~
+{: .language-bash}
 
 And this prints out the next page url. 
 ~~~
@@ -194,7 +199,14 @@ To our function parse, we add a call to itself: the function parse.
 ~~~
 {: .language-python}
 
-And now, with a single invocation of the scraper, we get:
+And now, with a single invocation of the scraper (note our lack of depth limit, since we're testing recursion):
+
+~~~
+$ scrapy crawl austmpdata 
+~~~
+{: .language-bash}
+
+we get:
 
 ~~~
 (...)
@@ -244,11 +256,11 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = response.xpath("h4/a/text()").extract_first()
-            item['link'] = response.xpath("h4/a/@href").extract_first()
-            item['district'] = response.xpath("dl/dd/text()").extract_first()
-            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['name'] = resource.xpath("h4/a/text()").extract_first()
+            item['link'] = resource.xpath("h4/a/@href").extract_first()
+            item['district'] = resource.xpath("dl/dd/text()").extract_first()
+            item['twitter'] = resource.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = resource.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             yield item
 
@@ -259,9 +271,9 @@ class AustmpdataSpider(scrapy.Spider):
 If we run:
 
 ~~~
-rm output.csv
-scrapy crawl austmpdata -o output.csv
-wc -l output.csv 
+$ rm output.csv
+$ scrapy crawl austmpdata -o output.csv
+$ wc -l output.csv 
 ~~~
 {: .language-bash}
 
@@ -284,7 +296,7 @@ Tip: `"Electorate Office "` has a space inside the `h3`. And we're going to need
 Using scrapy shell 
 
 ~~~
-scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=R36"
+$ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=R36"
 ~~~
 {: .source}
 
@@ -296,7 +308,7 @@ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=R
 
 We will use the `dd[1]` here because otherwise we're going to enter into far more complex selectors.
 
-Now that we have the XPath solution, we need to make sure the items.py object has a phone number that it can accept.
+Now that we have the XPath solution, we need to make sure the `items.py` object has a phone number that it can accept.
 
 ~~~
 import scrapy
@@ -351,16 +363,16 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = response.xpath("h4/a/text()").extract_first()
+            item['name'] = resource.xpath("h4/a/text()").extract_first()
 
 
             # Instead of just writing the relative path of the profile page, lets make the full profile page so we can use it later.
-            profilepage = response.urljoin(response.xpath("h4/a/@href").extract_first())
+            profilepage = response.urljoin(resource.xpath("h4/a/@href").extract_first())
             item['link'] = profilepage
 
-            item['district'] = response.xpath("dl/dd/text()").extract_first()
-            item['twitter'] = response.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
-            item['party'] = response.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
+            item['district'] = resource.xpath("dl/dd/text()").extract_first()
+            item['twitter'] = resource.xpath("dl/dd/a[contains(@class, 'twitter')]/@href").extract_first()
+            item['party'] = resource.xpath("dl/dt[text()='Party']/following-sibling::dd/text()").extract_first()
 
             # We need to make a new variable that the scraper will return that will get passed through another callback. We're calling that variable "request"
             request= scrapy.Request(profilepage, callback=self.get_phonenumber)
@@ -378,9 +390,9 @@ class AustmpdataSpider(scrapy.Spider):
 and running:
 
 ~~~
-rm -f output.csv
-scrapy crawl austmpdata -o output.csv
-head -3 output.csv
+$ rm -f output.csv
+$ scrapy crawl austmpdata -o output.csv
+$ head -3 output.csv
 ~~~
 {: .language-bash}
 
