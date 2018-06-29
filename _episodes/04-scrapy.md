@@ -878,9 +878,9 @@ class AustmpdataSpider(scrapy.Spider):
             # Loop over each item on the page. 
             item = AustmpsItem() # Creating a new Item object
 
-            item['name'] = response.xpath("h4/a/text()").extract_first()
-            item['link'] = response.xpath("h4/a/@href").extract_first()
-            item['district'] = response.xpath("dl/dd/text()").extract_first()
+            item['name'] = resource.xpath("h4/a/text()").extract_first()
+            item['link'] = resource.xpath("h4/a/@href").extract_first()
+            item['district'] = resource.xpath("dl/dd/text()").extract_first()
 
             yield item
 
