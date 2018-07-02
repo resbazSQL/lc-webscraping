@@ -14,7 +14,6 @@ objectives:
 
 keypoints:
 - "HTML is a markup language. It provides structure to documents."
-- "Modern HTML is valid XML."
 - "HTML documents are made out of nodes, which form a hierarchy."
 - "HTML uses the Document Object Model to build a webpage."
 - "We need to be able to find the content we want to scrape in the page's DOM"
@@ -39,8 +38,7 @@ XPath is rarely used on its own, rather it is used within software and languages
 
 > ## XML and HTML
 >
-> Modern HTML is also valid XML. We can therefore use "XPath" to query HTML documents. In fact, starting with HTML5, HTML documents are fully-formed XML documents.
-> In a sense, HTML is like a particular dialect of XML. All of the discussion in this section can also be applied to other XML documents.
+> Modern HTML has many similiarities to XML. We can therefore use "XPath" to query HTML documents. Moreover, all of the discussion in this section can also be applied to other XML documents.
 >
 {: .callout}
 
