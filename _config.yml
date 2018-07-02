@@ -9,7 +9,7 @@ carpentry: "lc"
 title: "Introduction to web scraping"
 
 # Contact email address.
-email: tom@timtom.ch
+email: thomas.guignard@gmail.com 
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -20,7 +20,7 @@ kind: "lesson"
 
 # Magic to make URLs resolve both locally and on GitHub.
 # See https://help.github.com/articles/repository-metadata-on-github-pages/.
-repository: resbazSQL/lc-webscraping
+repository: <USERNAME>/<PROJECT>
 
 # Sites.
 amy_site: "https://amy.software-carpentry.org/workshops"

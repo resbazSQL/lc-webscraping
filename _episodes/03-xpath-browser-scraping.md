@@ -11,7 +11,7 @@ objectives:
 - "Practice scraping data that is poorly structured."
 - "Use XPath queries to refine what needs to be scraped when data is less structured."
 keypoints:
-- "Data that is relatively well structured (in a table) is relatively easily to scrape."
+- "Data that is relatively well structured (in a table) is relatively easy to scrape."
 - "More often than not, web scraping tools need to be told what to scrape."
 - "XPath can be used to define what information to scrape, and how to structure it."
 - "More advanced data cleaning operations are best done in a subsequent step."
@@ -41,7 +41,7 @@ Note the "Selector" on the left column. It should read:
 ![A good output of the scraper]({{ page.root }}/fig/goodManualScrape.png)
 
 
-What happens if you don't highlight the full row and right click scrape similiar? We see something like:
+What happens if you don't highlight the full row and right click scrape similar? We see something like:
 
 ~~~
 //tr[2]/td
@@ -205,7 +205,7 @@ and the addresses are separated.
 
 ## Getting attribute data from elements.
 
-Let us explore the UK parlimentary website for a moment. Can we get the profile URIs of the members?
+Let us explore the UK parliamentary website for a moment. Can we get the profile URIs of the members?
 
 This isn't something that can be solved by being careful with our selection criteria. We'll have to add another column in the scraper. 
 
@@ -232,7 +232,7 @@ Note how this shows us the *text* inside the first element called `a` in the fir
 We see:
 ![Adding td/a/@href gives us url]({{page.root}}/fig/href.png)
 
-## Exercises: scrape the list of Australian members of parliment, their page URLs, their districts, their parties, and their twitter handles.
+## Exercises: scrape the list of Australian members of parliament, their page URLs, their districts, their parties, and their twitter handles.
 
 Let us remind ourselves of the handy set of XPath expressions referenced in the prior section.
 
@@ -411,7 +411,7 @@ Mr Andrew Broad MP  The Nationals   https://twitter.com/broad4mallee
 > 
 {: .challenge}
 
-This page, unfortunately doesn't have any useful elements deliniated by id. As a final takeaway, most of these XPath queries have been well answered on stack overflow. It is worth searching on [Questions tagged "XPath"](https://stackoverflow.com/questions/tagged/XPath) when exploring a query you are trying to write. In the process of writing this lesson, I had to refer to three separate answers.
+This page, unfortunately doesn't have any useful elements delineated by id. As a final takeaway, most of these XPath queries have been well answered on stack overflow. It is worth searching on [Questions tagged "XPath"](https://stackoverflow.com/questions/tagged/XPath) when exploring a query you are trying to write. In the process of writing this lesson, I had to refer to three separate answers.
 
 > ## Discussion
 > 

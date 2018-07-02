@@ -9,7 +9,7 @@ objectives:
 keypoints:
 - "We can have the spider follow links to collect more data in an automated fashion."
 - "We can use a callback to get that data scraped for our output file"
-- "We can use .meta to exchange data bewteen callbacks"
+- "We can use .meta to exchange data between callbacks"
 ---
 
 # Walking over the site we want to scrape
@@ -67,7 +67,7 @@ returns
 > _relative_ to that page. They are all missing part of the URL to become _absolute_ URLs, which
 > we will need if we want to ask our spider to visit those URLs to scrape more data. We could
 > prefix all those URLs with `https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results` to make them absolute, but
-> since this is a common occurence when scraping web pages, Scrapy provides a built-in function
+> since this is a common occurrence when scraping web pages, Scrapy provides a built-in function
 > to deal with this issue.
 >
 > To try it out, still in the Scrapy shell, let's first store the first returned URL into a
@@ -220,7 +220,7 @@ Found url: https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Re
 {: .output}
 
 
-If we turn our response parsing back on by uncommenting the item for loop, we suddenly get all 145 members of parliment.
+If we turn our response parsing back on by uncommenting the item for loop, we suddenly get all 145 members of parliament.
 
 Here is the full code of `austmpdata.py`:
 

@@ -131,7 +131,7 @@ Websites change. The original version of this lesson used a governmental website
 <table>
 <tr>
 <td style="width:50%">
-<img src="{{ page.root }}/fig/importio-ontparl-01.png" alt="Parliment Members Page"/>
+<img src="{{ page.root }}/fig/importio-ontparl-01.png" alt="Parliament Members Page"/>
 
 </td>
 <td style="width:50%">
@@ -215,7 +215,7 @@ Thanks to these labels, we could relatively easily instruct a computer to look f
 
 > ## Discussion
 >
-> Consider a researcher wanting to get a list of Australian members of parliment so that she can combine it with data from the Australian Bureau of Statistics about land area. Scraping is beneficial for her because:
+> Consider a researcher wanting to get a list of Australian members of parliament so that she can combine it with data from the Australian Bureau of Statistics about land area. Scraping is beneficial for her because:
 >
 > * A. Data, on the web, is made by computers. It takes a computer to get that data out.
 > * B. Her colleagues post their data in pdfs, this technique can help her get their data.
@@ -297,7 +297,7 @@ In this lesson, we will continue exploring the examples above and try different 
 >
 > While exploring pages before scraping, it's very important to be able to see "underneath the underneath." We live in an age where pages change before our very eyes, sometimes even as a result of our clicking on them. Before we go into scraping, we need to become comfortable with the browser's document inspector. All major browsers have a live inspector these days that is far more powerful than the old tool called "view source."
 >
-> Let us visit the [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. Backup link [at perma.cc](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=). Some MPs have links to twitter  as part of their profiles. Let's go find them.
+> Let us visit the [Members of the Australian Parliament](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0) site. Backup link [at perma.cc](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=). Some MPs have links to twitter  as part of their profiles. Let's go find them.
 >
 > First, we need to make sure that this information isn't trivially available by other means. Let us see if this list of members is available on [data.gov.au](https://data.gov.au).
 >

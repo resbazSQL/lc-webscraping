@@ -68,7 +68,7 @@ $ scrapy version
 in a shell. If all is good, you should get the following back (as of February 2017):
 
 ~~~
-Scrapy 1.3.2
+Scrapy 1.5
 ~~~
 {: .output}
 
@@ -77,7 +77,7 @@ If you have a newer version, you should be fine as well.
 To introduce the use of Scrapy, we will reuse the same example we used in the previous section. 
 
 
-We will be working the the australian MP data and paths you were just working on. However, instead of scraping the *first twelve* MPs, we will be scraping all of them, and going into their profiles as well. 
+We will be working the australian MP data and paths you were just working on. However, instead of scraping the *first twelve* MPs, we will be scraping all of them, and going into their profiles as well. 
 
 * First dozen [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). Backup link: [https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=).
 
@@ -169,7 +169,7 @@ austmps/            # the root project directory
         items.py        # Holds the structure of the data we want to collect
 
         middlewares.py  # We aren't going to use this today. 
-                        # A file to manipulate how spiders process input, incase pretending to be a normal HTTP browser doesn't work.
+                        # A file to manipulate how spiders process input, in case pretending to be a normal HTTP browser doesn't work.
 
         pipelines.py    # We aren't going to use this today, either.
                         # Once our spider writes things to the "item," we can use pipelines to do additional processing before we export it.
