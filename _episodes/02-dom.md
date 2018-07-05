@@ -1,6 +1,6 @@
 ---
 title: "Querying the Document Object Model with XPath"
-teaching: 30
+teaching: 60
 exercises: 30
 questions:
 - "How is a webpage organised from a code perspective?"
