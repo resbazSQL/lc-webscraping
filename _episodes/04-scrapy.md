@@ -1,6 +1,6 @@
 ---
 title: "Web scraping using Python and Scrapy"
-teaching: 30
+teaching: 60
 exercises: 30
 questions:
 - "How can scraping a web site be automated?"
@@ -499,12 +499,9 @@ Now let's get data out using the scrapy shell.
 
 ## Using the Scrapy shell
 
-As we learned in the previous sections, using the browser console and the `$x()` syntax can be useful to make sure
-we are selecting the desired elements using our XPath queries. But it is not the only way. Scrapy provides a similar
-way to test out XPath queries, with the added benefit that we can then also debug how to further work on those
-queries from within Scrapy.
+Scrapy provides a way to test out XPath queries, with the added benefit that we can then also debug how to further work on those queries from within Scrapy.
 
-This is achieved by calling the _Scrapy shell_ from the command line:
+This is achieved by once again calling the _Scrapy shell_ from the command line:
 
 ~~~
 $ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0"
@@ -577,6 +574,8 @@ to get the "content" that the `selectors` are pointing to, the following methods
 |`re_first()`| Returns the first match of the regular expression|
 
 Those objects are pointers to the different elements in the scraped page (`h4` text) as defined by our XPath query. To get to the actual content of those elements (the text of the links), we can use the `extract()` method. A variant of that method is `extract_first()` which does the same thing as `extract()` but only returns the first element if there are more than one:
+
+For example we can see: 
 
 ~~~
 >>> response.xpath("//h4[@class='title']/a/text()").extract_first()

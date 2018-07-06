@@ -259,43 +259,33 @@ There are many many web technologies which provide for: "Find me this specific e
 This next exercise will allow us to practice with an XPath directly. It can also be very useful for debugging XPaths when you are using them in other programs and scripts.
 
 
-We can run XPath queries directly from within all major modern browsers, by enabling the built-in Javascript console.
+We can run XPath queries directly from python by calling a component of scrapy called the scrapy shell.
 
-> ## Exercise: Display the console in your browser
->
-> * In Firefox, use to the *Tools > Web Developer > Web Console* menu item.
-> * In Chrome, use the *View > Developer > Javascript Console* menu item.
-> * In Safari, use the *Develop > Show Error Console* menu item. If your Safari browser doesn't have a Develop menu,
->   you must first enable this option in the Preferences, see above.
->
-{: .callout}
+> ## Exercise: Run Scrapy Shell against this page
+> 
+> in the command prompt, run `scrapy shell "{{page.root}}"` and follow along with the following explorations.
+> 
+> > ## Quotes
+> > It's always a good idea to enclose URLs in quotes in the command line as some of their characters do odd things to the shell
+> {: .callout}
+{: .challenge}
 
-Here is how the console looks like in the Firefox browser:
-
-![Javascript console in Firefox]({{ page.root }}/fig/firefox-console.png)
-
-For now, don't worry too much about error messages if you see any in the console when you open it. The console
-should display a _prompt_ with a `> ` character (`>>` in Firefox) inviting you to type commands.
-
-The syntax to run an XPath query within the Javascript console is `$x("XPath_QUERY")`, for example:
+The syntax to run an XPath query within the scrapy shell is `response.xpath("XPath_QUERY")`, for example:
 
 ~~~
-$x("/html/head/title/text()")
+>>> response.xpath("/html/head/title/text()")
 ~~~
-{: .source}
+{: .source .language-python}
 
 This should return something similar to
 
 ~~~
-<- Array [ #text "{{page.title}}" ]
+[<Selector xpath='/html/head/title/text()' data='Introduction to web scraping: Querying t'>]
 ~~~
 {: .output}
 
-The output can vary slightly based on the browser you are using. For example in Chrome, you have to "open" the
-return object by clicking on it in order to view its contents.
-
 Let's look closer at the XPath query used in the example above: `/html/head/title/text()`. The first `/` indicates
-the _root_ of the document. With that query, we told the browser to
+the _root_ of the document. With that query, we told scrapy shell to
 
 |-----------------|:-------------|
 | `/`| Start at the root of the document... |
@@ -315,14 +305,14 @@ Using this syntax, XPath thus allows us to determine the exact _path_ to a node.
 > > ## Solution
 > >
 > > ~~~
-> > $x("/html/body/div/article/h1[1]")
+> > >>> response.xpath("/html/body/div/article/h1[1]")
 > > ~~~
-> > {: .source}
+> > {: .source .language-python}
 > >
 > > should produce something similar to
 > >
 > > ~~~
-> > <- Array [ <h1#introduction> ]
+> > [<Selector xpath='/html/body/div/article/h1[1]' data='<h1 id="introduction">Introduction</h1>'>]
 > > ~~~
 > > {: .output}
 > >
@@ -337,35 +327,37 @@ within a document and what their relationships with each others are.
 For example, to select all the `blockquote` nodes of this page, we can write
 
 ~~~
-$x("/html/body/div/article/blockquote")
+>>> response.xpath("/html/body/div/article/blockquote")
 ~~~
-{: .source}
+{: .source .language-python}
 
 This produces an array of objects:
 
 ~~~
-<- Array [ <blockquote.objectives>, <blockquote.callout>, <blockquote.callout>, <blockquote.challenge>, <blockquote.callout>, <blockquote.callout>, <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, <blockquote.keypoints> ]
+[<Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="objectives">\n  <h2>Ov'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="callout">\n  <h2 id="x'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote>\n  <p>The Document Object Mo'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="callout">\n  <h2 id="a'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="discussion">\n  <h2 id'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="callout">\n  <h2 id="x'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="discussion">\n  <h2 id'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="callout">\n  <h2 id="e'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="discussion">\n  <h2 id'>, <Selector xpath='/html/body/div/article/blockquote' data='<blockquote class="keypoints">\n  <h2>Key'>]
+
 ~~~
-{: .output}
+{: .output .language-html}
 
 This selects all the `blockquote` elements that are under `html/body/div`. If we want instead to select _all_
 `blockquote` elements in this document, we can use the `//` syntax instead:
 
 ~~~
-$x("//blockquote")
+>>> response.xpath("//blockquote")
 ~~~
-{: .source}
+{: .source .language-python}
 
 This produces a longer array of objects:
 
 ~~~
-<- Array [ <blockquote.objectives>, <blockquote.callout>, <blockquote.callout>, <blockquote.challenge>, <blockquote.callout>, <blockquote.callout>, <blockquote.challenge>, <blockquote.solution>, <blockquote.challenge>, <blockquote.solution>, 3 more... ]
+[<Selector xpath='//blockquote' data='<blockquote class="objectives">\n  <h2>Ov'>, <Selector xpath='//blockquote' data='<blockquote class="callout">\n  <h2 id="x'>, <Selector xpath='//blockquote' data='<blockquote>\n  <p>The Document Object Mo'>, <Selector xpath='//blockquote' data='<blockquote class="callout">\n  <h2 id="a'>, <Selector xpath='//blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='//blockquote' data='<blockquote class="discussion">\n  <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="solution">\n    <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="callout">\n  <h2 id="x'>, <Selector xpath='//blockquote' data='<blockquote class="discussion">\n  <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="solution">\n    <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="callout">\n  <h2 id="e'>, <Selector xpath='//blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='//blockquote' data='<blockquote class="solution">\n    <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='//blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='//blockquote' data='<blockquote class="solution">\n    <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath='//blockquote' data='<blockquote class="quotation">\n<p>Moral '>, <Selector xpath='//blockquote' data='<blockquote class="solution">\n    <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="discussion">\n  <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="solution">\n    <h2 id'>, <Selector xpath='//blockquote' data='<blockquote class="keypoints">\n  <h2>Key'>]
+
 ~~~
-{: .output}
+{: .output .language-html}
 
 > ## Why is the second array longer?
-> If you look closely into the array that is returned by the `$x("//blockquote")` query above,
-> you should see that it contains objects like `<blockquote.solution>` that were not
+> If you look closely into the array that is returned by the `response.xpath("//blockquote")` query above,
+> you should see that it contains objects like `data='<blockquote class="solution">` that were not
 > included in the results of the first query. Why is this so?
 >
 > Tip: look at the source code and see how the challenges and solutions elements are
@@ -404,12 +396,13 @@ you are currently reading on this page.</p>
 
 We know that the `class` attribute is characteristic of all of the challenge boxes. This means we can create an Javascript query of XPath of 
 ~~~
-$x("//blockquote[@class='challenge']");
+>>> response.xpath("//blockquote[@class='challenge']");
 ~~~
-{: .source}
+{: .source .language-python}
 This should return something like:
 ~~~
-(5) [blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge, blockquote.challenge]
+[<Selector xpath="//blockquote[@class='challenge']" data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath="//blockquote[@class='challenge']" data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath="//blockquote[@class='challenge']" data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath="//blockquote[@class='challenge']" data='<blockquote class="challenge">\n  <h2 id='>, <Selector xpath="//blockquote[@class='challenge']" data='<blockquote class="challenge">\n  <h2 id='>]
+
 ~~~
 {: .output}
 
@@ -445,22 +438,22 @@ that object in the document, enabling you to make sure you got the right ones.
 > * Remember that XPath queries are relative to a context node, and by default that node is the root node.
 > * Use the `//` syntax to select for elements regardless of where they are in the tree.
 > * The syntax to select the parent element relative to a context node is `..`
-> * The `$x(...)` Javascript syntax will always return an array of nodes, regardless of the number of
->   nodes returned by the query. Contrary to XPath, Javascript uses _zero based indexing_, so the syntax to get
->   the first element of that array is therefore `$x(...)[0]`.
+> * The `response.xpath(...)` Python syntax will always return an array of nodes, regardless of the number of
+>   nodes returned by the query. Contrary to XPath, Python uses _zero based indexing_, so the syntax to get
+>   the first element of that array is therefore `response.xpath(...)[0]`.
 >
 >
 > > ## Solution
 > >
 > > ~~~
-> > $x("/html/body/div/article/h1[@id='introduction']")
+> > response.xpath("/html/body/div/article/h1[@id='introduction']")
 > > ~~~
 > > {: .source}
 > >
 > > should produce something similar to
 > >
 > > ~~~
-> > <- Array [ <h1#introduction> ]
+> > [<Selector xpath="/html/body/div/article/h1[@id='introduction']" data='<h1 id="introduction">Introduction</h1>'>]
 > > ~~~
 > > {: .output}
 > >
@@ -484,24 +477,18 @@ that object in the document, enabling you to make sure you got the right ones.
 > 
 > Write an XPath query which can get only titles of the books inside that quote.
 > 
->  We know that we can select challenge blockquotes through `$x("//blockquote[@class='challenge']");`. And we know we can follow elements into each other by using `/`. And we know we can get the text of an element through `text()`. How do we combine these ideas?
+>  We know that we can select challenge blockquotes through `response.xpath("//blockquote[@class='challenge']");`. And we know we can follow elements into each other by using `/`. And we know we can get the text of an element through `text()`. How do we combine these ideas?
 >  
 > > ## Solution
 > >  
-> >  `$x("//blockquote[@class='quotation']/p/a/text()");`
+> >  `response.xpath("//blockquote[@class='quotation']/p/a/text()")`
 > >  
 > >  We start with `class='quotation'` to find the container which has an identifiable class. If we don't restrict to `class='quotation'` then we get that trap link to Neil Stephenson I included above. 
 > >  
 > >  We then descend down through the `<p>`aragraph element, to the `<a>` elements. Since the preceeding paragraph doesn't have any hyperlinks, nothing in it is matched. We then use `text()` to get the text of those two links.
 > >
 > >  ~~~
-> > (2) [text, text]
-> >   0: text
-> >     (...)
-> >     data: "The Victorians"
-> >   1: text
-> >     (...)
-> >     data: "The Diamond Age"
+>> [<Selector xpath="//blockquote[@class='quotation']/p/a/text()" data='The Victorians'>, <Selector xpath="//blockquote[@class='quotation']/p/a/text()" data='The Diamond Age'>]
 > >  ~~~
 > >  {: .output}
 > {: .solution} 
