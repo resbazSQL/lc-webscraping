@@ -118,9 +118,8 @@ class AustmpdataSpider(scrapy.Spider):
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        # the function is an iterator, so we need to iterate over it. There is likely a cleaner way to do this.
-        for item in self.scrape(response):
-            yield item
+        # When asked for a new item, ask self.scrape for new items and pass them along
+        yield from self.scrape(response)
 
     def scrape(self, response):
         for resource in response.xpath("//h4[@class='title']/.."):
@@ -155,8 +154,8 @@ Since we have an XPath query we know will extract the URLs we are looking for, w
         nextpage = response.urljoin(nextpageurl)
         print(nextpage)
        
-        for item in self.scrape(response):
-            yield item
+        # When asked for a new item, ask self.scrape for new items and pass them along
+        yield from self.scrape(response)
 (...)
 ~~~
 {: .language-python}
@@ -185,8 +184,8 @@ To our function parse, we add a call to itself: the function parse.
         # 'start_url' argument above. The content of the scraped URL is passed on
         # as the 'response' object.
 
-        # for item in self.scrape(response):
-        #     yield item
+        # When asked for a new item, ask self.scrape for new items and pass them along
+        # yield from self.scrape(response)
 
         nextpageurl = response.xpath("//a[@title='Next page']/@href")
 
@@ -242,8 +241,8 @@ class AustmpdataSpider(scrapy.Spider):
 
         nextpageurl = response.xpath("//a[@title='Next page']/@href")
 
-        for item in self.scrape(response):
-            yield item
+        # When asked for a new item, ask self.scrape for new items and pass them along
+        yield from self.scrape(response)
 
         if nextpageurl:
             path = nextpageurl.extract_first()
@@ -347,9 +346,9 @@ class AustmpdataSpider(scrapy.Spider):
         # as the 'response' object.
 
         nextpageurl = response.xpath("//a[@title='Next page']/@href")
-
-        for item in self.scrape(response):
-            yield item
+        
+        # When asked for a new item, ask self.scrape for new items and pass them along
+        yield from self.scrape(response)
 
         if nextpageurl:
             path = nextpageurl.extract_first()
