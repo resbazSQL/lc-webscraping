@@ -27,7 +27,7 @@ scraping websites, and we will establish a [code of conduct (below)](#web-scrapi
 to guide our web scraping projects.
 
 > ## This section does not constitute legal advice
-> 
+>
 > Please note that the information provided on this page is for information
 > purposes only and does not constitute professional legal advice on the
 > practice of web scraping.
@@ -47,7 +47,7 @@ number of pages. For each of these pages, a request will be sent to the web serv
 is hosting the site, and the server will have to process the request and send a response
 back to the computer that is running our code. Each of these requests will consume resources
 on the server, during which it will not be doing something else, like for example responding
-to someone else trying to access the same site. 
+to someone else trying to access the same site.
 
 If we send too many such requests over a short span of time, we can prevent other "normal" users
 from accessing the site during that time, or even cause the server to run out of resources and crash.
@@ -67,7 +67,7 @@ a website.
 The good news is that a good web scraper, such as Scrapy, recognizes that this is a risk and includes
 measures to prevent our code from appearing to launch a DoS attack on a website. This is mostly
 done by inserting a random delay between individual requests, which gives the target server enough
-time to handle requests from other users between ours. 
+time to handle requests from other users between ours.
 
 This is Scrapy's default behaviour, and it should prevent most scraping projects from ever causing problems.
 To be on the safe side, however, it is good practice to limit the number of pages we are scraping
@@ -163,7 +163,7 @@ be fine.
    of the intellectual property legislation. However, sharing data for which you don't
    hold the right to share is illegal.
 5. __Share what you can.__ If the data you scraped is in the public domain or you got
-   permission to share it, then put it out there for other people to reuse it (e.g. on 
+   permission to share it, then put it out there for other people to reuse it (e.g. on
    [datahub.io](https://datahub.io)). If you
    wrote a web scraper to access it, share its code (e.g. on GitHub) so that others can
    benefit from it.
