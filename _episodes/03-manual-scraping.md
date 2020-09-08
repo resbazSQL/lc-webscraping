@@ -274,3 +274,150 @@ and the addresses are separated.
 > >
 > {: .solution}
 {: .challenge}
+
+## Advanced XPaths
+
+Now we are finally ready to do some web scraping. Let's go to the list of Senators and
+Members of the [Australian
+Parliament](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0).
+
+With the Scrapy extension installed, we can select the first Member from the list, do a right
+click and choose "Scrape similar" from the contextual menu:
+
+![Screenshot of the Scraper contextual menu]({{ page.root }}/fig/scraper-austmps-context.png)
+
+Alternatively, the "Scrape similar" option can also be accessed from the Scraper extension
+icon:
+
+![Screenshot of the Scraper menu]({{ page.root }}/fig/scraper-austmps-menu.png)
+
+Either operation will bring up the Scraper window:
+
+![Screenshot of the Scraper main window]({{ page.root }}/fig/scraper-austmps-default.png)
+
+We recognize that Scraper has generated XPath queries that corresponds to the data we had
+selected upon calling it. The Member of Parliament (highlighted in red in the above screenshot)
+ has been set to `//h4/a` which selects the name and URL of the first Member of
+ Parliament.
+
+In fact, we can try out that query using the technique that we learned in the previous
+section by typing the following in the browser console:
+
+~~~
+$x("//h4/a")
+~~~
+{: .source}
+
+returns something like
+
+~~~
+<- Array [12]
+~~~
+{: .output}
+
+which we can explore in the console to make sure this is the right data.
+
+To understand what this means, we have to remember that XPath queries are relative to the
+current context node. The context node has been set by the Selector query above, so
+those queries are relative to the array of `h4` elements that has been selected.
+
+We can replicate their effect by trying out
+
+~~~
+$x("//h4/a/*[1]")
+~~~
+{: .source}
+
+in the console. This should select only the first header. The same goes for the second
+header.
+
+In this case we need to do some extra work to get the constituency information,
+as Scraper was unable to deduce it automatically for us. If we look at the inspector for
+Anthony Albanese that is shown below, we can see all the information contained within
+a `div` element, including the `h4` element containing the name, the Electorate
+information, positions and the Party.
+
+![Using the inspect element to investigate the structure of an entry.
+]({{ page.root }}/fig/austmps-inspect.png)
+
+This `div` element is the context node we want to select for our XPath query,
+with all the individual elements selected relative to it. Rather than trying
+to find the appropriate `div` element, it is easier to refer to this as the parent of
+the `h4` element; we already know this selects each of the MPs on the page. We can
+update our XPath query in the Scraper extension, using `//h4/..` for the selector,
+`./h4/a` for the name, and `./h4/a/@href` for the link.
+
+![We can replicate the same query as the default selecting the parent `<div>` element
+and extracting information relative to that.]({{ page.root}}/fig/scraper-austmps-parent.png)
+
+While this change makes the current query more complicated, it makes it easier to
+extract the additional information about the Electorate, Positions, the Party, and
+information on how to connect with the MP. To extract this information we need to add
+extra columns to Scrapy, specifying the relative XPath used to select each. The HTML
+for of the selected `div` for Anthony Albanese is shown below.
+
+```
+<div class="medium-pull-2 medium-7 large-8  columns">
+  <h4 class="title">
+    <a href="/Senators_and_Members/Parliamentarian?MPID=R36">Hon Anthony Albanese MP</a>
+  </h4>
+  <dl class="dl--inline__result text-small">
+    <dt>For</dt>
+    <dd>Grayndler, New South Wales</dd>
+    <dt>Positions</dt>
+    <dd>Leader of the Opposition</dd>
+    <dt>Party</dt>
+    <dd>Australian Labor Party</dd>
+    <dt>Connect</dt>
+    <dd>
+      <a href="mailto:A.Albanese.MP@aph.gov.au" class="social mail" target="_blank"><i class="fa fa-lg margin-right fa-envelope-o"></i></a>
+      <a href="http://twitter.com/AlboMP" class="social twitter margin-right" target="_blank"><i class="fa fa-lg fa-twitter"></i></a>
+    </dd>
+  </dl>
+</div>
+```
+{: .language-html}
+
+Here we can see the Electorate (For) is given by the first definition description tag
+`<dd>` within the definition list `<dl>`, the Positions is given by the second
+definition tag, and the party by the third. We could use the following selections;
+
+- Electorate: `./dl/dd[1]`
+- Position: `./dl/dd[2]`
+- Party: `./dl/dd[3]`
+
+![]({{ page.root }}/fig/scraper-austmps-naive.png)
+
+The problems with using this method is that the structure of each MP is slightly
+different. Dr Katie Allen MP has no positions, so the Party information is in the
+Position column. We also have Hon Kevin Andrews MP who has two positions, resulting in
+no party information. We can solve this by using the information in the definition term
+tag `<dt>` that precedes the definition description `<dd>` tag. For the Electorate
+information, the `<dt>` tag contains the text `For` which we can use to identify it
+using the relative XPath query, `./dl/dt[text() = 'For']`. To get the following `<dd>`
+tag, we can use the `following-sibling::dd` XPath selector giving
+
+```
+./dl/dt[text() = 'For']/following-sibling::dd`
+```
+
+A similar approach can be taken for all selections
+
+- Electorate: `./dl/dt[text() = 'For']/following-sibling::dd`
+- Position: `./dl/dt[text() = 'Positions']/following-sibling::dd`
+- Party: `./dl/dt[text() = 'Party']/following-sibling::dd`
+
+Finally we can handle multiple Positions by selecting each index within the XPath query,
+
+- Position: `./dl/dt[text() = 'Positions'][1]/following-sibling::dd`
+- Position 2: `./dl/dt[text() = 'Positions'][2]/following-sibling::dd`
+
+Giving our final query shown below.
+
+![]({{ page.root}}/fig/scraper-austmps-final.png)
+
+The Scraper extension provides a useful utility for the extraction of structured
+information from Websites. Using the XPath query syntax, we are able to construct
+powerful queries to extract the information we require. However, the Scraper extension
+has the fairly significant drawback that it can only scrape a single page of
+information. Additionally it only samples a single point in time.
