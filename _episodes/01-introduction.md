@@ -18,9 +18,9 @@ keypoints:
 ## What is web scraping?
 
 Web scraping is a technique for extracting information from websites. This can be done manually
-but it is usually faster, more efficient and less error-prone to automate the task. 
+but it is usually faster, more efficient and less error-prone to automate the task.
 
-Web scraping allows you to acquire non-tabular or poorly structured data from websites and convert it 
+Web scraping allows you to acquire non-tabular or poorly structured data from websites and convert it
 into a usable, structured format, such as a .csv file or spreadsheet.
 
 Scraping is about more than just acquiring data: it can also help you archive data and track changes to data online.
@@ -46,7 +46,7 @@ that allows analysis.
 As useful as scraping is, there might be better options for the task. Choose the right (i.e. the easiest) tool for the job.
 
 - Check whether or not you can easily copy and paste data from a site into Excel or Google Sheets. This might be quicker than scraping.
-- Check if the site or service already provides an API to extract structured data. If it does, that will be a much more efficient and effective pathway. Good examples are the 
+- Check if the site or service already provides an API to extract structured data. If it does, that will be a much more efficient and effective pathway. Good examples are the
 [Facebook API](https://developers.facebook.com/tools/explorer/), the [Twitter APIs](https://dev.twitter.com/rest/public) or the [YouTube comments API](https://developers.google.com/youtube/v3/docs/commentThreads/list).
 - For much larger needs, Freedom of information requests can be useful. Be specific about the formats required for the data you want.
 
@@ -54,7 +54,7 @@ As useful as scraping is, there might be better options for the task. Choose the
 
 In this lesson, we will extract contact information
 from government websites that list the members of various constituencies. Librarians could use this example
-to scrape information from any site listing contact details. 
+to scrape information from any site listing contact details.
 
 Let's start by looking at the current list of members of the Canadian parliament, which is available
 on the [Parliament of Canada website](http://www.parl.gc.ca/Parliamentarians/en/members).
@@ -69,7 +69,7 @@ database before being displayed on this page. The data can be readily downloaded
 file or as XML for re-use in their own database, spreadsheet or computer program.
 
 Even though the information displayed in the view above is not labelled, anyone visiting this site with some
-knowledge of Canadian geography and politics can see what information pertains to the 
+knowledge of Canadian geography and politics can see what information pertains to the
 politicians' names, the geographical area they come from and the political party they represent. This is because human
 beings are good at using context and prior knowledge to quickly categorise information.
 
@@ -80,10 +80,10 @@ organised inside labelled elements:
 ~~~
 (...)
 <div>
-    <a href="/Parliamentarians/en/members/Ziad-Aboultaif(89156)"> 
+    <a href="/Parliamentarians/en/members/Ziad-Aboultaif(89156)">
         <img alt="Photo - Ziad Aboultaif - Click to open the Member of Parliament profile" title="Photo - Ziad Aboultaif - Click to open the Member of Parliament profile" src="http://www.parl.gc.ca/Parliamentarians/Images/OfficialMPPhotos/42/AboultaifZiad_CPC.jpg" class="picture" />
         <div class="full-name">
-		    <span class="honorific"><abbr></abbr></span>
+            <span class="honorific"><abbr></abbr></span>
             <span class="first-name">Ziad</span>
             <span class="last-name">Aboultaif</span>
         </div>
@@ -91,7 +91,7 @@ organised inside labelled elements:
     <div class="caucus-banner" style="background-color:#002395"></div>
     <div class="caucus">Conservative</div>
     <div class="constituency">Edmonton Manning</div>
-    <div class="province">Alberta</div>        
+    <div class="province">Alberta</div>
 </div>
 (...)
 ~~~
@@ -105,7 +105,7 @@ Alberta and list their names and caucus information.
 > When presented with information, human beings are good at quickly categorizing it and extracting the data
 > that they are interested in. For example, when we look at a magazine rack, provided the titles are written
 > in a script that we are able to read, we can rapidly figure out the titles of the magazines, the stories they
-> contain, the language they are written in, etc. and we can probably also easily organize them by topic, 
+> contain, the language they are written in, etc. and we can probably also easily organize them by topic,
 > recognize those that are aimed at children, or even whether they lean toward a particular end of the
 > political spectrum. Computers have a much harder time making sense of such _unstructured_ data unless
 > we specifically tell them what elements data is made of, for example by adding labels such as
@@ -114,7 +114,7 @@ Alberta and list their names and caucus information.
 >
 {: .callout}
 
-Let's look now at the current list of members for the [UK House of Commons](https://www.parliament.uk/mps-lords-and-offices/mps/). 
+Let's look now at the current list of members for the [UK House of Commons](https://www.parliament.uk/mps-lords-and-offices/mps/).
 
 ![Screenshot of the UK House of Commons website]({{ page.root }}/fig/ukparl.png)
 
@@ -152,10 +152,10 @@ faced with a large set of data. What if we wanted to collect this information fo
 has a parliamentary system?
 
 Fortunately, there are tools to automate at least part of the process. This technique is called
-_web scraping_. 
+_web scraping_.
 
 >
-> "Web scraping (web harvesting or web data extraction) is a computer software technique of 
+> "Web scraping (web harvesting or web data extraction) is a computer software technique of
 > extracting information from websites."
 > (Source: [Wikipedia](https://en.wikipedia.org/wiki/Web_scraping))
 >
@@ -172,4 +172,3 @@ a specific subset of that information.
 
 * [Web Scraping (Wikipedia)](https://en.wikipedia.org/wiki/Web_scraping)
 * [The Data Journalism Handbook: Getting Data from the Web](http://datajournalismhandbook.org/1.0/en/getting_data_3.html)
-
