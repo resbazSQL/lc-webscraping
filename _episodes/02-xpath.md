@@ -67,18 +67,22 @@ XML document follows basic syntax rules:
   <date>2019-10-01</date>
 </catfood>
 ```
+
 * Text nodes (data) are contained inside the opening and closing tags
 * XML attribute nodes contain values that must be quoted, e.g.
-``` <catfood type="basic"></catfood> ```
+
+```
+<catfood type="basic"></catfood>
+```
 
 # XPath Expressions
 
-XPath is written using expressions. Expressions consist of values, e.g., 368, and operators, e.g., +, that will return 
+XPath is written using expressions. Expressions consist of values, e.g., 368, and operators, e.g., +, that will return
 a single value. `368 + 275` is an example of an expression. It will return the value `643`. In programming terminology, this is called evaluating, which simply means reducing down to a single value. A single value with no operators, e.g. `35`, can also be called an expression, though it will evaluate only to its existing value, e.g. 35.
 
 Using XPath is similar to using advanced search in a library catalogue, where the structured nature of bibliographic information allows us to specify which metadata fields to query. For example, if we want to find books *about* Shakespeare but not works *by* him, we can limit our search function to the `subject` field only.
 
-When we use XPath, we do not need to know in advance what the data we want looks like (as we would with regular expressions, where we need to know the pattern of the data). Since XML documents are structured into fields called nodes, XPath makes use of that structure to navigate through the nodes to select the data we want. We just need to know in which nodes within an XML file the data we want to find resides. When XPath expressions are evaluated on XML documents, they return objects containing the nodes that you specify. 
+When we use XPath, we do not need to know in advance what the data we want looks like (as we would with regular expressions, where we need to know the pattern of the data). Since XML documents are structured into fields called nodes, XPath makes use of that structure to navigate through the nodes to select the data we want. We just need to know in which nodes within an XML file the data we want to find resides. When XPath expressions are evaluated on XML documents, they return objects containing the nodes that you specify.
 
 ## XPath always assumes *structured* data.
 
@@ -151,7 +155,7 @@ a web page.
 >
 > If you are using Safari, you must first turn on the "Develop" menu in order to view the page source, and use the
 > functions that we will use later in this section. To do so, navigate to Safari > Preferences and in the Advanced tab
-> select the "Show Develop in menu bar" option. Note: In recent versions of Safari you must first turn on the "Develop" 
+> select the "Show Develop in menu bar" option. Note: In recent versions of Safari you must first turn on the "Develop"
 > menu (in Preferences) and then navigate to `Develop > Show Javascript Console` and then click on the "Console" tab.
 >
 {: .callout}
@@ -167,7 +171,7 @@ been removed for clarity):
     <title>{{page.title}}</title>
   </head>
   <body>
-	 (...)
+    (...)
   </body>
 </html>
 ~~~
@@ -253,7 +257,6 @@ Using this syntax, XPath thus allows us to determine the exact _path_ to a node.
 Before we look into other
 ways to reach a specific HTML node using XPath, let's start by looking closer at how nodes are arranged
 within a document and what their relationships with each others are.
-
 
 For example, to select all the `blockquote` nodes of this page, we can write
 
@@ -346,8 +349,6 @@ Array [ <blockquote.challenge>, <blockquote.challenge>, <blockquote.challenge>, 
 > >
 > {: .solution}
 {: .challenge}
-
-
 
 
 > ## Select this challenge box
@@ -513,8 +514,6 @@ This is because != indicates the existence of an @id, whie the not() expression 
 -->
 
 
-
-
 ## Wildcards
 
 XPath wildcards can be used to select unknown XML nodes.
@@ -600,7 +599,7 @@ FIXME: Firefox sometime cleans up the HTML of a page before displaying it, meani
 we can access through the console might not reflect the actual source code. `<tbody>` elements are
 typically not reliable.
 The [Scrapy documentation](https://doc.scrapy.org/en/latest/topics/firefox.html#caveats-with-inspecting-the-live-browser-dom)
-has more on the topic. 
+has more on the topic.
 
 # References
 

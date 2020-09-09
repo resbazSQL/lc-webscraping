@@ -77,7 +77,7 @@ If you have a newer version, you should be fine as well.
 To introduce the use of Scrapy, we will reuse the same example we used in the previous section.
 
 
-We will be working the australian MP data and paths you were just working on. However, instead of scraping the *first twelve* MPs, we will be scraping all of them, and going into their profiles as well.
+We will be working the Australian MP data and paths you were just working on. However, instead of scraping the *first twelve* MPs, we will be scraping all of them, and going into their profiles as well.
 
 * First dozen [Members of the Australian Parliment](https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&par=-1&gen=0&ps=0). Backup link: [https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=](https://perma-archives.org/warc/8ATF-RT3Q/https://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=).
 
@@ -488,9 +488,9 @@ While we can use the relative path we discovered in the prior exercise, it is fr
 
 To review, let us break down this XPath into each component.
 
-We have `//h4[@class='title']` which says "Find any h4 element" with its css class being "title".
+We have `//h4[@class='title']` which says "Find any `h4` element" with its css class being "title".
 
-Then we have `/a/text()` which says "Then go into the a element inside that h4, and get me the text of whatever is inside that element."
+Then we have `/a/text()` which says "Then go into the `a` element inside that `h4`, and get me the text of whatever is inside that element."
 
 Now let's get data out using the scrapy shell.
 

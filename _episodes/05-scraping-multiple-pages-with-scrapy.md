@@ -285,7 +285,7 @@ $ wc -l output.csv
 ~~~
 {: .language-bash}
 
-We get all 145 members of parliment + 1 line for the header:
+We get all 145 members of parliament + 1 line for the header:
 ~~~
 146 output.csv
 ~~~
