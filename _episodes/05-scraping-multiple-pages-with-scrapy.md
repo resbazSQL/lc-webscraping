@@ -397,7 +397,7 @@ class AustmpdataSpider(scrapy.Spider):
     def get_phonenumber(self, response):
         # A scraper designed to operate on one of the profile pages
         item = response.meta['item'] #Get the item we passed from scrape()
-        item['phonenumber'] = response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract_first()
+        item['phonenumber'] = response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/a/text()").extract_first()
         yield item #Return the new phonenumber'd item back to scrape
 ~~~
 {: .language-python}
