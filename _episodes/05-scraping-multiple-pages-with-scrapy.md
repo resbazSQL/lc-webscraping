@@ -313,7 +313,7 @@ $ scrapy shell "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID
 
 
 ~~~
->>> response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/text()").extract()
+>>> response.xpath("//h3[text()='Electorate Office ']/following-sibling::dl/dd[1]/a/text()").extract()
 ~~~
 {: .language-python}
 
